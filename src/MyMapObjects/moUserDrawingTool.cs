@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace MyMapObjects
 {
+    // 给组件用户使用的绘图工具（User为组件用户，为开发者）
     public class moUserDrawingTool
     {
         #region 字段
-        private Graphics _MyGraphics;               //绘图对象
-        private moRectangle _Extent;              //绘图区域左上点（0，0）对应的投影坐标系中的点，即投影坐标系相对屏幕坐标系的平移量
-        private double _MapScale = 10000;               //比例尺的倒数
-        private double _dpm = 96 / 0.0254;              //屏幕上每米代表的象素数
-        private double _mpu = 1.0;                      //1个地图坐标单位代表的米数，一般为1.
-        #endregion
+
+        private Graphics _MyGraphics; //绘图对象
+        private moRectangle _Extent; //绘图区域左上点（0，0）对应的投影坐标系中的点，即投影坐标系相对屏幕坐标系的平移量
+        private double _MapScale = 10000; //比例尺的倒数
+        private double _dpm = 96 / 0.0254; //屏幕上每米代表的像素数
+        private double _mpu = 1.0; //1个地图坐标单位代表的米数，一般为1
+
+        #endregion 字段
 
         #region 构造函数
 
@@ -28,7 +26,7 @@ namespace MyMapObjects
             _mpu = mpu;
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
@@ -59,10 +57,9 @@ namespace MyMapObjects
             get { return _mpu; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
-
 
         /// <summary>
         /// 以指定符号绘制指定点
@@ -124,6 +121,7 @@ namespace MyMapObjects
         {
             moMapDrawingTools.DrawPolygon(_MyGraphics, _Extent, _MapScale, _dpm, _mpu, points, symbol);
         }
+
         /// <summary>
         /// 以指定符号绘制指定复合折线
         /// </summary>
@@ -144,6 +142,6 @@ namespace MyMapObjects
             moMapDrawingTools.DrawMultiPolygon(_MyGraphics, _Extent, _MapScale, _dpm, _mpu, multiPolygon, symbol);
         }
 
-        #endregion
+        #endregion 方法
     }
 }

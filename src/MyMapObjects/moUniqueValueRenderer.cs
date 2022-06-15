@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyMapObjects
 {
-    public class moUniqueValueRenderer:moRenderer
+    // 唯一值渲染
+    public class moUniqueValueRenderer : moRenderer
     {
         #region 字段
 
         private string _Field = ""; //绑定字段
         private string _HeadTitle = ""; //在图层显示控件中的标题
         private bool _ShowHead = true; //在图层显示控件中是否显示标题
-        private List<string> _Values = new List<string>();
-        private List<moSymbol> _Symbols = new List<moSymbol>();
+        private List<string> _Values = new List<string>(); //唯一值列表
+        private List<moSymbol> _Symbols = new List<moSymbol>(); //符号列表，与唯一值列表对应
         private moSymbol _DefaultSymbol; //默认符号
         private bool _ShowDefaultSymbol = true; //在图层显示控件中是否显示默认符号
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
         public moUniqueValueRenderer()
-        { }
+        {
+        }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
@@ -35,7 +34,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 获取或设置绑定字段
+        /// 获取或设置唯一值的绑定字段
         /// </summary>
         public string Field
         {
@@ -59,9 +58,10 @@ namespace MyMapObjects
             get { return _DefaultSymbol; }
             set { _DefaultSymbol = value; }
         }
-        //其他属性不再编写
-        
-        #endregion
+
+        //其他属性不再编写，自行添加
+
+        #endregion 属性
 
         #region 方法
 
@@ -80,7 +80,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <param name="value"></param>
-        public void SetValue(Int32 index,string value)
+        public void SetValue(Int32 index, string value)
         {
             _Values[index] = value;
         }
@@ -100,52 +100,51 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <param name="symbol"></param>
-        public void SetSymbol(Int32 index,moSymbol symbol)
+        public void SetSymbol(Int32 index, moSymbol symbol)
         {
             _Symbols[index] = symbol;
         }
 
         /// <summary>
-        /// 增加一个唯一值及对应符号
+        /// 增加一个唯一值以及对应符号
         /// </summary>
         /// <param name="value"></param>
         /// <param name="symbol"></param>
-        public void AddUniqueValue(string value,moSymbol symbol)
+        public void AddUniqueValue(string value, moSymbol symbol)
         {
             _Values.Add(value);
             _Symbols.Add(symbol);
         }
 
         /// <summary>
-        /// 增加唯一值数字和对应的符号数组
+        /// 增加唯一值数组和对应的符号数组
         /// </summary>
         /// <param name="values"></param>
         /// <param name="symbols"></param>
-        public void AddUniqueValues(string[] values,moSymbol[] symbols)
+        public void AddUniqueValues(string[] values, moSymbol[] symbols)
         {
             if (values.Length != symbols.Length)
-            {
-                throw new Exception("the length of the two arrays is not equal!");
-            }
+                throw new Exception("两个数组的长度不一致！");
+
             _Values.AddRange(values);
             _Symbols.AddRange(symbols);
         }
 
         /// <summary>
-        /// 根据指定唯一值获取对应的符号，如果该值不存在则返回默认符号
+        /// 根据指定的唯一值获得对应符号，若该值不存在则返回默认符号
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
         public moSymbol FindSymbol(string value)
         {
             Int32 sValueCount = _Values.Count;
-            for (Int32 i = 0; i <= sValueCount - 1; i++)
+
+            for (int i = 0; i < sValueCount; i++)
             {
                 if (_Values[i] == value)
-                {
                     return _Symbols[i];
-                }
             }
+
             return _DefaultSymbol;
         }
 
@@ -153,7 +152,6 @@ namespace MyMapObjects
         /// 克隆
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public override moRenderer Clone()
         {
             moUniqueValueRenderer sRenderer = new moUniqueValueRenderer();
@@ -175,6 +173,6 @@ namespace MyMapObjects
             return sRenderer;
         }
 
-        #endregion
+        #endregion 方法
     }
 }

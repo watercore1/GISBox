@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace MyMapObjects
 {
+    // 文本符号
     public class moTextSymbol
     {
         #region 字段
-        private Font _Font = new Font("微软雅黑", 8);       //字体
-        private Color _FontColor = Color.Black;
-        private moTextSymbolAlignmentConstant _Alignment = moTextSymbolAlignmentConstant.CenterCenter;   //布局
-        private double _OffsetX, _OffsetY;  //X,Y方向偏移量，单位毫米，向右为正，向上为正 
-        private bool _UseMask = false;      //是否使用描边
+
+        private Font _Font = new Font("微软雅黑", 8); //字体
+        private Color _FontColor = Color.Black; //字体颜色
+        private moTextSymbolAlignmentConstant _Alignment = moTextSymbolAlignmentConstant.CenterCenter; //布局
+        private double _OffsetX, _OffsetY; //X,Y方向偏移量，单位毫米，向右为正，向上为正
+        private bool _UseMask = false; //是否使用描边
         private Color _MaskColor = Color.White; //描边的颜色
-        private double _MaskWidth = 0.5;    //描边宽度，单位毫米
-        #endregion
+        private double _MaskWidth = 0.5; //描边宽度，单位毫米
+
+        #endregion 字段
 
         #region 属性
 
@@ -93,12 +91,12 @@ namespace MyMapObjects
             set { _MaskWidth = value; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
         /// <summary>
-        /// 复制
+        /// 克隆
         /// </summary>
         /// <returns></returns>
         public moTextSymbol Clone()
@@ -114,6 +112,7 @@ namespace MyMapObjects
             sTextSymbol._MaskWidth = _MaskWidth;
             return sTextSymbol;
         }
-        #endregion
+
+        #endregion 方法
     }
 }

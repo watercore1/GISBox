@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyMapObjects
 {
-    public class moPoints:moGeometry
+    // 点集，即点的集合
+    public class moPoints
     {
         #region 字段
 
@@ -16,7 +14,7 @@ namespace MyMapObjects
         private double _MinY = double.MaxValue;
         private double _MaxY = double.MinValue;
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
@@ -31,7 +29,7 @@ namespace MyMapObjects
             _Points.AddRange(points);
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
@@ -75,12 +73,12 @@ namespace MyMapObjects
             get { return _MaxY; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
         /// <summary>
-        /// 获取指定索引号的点
+        /// 根据指定索引号返回点
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -90,7 +88,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 在末尾添加一个点
+        /// 在末尾增加一个点
         /// </summary>
         /// <param name="point"></param>
         public void Add(moPoint point)
@@ -99,7 +97,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 将指定数组中的元素添加到末尾
+        /// 将指定数组中的元素添加到末尾（添加若干个点）
         /// </summary>
         /// <param name="points"></param>
         public void AddRange(moPoint[] points)
@@ -116,7 +114,7 @@ namespace MyMapObjects
         {
             _Points.InsertRange(index, points);
         }
-        
+
         /// <summary>
         /// 将指定元素插入到指定索引号
         /// </summary>
@@ -130,14 +128,13 @@ namespace MyMapObjects
         /// <summary>
         /// 删除指定索引号的元素
         /// </summary>
-        /// <param name="index"></param>
         public void RemoveAt(Int32 index)
         {
             _Points.RemoveAt(index);
         }
 
         /// <summary>
-        /// 将所有元素复制到一个新的数组
+        /// 将所有元素复制到一个新的数组中
         /// </summary>
         /// <returns></returns>
         public moPoint[] ToArray()
@@ -152,14 +149,14 @@ namespace MyMapObjects
         {
             _Points.Clear();
         }
-        
+
         /// <summary>
-        /// 获取最小绑定矩形
+        /// 获取外包矩形
         /// </summary>
         /// <returns></returns>
         public moRectangle GetEnvelope()
         {
-            moRectangle sRect = new moRectangle(_MinX,_MaxX,_MinY,_MaxY);
+            moRectangle sRect = new moRectangle(_MinX, _MaxX, _MinY, _MaxY);
             return sRect;
         }
 
@@ -191,11 +188,11 @@ namespace MyMapObjects
             return sPoints;
         }
 
-        #endregion
+        #endregion 方法
 
         #region 私有函数
 
-        // 计算范围
+        //计算范围
         private void CalExtent()
         {
             double sMinX = double.MaxValue;
@@ -220,6 +217,6 @@ namespace MyMapObjects
             _MaxY = sMaxY;
         }
 
-        #endregion
+        #endregion 私有函数
     }
 }

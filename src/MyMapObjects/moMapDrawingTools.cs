@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
 namespace MyMapObjects
 {
+    // 绘图工具
     internal static class moMapDrawingTools
     {
         #region 程序集方法
+
         internal static void DrawGeometry(Graphics g, moRectangle extent, double mapScale, double dpm, double mpu, moGeometry geometry, moSymbol symbol)
         {
             if (extent == null)
@@ -33,11 +31,6 @@ namespace MyMapObjects
             {
                 moMultiPolygon sMultiPolygon = (moMultiPolygon)geometry;
                 DrawMultiPolygon(g, extent, mapScale, dpm, mpu, sMultiPolygon, symbol);
-            }
-            else if (geometry.GetType() == typeof(moPoints))
-            {
-                moPoints sPoints = (moPoints)geometry;
-                DrawPoints(g, extent, mapScale, dpm, mpu, sPoints, symbol);
             }
         }
 
@@ -118,7 +111,8 @@ namespace MyMapObjects
                     DrawPolygonBySimpleFill(g, extent, mapScale, dpm, mpu, points, sSymbol);
                 }
             }
-        }      
+        }
+
         //绘制复合折线
         internal static void DrawMultiPolyline(Graphics g, moRectangle extent, double mapScale, double dpm, double mpu, moMultiPolyline multiPolyline, moSymbol symbol)
         {
@@ -151,7 +145,8 @@ namespace MyMapObjects
             Pen sMaskPen = new Pen(textSymbol.MaskColor, (float)(2 * textSymbol.MaskWidth * dpm / 1000));
             float dpi = (float)(dpm * 0.0254);
             if (textSymbol.UseMask == true)
-            {   //需要描边
+            {
+                //需要描边
                 GraphicsPath sGraphicPath = new GraphicsPath();
                 sGraphicPath.AddString(labelText, textSymbol.Font.FontFamily, (Int32)textSymbol.Font.Style, textSymbol.Font.Size * dpi / 72, OriPoint, StringFormat.GenericDefault);
                 g.DrawPath(sMaskPen, sGraphicPath);
@@ -159,7 +154,8 @@ namespace MyMapObjects
                 sGraphicPath.Dispose();
             }
             else
-            {   //不需要描边
+            {
+                //不需要描边
                 g.DrawString(labelText, textSymbol.Font, sTextBrush, OriPoint);
             }
             sTextBrush.Dispose();
@@ -167,8 +163,7 @@ namespace MyMapObjects
             g.SmoothingMode = sSmoothMode;
         }
 
-
-        #endregion
+        #endregion 程序集方法
 
         #region 私有函数
 
@@ -375,15 +370,11 @@ namespace MyMapObjects
             }
         }
 
-        //绘制简单点符号   此处需要自己补全代码
+        //绘制简单点符号
         private static void DrawSimpleMarker(Graphics g, Rectangle drawingArea, double dpm, moSimpleMarkerSymbol symbol)
         {
             if (symbol.Style == moSimpleMarkerSymbolStyleConstant.Circle)
-            {
-                Pen sPen = new Pen(symbol.Color, 2);
-                g.DrawEllipse(sPen, drawingArea);
-                sPen.Dispose();
-            }
+            { throw new NotImplementedException(); }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.SolidCircle)
             {
                 SolidBrush sBrush = new SolidBrush(symbol.Color);
@@ -391,32 +382,11 @@ namespace MyMapObjects
                 sBrush.Dispose();
             }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.Triangle)
-            {
-                Pen sPen = new Pen(symbol.Color, 2);
-                Point point1 = new Point(drawingArea.X, drawingArea.Y + drawingArea.Height);
-                Point point2 = new Point(drawingArea.X + drawingArea.Width, drawingArea.Y + drawingArea.Height);
-                Point point3 = new Point(drawingArea.X + drawingArea.Width / 2, drawingArea.Y);
-                Point[] pntArr = { point1, point2, point3 };
-                g.DrawPolygon(sPen, pntArr);
-                sPen.Dispose();
-            }
+            { throw new NotImplementedException(); }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.SolidTriangle)
-            {
-                SolidBrush sBrush = new SolidBrush(symbol.Color);
-                Point point1 = new Point(drawingArea.X, drawingArea.Y + drawingArea.Height);
-                Point point2 = new Point(drawingArea.X + drawingArea.Width, drawingArea.Y + drawingArea.Height);
-                Point point3 = new Point(drawingArea.X + drawingArea.Width / 2, drawingArea.Y);
-                Point[] pntArr = { point1, point2, point3 };
-                g.FillPolygon(sBrush, pntArr);
-                sBrush.Dispose();
-            }
+            { throw new NotImplementedException(); }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.Square)
-            {
-                Pen sPen = new Pen(symbol.Color, 2);
-                Point point1 = new Point(drawingArea.X, drawingArea.Y);
-                g.DrawRectangle(sPen, point1.X, point1.Y, drawingArea.Width, drawingArea.Height);
-                sPen.Dispose();
-            }
+            { throw new NotImplementedException(); }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.SolidSquare)
             {
                 SolidBrush sBrush = new SolidBrush(symbol.Color);
@@ -424,27 +394,11 @@ namespace MyMapObjects
                 sBrush.Dispose();
             }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.CircleDot)
-            {
-                Pen sPen = new Pen(symbol.Color, 2);
-                SolidBrush sBrush = new SolidBrush(symbol.Color);
-                g.DrawEllipse(sPen, drawingArea);
-                Rectangle sRect = new Rectangle(drawingArea.X + drawingArea.Width / 2,
-                    drawingArea.Y + drawingArea.Height / 2, 2, 2);
-                g.FillRectangle(sBrush, sRect);
-                sPen.Dispose();
-                sBrush.Dispose();
-            }
+            { throw new NotImplementedException(); }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.CircleCircle)
-            {
-                Pen sPen = new Pen(symbol.Color, 2);
-                Rectangle sRect = new Rectangle(drawingArea.X + drawingArea.Width / 4,
-                    drawingArea.Y + drawingArea.Height / 4, drawingArea.Width / 2, drawingArea.Height / 2);
-                g.DrawEllipse(sPen, drawingArea);
-                g.DrawEllipse(sPen, sRect);
-                sPen.Dispose();
-            }
+            { throw new NotImplementedException(); }
         }
 
-        #endregion
+        #endregion 私有函数
     }
 }

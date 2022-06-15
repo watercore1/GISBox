@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyMapObjects
 {
@@ -13,24 +9,33 @@ namespace MyMapObjects
         //（2）仅实现了Lambert_Conformal_Conic_2SP投影下的地理坐标与投影坐标的互换
 
         #region 字段
+
         //常数
         private const double PI = Math.PI;              //圆周率
+
         private const double HALF_PI = PI * 0.5;        //1/2圆周率
         private const double TWO_PI = PI * 2.0;         //2倍圆周率
         private const double EPSILON = 0.0000000001;    //极小值
+
         //坐标系名称
         private string _ProjCSName = "";              //投影坐标系名称
+
         //地理坐标系参数
         private string _GeoCSName = "";             //地理坐标系名称
+
         private string _DatumName = "";             //大地基准面名称
         private string _SpheroidName = "";          //椭球体名称
+
         //Private _SpheroidType As SpheroidTypeConstant = SpheroidTypeConstant.Krassowsky_1940    ''椭球体类型
         private double _SemiMajor;                  //长半轴
+
         private double _SemiMinor;                  //短半轴
         private double _InverseFlattening;          //扁率倒数
         private string _PrimeMeridian = "";         //本初子午线
+
         //投影参数
         private moProjectionTypeConstant _ProjType; //投影类型
+
         private string _ProjName;                   //投影名称
         private double _CentralMeridian;            //中央经线（度）
         private double _OriginLatitude;             //原点纬度（度）
@@ -43,19 +48,24 @@ namespace MyMapObjects
 
         //通用参数
         private double a, b, alpha;                 //长半轴，短半轴，扁率
+
         private double e, e2, e4, e6, e8;           //第一偏心率，及第一偏心率的平方、四次方、六次方、八次方
         private double ep, ep2;                     //第二偏心率，及第二偏心率的平方
         private double lambda0;                     //中央经线（弧度）
         private double phi0, phi1, phi2;            // 原点纬线，第一、第二标准纬线（弧度）
+
         //特殊参数-墨卡托投影参数
         private double ak;                          //没有使用
+
         //特殊参数-Lambert和Albers投影参数
         private double n, f0, r0, af0, _1n, e_2;
+
         //特殊参数-高斯克吕格（横轴墨卡托）投影参数
         private double m0;                          //没有使用
+
         private double _e, _e2, _e3, _e4;           //没有使用
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
@@ -86,7 +96,7 @@ namespace MyMapObjects
             InitializeVars();
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
@@ -198,7 +208,7 @@ namespace MyMapObjects
             get { return _LinearUnit; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
@@ -298,7 +308,7 @@ namespace MyMapObjects
             return sDataOut;
         }
 
-        #endregion
+        #endregion 方法
 
         #region 私有函数
 
@@ -387,7 +397,6 @@ namespace MyMapObjects
             return (radians * 180.0) / PI;
         }
 
-
         //根据x的正负返回－1或者1
         private double Sign(double x)
         {
@@ -462,6 +471,6 @@ namespace MyMapObjects
             return sResult;
         }
 
-        #endregion
+        #endregion 私有函数
     }
 }

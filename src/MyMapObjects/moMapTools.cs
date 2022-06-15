@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyMapObjects
 {
+    // 算法工具类
     public static class moMapTools
     {
         #region 基本部分
@@ -286,12 +285,12 @@ namespace MyMapObjects
             return s;
         }
 
-        #endregion
+        #endregion 基本部分
 
         #region 算法部分
 
         /// <summary>
-        /// 指示在指定容限下，一个点是否位于另一个点上
+        /// 指示在指定容限下，一个点是否位于另一个点上，用来做点选点要素
         /// </summary>
         /// <param name="point"></param>
         /// <param name="pointOverlapped"></param>
@@ -306,7 +305,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 指示在指定容限下，指定点是否位于指定的折线上
+        /// 指示在指定容限下，指定点是否位于指定的折线上，用来做点选线要素
         /// </summary>
         /// <param name="point"></param>
         /// <param name="points"></param>
@@ -434,7 +433,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 指示指定复合多边形是否部分或完全位于指定矩形盒内
+        /// 指示指定复合多边形是否部分或完全位于指定矩形盒内，框选模式，要素全部或部分位于矩形盒内
         /// </summary>
         /// <param name="multipolygon"></param>
         /// <param name="box"></param>
@@ -603,6 +602,7 @@ namespace MyMapObjects
             moPoint sLabelPoint = new moPoint(sLabelPointX, sScanY);
             return sLabelPoint;
         }
-        #endregion
+
+        #endregion 算法部分
     }
 }

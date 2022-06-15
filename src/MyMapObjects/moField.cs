@@ -1,24 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyMapObjects
 {
-    /// <summary>
-    /// 字段
-    /// </summary>
+    // 字段
     public class moField
     {
         #region 字段
 
         private string _Name = ""; //字段名称
         private string _AliasName = ""; //字段别名
-        private moValueTypeConstant _ValueType = moValueTypeConstant.dInt32;
-        private Int32 _Length; //字段长度
+        private moValueTypeConstant _ValueType = moValueTypeConstant.dInt32; //字段类型
+        private Int32 _Length = 0; //字段长度，因为对于一些数据库系统，对字段长度有所限制，注意不是字段名的长度，是字段所储存的数据长度
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
@@ -28,14 +22,14 @@ namespace MyMapObjects
             _AliasName = name;
         }
 
-        public moField(string name,moValueTypeConstant valueType)
+        public moField(string name, moValueTypeConstant valueType)
         {
             _Name = name;
-            _AliasName= name;
+            _AliasName = name;
             _ValueType = valueType;
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
@@ -47,32 +41,23 @@ namespace MyMapObjects
             get { return _Name; }
         }
 
-        /// <summary>
-        /// 获取或设置字段别名
-        /// </summary>
         public string AliasName
         {
             get { return _AliasName; }
             set { _AliasName = value; }
         }
 
-        /// <summary>
-        /// 获取值类型
-        /// </summary>
         public moValueTypeConstant ValueType
         {
             get { return _ValueType; }
         }
 
-        /// <summary>
-        /// 获取字段长度
-        /// </summary>
         public Int32 Length
         {
             get { return _Length; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
@@ -88,6 +73,6 @@ namespace MyMapObjects
             return sField;
         }
 
-        #endregion
+        #endregion 方法
     }
 }

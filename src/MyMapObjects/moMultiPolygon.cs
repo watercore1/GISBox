@@ -1,23 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyMapObjects
 {
-    public class moMultiPolygon:moGeometry
+    // 复合多边形，或称多多边形
+    public class moMultiPolygon : moGeometry
     {
         #region 字段
 
-        private moParts _Parts; //部件集合
-        double _MinX = double.MaxValue;
-        double _MaxX = double.MinValue;
-        double _MinY = double.MaxValue;
-        double _MaxY = double.MinValue;
+        private moParts _Parts;
+        private double _MinX = double.MaxValue;
+        private double _MaxX = double.MinValue;
+        private double _MinY = double.MaxValue;
+        private double _MaxY = double.MinValue;
 
-
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
@@ -37,7 +33,7 @@ namespace MyMapObjects
             _Parts = parts;
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
@@ -58,47 +54,31 @@ namespace MyMapObjects
             get { return _MinX; }
         }
 
-        /// <summary>
-        /// 获取最大X坐标
-        /// </summary>
         public double MaxX
         {
             get { return _MaxX; }
         }
 
-        /// <summary>
-        /// 获取最小Y坐标
-        /// </summary>
         public double MinY
         {
             get { return _MinY; }
         }
 
-        /// <summary>
-        /// 获取最大Y坐标
-        /// </summary>
         public double MaxY
         {
             get { return _MaxY; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
-        /// <summary>
-        /// 获取最小绑定矩形
-        /// </summary>
-        /// <returns></returns>
         public moRectangle GetEnvelope()
         {
             moRectangle sRect = new moRectangle(_MinX, _MaxX, _MinY, _MaxY);
             return sRect;
         }
 
-        /// <summary>
-        /// 更新范围
-        /// </summary>
         public void UpdateExtent()
         {
             CalExtent();
@@ -119,8 +99,7 @@ namespace MyMapObjects
             return sMultiPolygon;
         }
 
-
-        #endregion
+        #endregion 方法
 
         #region 私有函数
 
@@ -148,6 +127,6 @@ namespace MyMapObjects
             _MaxY = sMaxY;
         }
 
-        #endregion
+        #endregion 私有函数
     }
 }

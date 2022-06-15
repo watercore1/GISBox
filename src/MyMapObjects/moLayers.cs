@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyMapObjects
 {
+    // 图层集合类，对图层进行管理
     public class moLayers
     {
         #region 字段
 
         private List<moMapLayer> _Layers = new List<moMapLayer>();
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
         public moLayers()
         { }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
@@ -31,7 +29,7 @@ namespace MyMapObjects
             get { return _Layers.Count; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
@@ -52,11 +50,6 @@ namespace MyMapObjects
         public void Add(moMapLayer mapLayer)
         {
             _Layers.Add(mapLayer);
-        }
-
-        public void Insert(Int32 index, moMapLayer mapLayer)
-        {
-            _Layers.Insert(index, mapLayer);
         }
 
         /// <summary>
@@ -102,6 +95,6 @@ namespace MyMapObjects
             }
         }
 
-        #endregion
+        #endregion 方法
     }
 }

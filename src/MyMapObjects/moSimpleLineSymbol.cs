@@ -1,40 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Security.Cryptography;
 
-
 namespace MyMapObjects
 {
-    public class moSimpleLineSymbol:moSymbol
+    // 简单线符号
+    public class moSimpleLineSymbol : moSymbol
     {
         #region 字段
 
-        private string _Label = "";     //符号标签
-        private bool _Visible = true;   //是否可见
+        private string _Label = ""; //符号标签
+        private bool _Visible = true; //是否可见
         private moSimpleLineSymbolStyleConstant _Style = moSimpleLineSymbolStyleConstant.Solid; //形状
-        private Color _Color = Color.LightPink;     //颜色
-        private double _Size = 0.35;    //宽度，单位毫米
+        private Color _Color = Color.LightPink; //颜色
+        private double _Size = 0.35; //宽度，单位毫米
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
         public moSimpleLineSymbol()
         {
-            CreateRandomColor();        //生成随机颜色
+            CreateRandomColor(); //生成随机颜色
         }
 
         public moSimpleLineSymbol(string label)
         {
             _Label = label;
-            CreateRandomColor();        //生成随机颜色
+            CreateRandomColor(); //生成随机颜色
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
@@ -91,12 +87,12 @@ namespace MyMapObjects
             set { _Size = value; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
         /// <summary>
-        /// 复制
+        /// 克隆
         /// </summary>
         public override moSymbol Clone()
         {
@@ -109,7 +105,7 @@ namespace MyMapObjects
             return sSymbol;
         }
 
-        #endregion
+        #endregion 方法
 
         #region 私有函数
 
@@ -144,6 +140,6 @@ namespace MyMapObjects
             _Color = Color.FromArgb(A, R, G, B);
         }
 
-        #endregion
+        #endregion 私有函数
     }
 }

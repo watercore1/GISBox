@@ -1,47 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyMapObjects
+﻿namespace MyMapObjects
 {
+    // 要素
     public class moFeature
     {
         #region 字段
 
-        private moGeometryTypeConstant _ShapeType = moGeometryTypeConstant.MultiPolygon; //几何类型
-        private moGeometry _Geometry; //几何图形
+        private moGeometryTypeConstant _ShapeType = moGeometryTypeConstant.MultiPolygon;
+        private moGeometry _Geometry;
         private moAttributes _Attributes; //属性集合
-        private moSymbol _Symbol; //为该要素配置的符号
+        private moSymbol _Symbol; //符号
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
-        public moFeature(moGeometryTypeConstant shapeType,moGeometry geometry,moAttributes attributes)
+        public moFeature(moGeometryTypeConstant shapeType, moGeometry geometry, moAttributes attributes)
         {
             _ShapeType = shapeType;
             _Geometry = geometry;
             _Attributes = attributes;
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
-        /// <summary>
-        /// 获取或设置几何类型
-        /// </summary>
         public moGeometryTypeConstant ShapeType
         {
             get { return _ShapeType; }
             set { _ShapeType = value; }
         }
 
-        /// <summary>
-        /// 获取或设置几何图形
-        /// </summary>
         public moGeometry Geometry
         {
             get { return _Geometry; }
@@ -58,49 +47,42 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 获取或设置要素符号
+        /// 获取或设置符号，只为了我们程序内部显示所用，外部不可访问
         /// </summary>
         internal moSymbol Symbol
         {
-            get { return _Symbol;}
-            set { _Symbol = value;}
+            get { return _Symbol; }
+            set { _Symbol = value; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
         /// <summary>
-        /// 获取要素的最小外包矩形
+        /// 获取要素的外包矩形（最小绑定矩形）
         /// </summary>
         /// <returns></returns>
         public moRectangle GetEnvelope()
         {
             moRectangle sRect = null;
+
             if (_ShapeType == moGeometryTypeConstant.Point)
             {
                 moPoint sPoint = (moPoint)_Geometry;
-                sRect = new moRectangle(sPoint.X, sPoint.X, sPoint.Y, sPoint.Y);
-
+                sRect = new moRectangle(sPoint.X, sPoint.X, sPoint.Y, sPoint.Y); //一个空矩形
+            }
+            else if (_ShapeType == moGeometryTypeConstant.MultiPolyline)
+            {
+                moMultiPolyline moMultiPolyline = (moMultiPolyline)_Geometry;
+                sRect = moMultiPolyline.GetEnvelope();
             }
             else
             {
-                if (_ShapeType == moGeometryTypeConstant.MultiPolyline)
-                {
-                    moMultiPolyline sMultiPolyline = (moMultiPolyline)_Geometry;
-                    sRect = sMultiPolyline.GetEnvelope();
-                }
-                else if (_ShapeType == moGeometryTypeConstant.MultiPolygon)
-                {
-                    moMultiPolygon sMultiPolygon = (moMultiPolygon)_Geometry;
-                    sRect = sMultiPolygon.GetEnvelope();
-                }
-                else
-                {
-                    moPoints sPoints = (moPoints)_Geometry;
-                    sRect = sPoints.GetEnvelope();
-                }
+                moMultiPolygon moMultiPolygon = (moMultiPolygon)_Geometry;
+                sRect = moMultiPolygon.GetEnvelope();
             }
+
             return sRect;
         }
 
@@ -132,6 +114,6 @@ namespace MyMapObjects
             return sFeature;
         }
 
-        #endregion
+        #endregion 方法
     }
 }

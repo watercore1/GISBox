@@ -1,28 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyMapObjects
+﻿namespace MyMapObjects
 {
-    /// <summary>
-    /// 简单渲染
-    /// </summary>
-    public class moSimpleRenderer:moRenderer
+    // 单一符号渲染，或称简单渲染
+    public class moSimpleRenderer : moRenderer
     {
         #region 字段
 
         private moSymbol _Symbol;
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
         public moSimpleRenderer()
-        { }
+        {
+        }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
@@ -37,7 +30,7 @@ namespace MyMapObjects
             set { _Symbol = value; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
@@ -45,14 +38,14 @@ namespace MyMapObjects
         /// 克隆
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public override moRenderer Clone()
         {
             moSimpleRenderer sRenderer = new moSimpleRenderer();
-            sRenderer.Symbol = _Symbol.Clone();
+            sRenderer._Symbol = Symbol.Clone();
+
             return sRenderer;
         }
 
-        #endregion
+        #endregion 方法
     }
 }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyMapObjects
+﻿namespace MyMapObjects
 {
+    // 所有的枚举
+
     /// <summary>
     /// 值类型常数
     /// </summary>
@@ -18,28 +14,40 @@ namespace MyMapObjects
         dDouble = 4,
         dText = 5
     }
+
+    /// <summary>
+    /// 符号类型常数
+    /// </summary>
     public enum moSymbolTypeConstant
     {
-        SimpleMarkerSymbol = 0,
-        SimpleLineSymbol = 1,
-        SimpleFillSymbol = 2
+        SimpleMarkerSymbol = 0, //简单点符号
+        SimpleLineSymbol = 1, //简单线符号
+        SimpleFillSymbol = 2 //简单面符号
     }
+
+    /// <summary>
+    /// 简单点符号形状常数
+    /// </summary>
     public enum moSimpleMarkerSymbolStyleConstant
     {
-        Circle = 0,
-        SolidCircle = 1,
+        Circle = 0, //圆
+        SolidCircle = 1, //实心圆
         Triangle = 2,
         SolidTriangle = 3,
         Square = 4,
         SolidSquare = 5,
-        CircleDot = 6,
-        CircleCircle = 7
+        CircleDot = 6, //圆加点
+        CircleCircle = 7 //同心圆
     }
+
+    /// <summary>
+    /// 简单线符号形状常数
+    /// </summary>
     public enum moSimpleLineSymbolStyleConstant
     {
-        Solid = 0,
-        Dash = 1,
-        Dot = 2,
+        Solid = 0, //实线
+        Dash = 1, //短棒线
+        Dot = 2, //点线
         DashDot = 3,
         DashDotDot = 4
     }
@@ -50,19 +58,18 @@ namespace MyMapObjects
     public enum moGeometryTypeConstant
     {
         Point = 0,
-        MultiPoint = 1,
-        MultiPolyline = 2,
-        MultiPolygon = 3,
+        MultiPolyline = 1,
+        MultiPolygon = 2
     }
 
     /// <summary>
-    /// 图层渲染类型常数
+    /// 渲染类型常数
     /// </summary>
     public enum moRendererTypeConstant
     {
-        Simple = 0,
-        UniqueValue = 1,
-        ClassBreaks = 2
+        Simple = 0, //单一符号渲染法，或称简单渲染法
+        UniqueValue = 1, //唯一值渲染法
+        ClassBreaks = 2 //分级渲染法
     }
 
     /// <summary>
@@ -82,7 +89,7 @@ namespace MyMapObjects
     }
 
     /// <summary>
-    /// 投影类型常数
+    /// 投影类型常数，可扩充，现仅实现Lambert_Conformal_Conic_2SP
     /// </summary>
     public enum moProjectionTypeConstant
     {

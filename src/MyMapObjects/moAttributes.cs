@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyMapObjects
 {
+    // 属性集合
     public class moAttributes
     {
         #region 字段
 
-        private List<object> _Attributes;
+        private List<object> _Attributes; //属性值集合
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
@@ -21,12 +19,9 @@ namespace MyMapObjects
             _Attributes = new List<object>();
         }
 
-        public Int32 Count
-        {
-            get { return _Attributes.Count; }
-        }
+        #endregion 构造函数
 
-        #endregion
+
 
         #region 方法
 
@@ -40,12 +35,7 @@ namespace MyMapObjects
             return _Attributes[index];
         }
 
-        /// <summary>
-        /// 设置指定索引号位置的元素
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="attributeValue"></param>
-        public void SetItem(Int32 index,object attributeValue)
+        public void SetItem(Int32 index, object attributeValue)
         {
             _Attributes[index] = attributeValue;
         }
@@ -70,7 +60,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 在末尾追加一个值
+        /// 在末尾添加一个值
         /// </summary>
         /// <param name="attributeValue"></param>
         public void Append(object attributeValue)
@@ -94,12 +84,10 @@ namespace MyMapObjects
         public moAttributes Clone()
         {
             moAttributes sAttributes = new moAttributes();
-            sAttributes._Attributes.AddRange(this._Attributes);
+            sAttributes._Attributes.AddRange(_Attributes);
             return sAttributes;
         }
 
-        #endregion
-
-
+        #endregion 方法
     }
 }

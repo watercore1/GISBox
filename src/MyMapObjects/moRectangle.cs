@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyMapObjects
+﻿namespace MyMapObjects
 {
-    public class moRectangle:moShape
+    // 自定义的矩形
+    public class moRectangle : moShape
     {
         #region 字段
 
-        private double _MinX,_MaxX,_MinY,_MaxY;
+        private double _MinX, _MinY, _MaxX, _MaxY;
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
-        public moRectangle(double minX,double maxX,double minY,double maxY)
+        public moRectangle(double minX, double maxX, double minY, double maxY)
         {
             _MinX = minX;
             _MaxX = maxX;
@@ -24,23 +19,16 @@ namespace MyMapObjects
             _MaxY = maxY;
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
+
         /// <summary>
         /// 获取最小X坐标
         /// </summary>
         public double MinX
         {
             get { return _MinX; }
-        }
-
-        /// <summary>
-        /// 获取最大X坐标
-        /// </summary>
-        public double MaxX
-        {
-            get { return _MaxX; }
         }
 
         /// <summary>
@@ -52,6 +40,14 @@ namespace MyMapObjects
         }
 
         /// <summary>
+        /// 获取最大X坐标
+        /// </summary>
+        public double MaxX
+        {
+            get { return _MaxX; }
+        }
+
+        /// <summary>
         /// 获取最大Y坐标
         /// </summary>
         public double MaxY
@@ -60,7 +56,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 获取宽度
+        /// 获取矩形宽度
         /// </summary>
         public double Width
         {
@@ -68,7 +64,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 获取高度
+        /// 获取矩形高度
         /// </summary>
         public double Height
         {
@@ -76,31 +72,13 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 指示是否为空矩形
+        /// 判断矩形是否为空矩形
         /// </summary>
         public bool IsEmpty
         {
-            get
-            {
-                if (_MaxX<=_MinX)
-                {
-                    return true;
-                }
-                else
-                {
-                    if(_MaxY<=_MinY)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
+            get { return _MaxX <= _MinX || _MaxY <= _MinY; }
         }
 
-        #endregion
-
+        #endregion 属性
     }
 }

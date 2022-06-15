@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MyMapObjects
 {
-    //图形闪烁控制器
+    //帮助用户实现图形的闪烁
     internal class moShapeFlashControler
     {
         #region 字段
 
         private moShape[] mShapes;      //图形集合
-        private Int32 mTimes;           //闪烁次数
+        private Int32 mTimes;           //闪烁次数，m表示模块级变量
         private Int32 mInterval;        //闪烁的时间间隔，单位毫秒
         private Int32 mSteps;           //时钟循环总次数=_Times*2
         private Int32 mCurStep;         //时钟循环当前次数
         private Timer mTimer = new Timer();     //时钟，用于时间控制
         private bool mIsInFlash = false;    //是否正处于闪烁控制中。
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
@@ -30,7 +26,7 @@ namespace MyMapObjects
             mTimer.Enabled = false;
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 方法
 
@@ -86,9 +82,10 @@ namespace MyMapObjects
             }
         }
 
-        #endregion
+        #endregion 方法
 
         #region 时钟事件处理
+
         private void MTimer_Tick(object sender, EventArgs e)
         {
             //根据当前步数的奇偶性，判断属于什么阶段
@@ -116,18 +113,22 @@ namespace MyMapObjects
             }
         }
 
-        #endregion
+        #endregion 时钟事件处理
 
         #region 事件
 
+        //只通知地图控件需要绘图或清图
+
         //需要清除正在闪烁的图形
         internal delegate void NeedClearFlashShapesHandle(object sender);
+
         internal event NeedClearFlashShapesHandle NeedClearFlashShapes;
 
         //需要绘制正在闪烁的图形
         internal delegate void NeedDrawFlashShapesHandle(object sender, moShape[] shapes);
+
         internal event NeedDrawFlashShapesHandle NeedDrawFlashShapes;
 
-        #endregion
+        #endregion 事件
     }
 }

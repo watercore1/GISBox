@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyMapObjects
 {
-    //部件集合对象
+    // 部件集
     public class moParts
     {
         #region 字段
 
-        private List<moPoints> _Parts;
+        private List<moPoints> _Parts; //单个的Part其实就是Points
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
@@ -22,31 +19,31 @@ namespace MyMapObjects
             _Parts = new List<moPoints>();
         }
 
+        /// <summary>
+        /// 有参构造函数
+        /// </summary>
+        /// <param name="parts">点集的数组</param>
         public moParts(moPoints[] parts)
         {
             _Parts = new List<moPoints>();
             _Parts.AddRange(parts);
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
-        /// <summary>
-        /// 获取部件数目
-        /// </summary>
-        /// <returns></returns>
         public Int32 Count
         {
             get { return _Parts.Count; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
         /// <summary>
-        /// 获取指定索引的部件
+        /// 获取指定索引号的部件
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -56,7 +53,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 设置指定索引位置的部件
+        /// 设置指定索引号的部件
         /// </summary>
         /// <param name="index"></param>
         /// <param name="part"></param>
@@ -83,7 +80,8 @@ namespace MyMapObjects
             _Parts.AddRange(parts);
         }
 
-        //其他的增加、插入、删除的接口不再编写，根据需要自行添加
+        //其他的增加、插入、删除的接口不再编写
+        //根据需要自行添加
 
         /// <summary>
         /// 克隆
@@ -101,6 +99,6 @@ namespace MyMapObjects
             return sParts;
         }
 
-        #endregion
+        #endregion 方法
     }
 }

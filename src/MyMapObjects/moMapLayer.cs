@@ -1,33 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace MyMapObjects
 {
-    /// <summary>
-    /// 矢量图层类型
-    /// </summary>
+    // 矢量图层
     public class moMapLayer
     {
         #region 字段
 
-        private moGeometryTypeConstant _ShapeType = moGeometryTypeConstant.Point;//要素几何类型
-        private string _Name = "Untitled";//图层名称
-        private bool _Visible = true;//是否可见
-        private bool _Selectable = true;//是否可选择
-        private string _Description = "";//描述
-        private bool _IsDirty = false;//是否被修改过
-        private moFields _AttributeFields = new moFields();//字段集合
-        private moFeatures _Features = new moFeatures();//要素集合
-        private moFeatures _SelectedFeatures = new moFeatures();//选择要素集合
-        private moRectangle _Extent = new moRectangle(double.MaxValue, double.MinValue, double.MaxValue, double.MinValue);//图层范围
-        private moRenderer _Renderer;//图层渲染对象
-        private moLabelRenderer _LabelRenderer;//注记渲染对象
-    
-        #endregion
+        private moGeometryTypeConstant _ShapeType = moGeometryTypeConstant.Point; //要素几何类型
+        private string _Name = "Untitled"; //图层名称
+        private bool _Visible = true; //是否显示当前图层
+        private bool _Selectable = true; //当前图层是否可以被选择
+        private string _Description = ""; //描述
+        private bool _IsDirty = false; //是否被修改过
+
+        private moFields _AttributeFields = new moFields(); //字段集合
+        private moFeatures _Features = new moFeatures(); //要素集合
+        private moFeatures _SelectedFeatures = new moFeatures(); //选中的要素的集合
+        private moRectangle _Extent = new moRectangle(double.MaxValue, double.MinValue, double.MaxValue, double.MinValue); //图层范围
+        private moRenderer _Renderer; //图层渲染对象
+        private moLabelRenderer _LabelRenderer; //注记渲染对象
+
+        #endregion 字段
 
         #region 构造函数
 
@@ -36,29 +32,27 @@ namespace MyMapObjects
             Initialize();
         }
 
-        public moMapLayer(string name,moGeometryTypeConstant shapeType)
+        public moMapLayer(string name, moGeometryTypeConstant shapeType)
         {
             _Name = name;
             _ShapeType = shapeType;
+
             Initialize();
         }
 
-        public moMapLayer(string name,moGeometryTypeConstant shapeTpye,moFields attributes)
+        public moMapLayer(string name, moGeometryTypeConstant shapeType, moFields attributesFields)
         {
             _Name = name;
-            _ShapeType = shapeTpye;
-            _AttributeFields = attributes;
+            _ShapeType = shapeType;
+            _AttributeFields = attributesFields;
+
             Initialize();
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
-        public List<Int32> SelectIndex
-        {
-            get { return GetSelectIndex(); }
-        }
         /// <summary>
         /// 获取图层的要素几何类型
         /// </summary>
@@ -120,7 +114,6 @@ namespace MyMapObjects
             get { return _Extent; }
         }
 
-
         /// <summary>
         /// 获取或设置要素集合
         /// </summary>
@@ -169,9 +162,7 @@ namespace MyMapObjects
             set { _LabelRenderer = value; }
         }
 
-
-
-        #endregion
+        #endregion 属性
 
         #region 方法
 
@@ -191,58 +182,44 @@ namespace MyMapObjects
             _SelectedFeatures.Clear();
         }
 
-        public void RemoveSelection()
-        {
-            MyMapObjects.moFeatures sFeatures = new MyMapObjects.moFeatures();
-            for(Int32 i = 0; i < _Features.Count; ++i)
-            {
-                if (SelectIndex.Contains(i) == false)
-                {
-                    sFeatures.Add(_Features.GetItem(i));
-                }
-            }
-            _Features = sFeatures;
-            _SelectedFeatures.Clear();
-            UpdateExtent();
-        }
-
         /// <summary>
         /// 根据矩形盒执行搜索
         /// </summary>
         /// <param name="selectingBox"></param>
         /// <param name="tolerance"></param>
-        /// <returns></returns>
+        /// <returns>返回一个要素集合</returns>
         public moFeatures SearchByBox(moRectangle selectingBox, double tolerance)
         {
-            //说明:出于简化，仅考虑一种选择模式
+            //说明：出于简化，我们只考虑一种选择模式：要素或说图形部分或全部位于矩形盒内
             moFeatures sSelection = null;
             if (selectingBox.Width == 0 && selectingBox.Height == 0)
             {
-                //按点选
+                //按点来选择
                 moPoint sSelectingPoint = new moPoint(selectingBox.MinX, selectingBox.MinY);
                 sSelection = SearchFeaturesByPoint(sSelectingPoint, tolerance);
             }
             else
             {
-                //按框选
+                //按框来选择
                 sSelection = SearchFeaturesByBox(selectingBox);
             }
+
             return sSelection;
         }
 
         /// <summary>
-        /// 根据指定方法执行选择(如新建、求并、求交、求差)
+        /// 根据指定方法执行选择（如新建、求并、求交、求差）
         /// </summary>
         /// <param name="features"></param>
         /// <param name="selectMethod"></param>
-        public void ExecuteSelect(moFeatures features,Int32 selectMethod)
+        public void ExecuteSelect(moFeatures features, Int32 selectMethod)
         {
-            //说明，此处仅新建集合
+            //出于简化，此处只实现新建集合 selectMethod也不做成枚举了
             if (selectMethod == 0)
             {
                 _SelectedFeatures.Clear();
                 Int32 sFeatureCount = features.Count;
-                for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+                for (int i = 0; i < sFeatureCount; i++)
                 {
                     _SelectedFeatures.Add(features.GetItem(i));
                 }
@@ -263,17 +240,25 @@ namespace MyMapObjects
             return sFeature;
         }
 
-        //绘制指定范围内的所有要素
+        /// <summary>
+        /// 绘制指定范围内的所有要素，以后将会被moControl调用
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="extent">范围，只绘制这个范围内的要素</param>
+        /// <param name="mapScale">当前比例尺</param>
+        /// <param name="dpm">分辨率相关：一米代表多少像素</param>
+        /// <param name="mpu">一个坐标单位代表多少米</param>
         internal void DrawFeatures(Graphics g, moRectangle extent, double mapScale, double dpm, double mpu)
         {
-            //(1)为所有要素配置符号
+            // (1) 为所有要素配置符号
             SetFeatureSymbols();
-            //(2)判断是否位于绘制范围内，如是，则绘制
+
+            // (2) 判断是否位于绘制范围，如是，则绘制
             Int32 sFeatureCount = _Features.Count;
-            for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+            for (int i = 0; i < sFeatureCount; i++)
             {
                 moFeature sFeature = _Features.GetItem(i);
-                if(IsFeatureInExtent(sFeature,extent) == true)
+                if (IsFeatureInExtent(sFeature, extent) == true)
                 {
                     moGeometry sGeometry = _Features.GetItem(i).Geometry;
                     moSymbol sSymbol = _Features.GetItem(i).Symbol;
@@ -282,12 +267,20 @@ namespace MyMapObjects
             }
         }
 
-        //绘制指定范围内的所有选择要素
-        internal void DrawSelectedFeatures(Graphics g, moRectangle extent, double mapScale, double dpm, double mpu,moSymbol symbol)
+        /// <summary>
+        /// 绘制选中的要素
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="extent">范围，只绘制这个范围内的要素</param>
+        /// <param name="mapScale">>当前比例尺</param>
+        /// <param name="dpm">分辨率相关：一米代表多少像素</param>
+        /// <param name="mpu">一个坐标单位代表多少米</param>
+        /// <param name="symbol">用这个统一的符号绘制要素</param>
+        internal void DrawSelectedFeatures(Graphics g, moRectangle extent, double mapScale, double dpm, double mpu, moSymbol symbol)
         {
-            //判断是否位于绘制范围内
+            //判断是否位于绘制范围内，如是，则绘制
             Int32 sFeatureCount = _SelectedFeatures.Count;
-            for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+            for (int i = 0; i < sFeatureCount; i++)
             {
                 moFeature sFeature = _SelectedFeatures.GetItem(i);
                 if (IsFeatureInExtent(sFeature, extent) == true)
@@ -298,7 +291,16 @@ namespace MyMapObjects
             }
         }
 
-        internal void DrawLabels(Graphics g, moRectangle extent, double mapScale, double dpm, double mpu,List<RectangleF>placedLabelExtents)
+        /// <summary>
+        /// 绘制指定范围内的所有要素的注记
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="extent"></param>
+        /// <param name="mapScale"></param>
+        /// <param name="dpm">屏幕分辨率：一米代表多少像素</param>
+        /// <param name="mpu">一个坐标单位代表多少米</param>
+        /// <param name="placedLabelExtents">已经配置的所有注记，它们在屏幕上的范围的集合，用来做冲突检测</param>
+        internal void DrawLabels(Graphics g, moRectangle extent, double mapScale, double dpm, double mpu, List<RectangleF> placedLabelExtents)
         {
             if (_LabelRenderer == null)
                 return;
@@ -313,10 +315,10 @@ namespace MyMapObjects
                 moFeature sFeature = _Features.GetItem(i);
                 if (IsFeatureInExtent(sFeature, extent) == false)
                 {   //要素不位于显示范围内，不显示注记
-                    continue;
+                    continue; //进入到下一个要素
                 }
                 if (sFeature.Symbol == null)
-                {   //要素没有配置符号，不显示注记
+                {   //要素没有配置符号，不显示注记，要素都不显示，注记也就没有配置的意义了
                     continue;
                 }
                 if (IsFeatureSymbolVisible(sFeature) == false)
@@ -328,7 +330,7 @@ namespace MyMapObjects
                 {   //注记文本为空，不显示注记
                     continue;
                 }
-                //根据要素几何类型采用相应的配置方案
+                //根据要素几何类型采用相应的配置方案，这里采用默认的配置方案
                 if (sFeature.ShapeType == moGeometryTypeConstant.Point)
                 {   //点要素，取点的右上为定位点，但要考虑点符号的大小
                     //（1）复制符号
@@ -351,33 +353,6 @@ namespace MyMapObjects
                         moMapDrawingTools.DrawLabel(g, dpm, sLabelExtent.Location, sLabelText, sTextSymbol);
                         placedLabelExtents.Add(sLabelExtent);
                     }
-                }
-                else if (sFeature.ShapeType == moGeometryTypeConstant.MultiPoint)
-                {
-                    //（1）复制符号
-                    moTextSymbol sTextSymbol;  //最终绘制注记所采用的符号
-                    sTextSymbol = _LabelRenderer.TextSymbol.Clone();    //复制符号
-                    //（2）计算定位点并设置符号
-                    PointF sSrcLabelPoint;   //定位点的屏幕坐标
-                    moPoints sPoints = (moPoints)sFeature.Geometry;
-                    for (Int32 m = 0; m < sPoints.Count; m++)
-                    {
-                        PointF sSrcPoint = FromMapPoint(extent, mapScale, dpm, mpu, sPoints.GetItem(m));    //点要素的屏幕坐标
-                        moSimpleMarkerSymbol sMarkerSymbol = (moSimpleMarkerSymbol)sFeature.Symbol;
-                        float sSymbolSize = (float)(sMarkerSymbol.Size / 1000 * dpm);        //符号的屏幕尺寸
-                                                                                             //右上方并设置符号
-                        sSrcLabelPoint = new PointF(sSrcPoint.X + sSymbolSize / 2, sSrcPoint.Y - sSymbolSize / 2);
-                        sTextSymbol.Alignment = moTextSymbolAlignmentConstant.BottomLeft;
-                        //（3）计算注记的屏幕范围矩形
-                        RectangleF sLabelExtent = GetLabelExtent(g, dpm, sSrcLabelPoint, sLabelText, sTextSymbol);
-                        //（4）冲突检测
-                        if (HasConflict(sLabelExtent, placedLabelExtents) == false)
-                        {   //没有冲突，则绘制并将当前注记范围矩形加入placedLabelExtents
-                            moMapDrawingTools.DrawLabel(g, dpm, sLabelExtent.Location, sLabelText, sTextSymbol);
-                            placedLabelExtents.Add(sLabelExtent);
-                        }
-
-                    }                   
                 }
                 else if (sFeature.ShapeType == moGeometryTypeConstant.MultiPolyline)
                 {   //线要素，为每个部分的中点配置一个注记
@@ -423,50 +398,47 @@ namespace MyMapObjects
             }
         }
 
-        #endregion
+        #endregion 方法
 
         #region 私有函数
 
         private void Initialize()
         {
-            //(1)加入_AttributesFields对象的事件
-            _AttributeFields.FieldAppended += _AttributeFields_FieldAppended;
-            _AttributeFields.FieldRemoved += _AttributeFields_FieldRemoved;
-            //(2)初始化图层渲染
-            InitializeRenderer();
+            // (1) 加入_AttributesFields对象的事件 设置侦听
+            _AttributeFields.FieldAppended += _AttributesFields_FieldAppended;
+            _AttributeFields.FieldRemoved += _AttributesFields_FieldRemoved;
 
+            // (2) 初始化图层渲染，即当一个图层被new出来，则一定要显示，所以我们必须立即为它配置渲染，默认为简单渲染
+            InitializeRenderer();
         }
 
-        //初始化图层渲染
+        /// <summary>
+        /// 初始化图层渲染
+        /// </summary>
         private void InitializeRenderer()
         {
             moSimpleRenderer sRenderer = new moSimpleRenderer();
+
             if (_ShapeType == moGeometryTypeConstant.Point)
             {
                 sRenderer.Symbol = new moSimpleMarkerSymbol();
                 _Renderer = sRenderer;
             }
+            else if (_ShapeType == moGeometryTypeConstant.MultiPolyline)
+            {
+                sRenderer.Symbol = new moSimpleLineSymbol();
+                _Renderer = sRenderer;
+            }
             else
             {
-                if (_ShapeType == moGeometryTypeConstant.MultiPolyline)
-                {
-                    sRenderer.Symbol = new moSimpleLineSymbol();
-                    _Renderer = sRenderer;
-                }
-                else if (_ShapeType == moGeometryTypeConstant.MultiPolygon)
-                {
-                    sRenderer.Symbol = new moSimpleFillSymbol();
-                    _Renderer = sRenderer;
-                }
-                else if (_ShapeType == moGeometryTypeConstant.MultiPoint)
-                {
-                    sRenderer.Symbol = new moSimpleMarkerSymbol();
-                    _Renderer = sRenderer;
-                }
+                sRenderer.Symbol = new moSimpleFillSymbol();
+                _Renderer = sRenderer;
             }
         }
 
-        //计算图层范围
+        /// <summary>
+        /// 计算图层范围
+        /// </summary>
         private void CalExtent()
         {
             double sMinX = Double.MaxValue;
@@ -489,7 +461,12 @@ namespace MyMapObjects
             _Extent = new moRectangle(sMinX, sMaxX, sMinY, sMaxY);
         }
 
-        //根据点搜索要素
+        /// <summary>
+        /// 根据点搜索要素
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
         private moFeatures SearchFeaturesByPoint(moPoint point, double tolerance)
         {
             moFeatures sSelectedFeatures = new moFeatures();
@@ -520,23 +497,15 @@ namespace MyMapObjects
                         sSelectedFeatures.Add(_Features.GetItem(i));
                     }
                 }
-                else if (_ShapeType == moGeometryTypeConstant.MultiPoint)
-                {
-                    moPoints sPoints = (moPoints)_Features.GetItem(i).Geometry;
-                    for(Int32 j = 0; j < sPoints.Count; j++)
-                    {
-                        if (moMapTools.IsPointOnPoint(point, sPoints.GetItem(j), tolerance) == true)
-                        {
-                            sSelectedFeatures.Add(_Features.GetItem(i));
-                            break;
-                        }
-                    }
-                }
             }
             return sSelectedFeatures;
         }
 
-        //根据矩形盒搜索要素
+        /// <summary>
+        /// 根据矩形盒搜索要素
+        /// </summary>
+        /// <param name="selectingBox"></param>
+        /// <returns></returns>
         private moFeatures SearchFeaturesByBox(moRectangle selectingBox)
         {
             moFeatures sSelectedFeatures = new moFeatures();
@@ -567,24 +536,14 @@ namespace MyMapObjects
                         sSelectedFeatures.Add(_Features.GetItem(i));
                     }
                 }
-                else if (_ShapeType == moGeometryTypeConstant.MultiPoint)
-                {
-                    moPoints sPoints = (moPoints)_Features.GetItem(i).Geometry;
-                    for(Int32 j = 0; j < sPoints.Count; j++)
-                    {
-                        if (moMapTools.IsPointWithinBox(sPoints.GetItem(j), selectingBox) == true)
-                        {
-                            sSelectedFeatures.Add(_Features.GetItem(i));
-                            break;
-                        }
-                    }
-                    
-                }
             }
             return sSelectedFeatures;
         }
 
-        //新建一个要素框架
+        /// <summary>
+        /// 新建一个要素框架，方便应用程序，同时维护逻辑一致性，即生成的新要素在一些字段上必须与已有的一致
+        /// </summary>
+        /// <returns></returns>
         private moFeature CreateNewFeature()
         {
             moAttributes sAttributes = new moAttributes();
@@ -595,51 +554,16 @@ namespace MyMapObjects
                 if (sField.ValueType == moValueTypeConstant.dInt16)
                 {
                     Int16 sValue = 0;
-                    if (sField.Name == _AttributeFields.PrimaryField)
-                    {
-                        for (Int32 j = 0; j < _Features.Count; j++)
-                        {
-                            Int16 temp = (Int16)_Features.GetItem(j).Attributes.GetItem(i);
-                            if (temp > sValue)
-                            {
-                                sValue = temp;
-                            }
-                        }
-                    }
-                    sValue += 1;
                     sAttributes.Append(sValue);
                 }
                 else if (sField.ValueType == moValueTypeConstant.dInt32)
                 {
                     Int32 sValue = 0;
-                    if(sField.Name == _AttributeFields.PrimaryField)
-                    {
-                        for(Int32 j = 0; j < _Features.Count; j++)
-                        {
-                            Int32 temp = (Int32)_Features.GetItem(j).Attributes.GetItem(i);
-                            if (temp >= sValue)
-                            {
-                                sValue = temp + 1;
-                            }
-                        }
-                    }
                     sAttributes.Append(sValue);
                 }
                 else if (sField.ValueType == moValueTypeConstant.dInt64)
                 {
                     Int64 sValue = 0;
-                    if (sField.Name == _AttributeFields.PrimaryField)
-                    {
-                        for (Int32 j = 0; j < _Features.Count; j++)
-                        {
-                            Int64 temp = (Int64)_Features.GetItem(j).Attributes.GetItem(i);
-                            if (temp > sValue)
-                            {
-                                sValue = temp;
-                            }
-                        }
-                    }
-                    sValue += 1;
                     sAttributes.Append(sValue);
                 }
                 else if (sField.ValueType == moValueTypeConstant.dSingle)
@@ -666,7 +590,9 @@ namespace MyMapObjects
             return sFeature;
         }
 
-        //为所有要素配置符号
+        /// <summary>
+        /// 为所有要素配置符号
+        /// </summary>
         private void SetFeatureSymbols()
         {
             Int32 sFeatureCount = _Features.Count;
@@ -736,7 +662,11 @@ namespace MyMapObjects
             }
         }
 
-        //获取一个值的字符串形式
+        /// <summary>
+        /// 获取一个属性值的字符串形式
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         private string GetValueString(object value)
         {
             if (value == null)
@@ -745,7 +675,12 @@ namespace MyMapObjects
                 return value.ToString();
         }
 
-        //指定要素是否位于指定范围，这里仅计算要素外包矩形和范围矩形是否相交
+        /// <summary>
+        /// 判断要素是否在范围内，这里仅计算要素的外包矩形和范围矩形是否相交
+        /// </summary>
+        /// <param name="feature"></param>
+        /// <param name="extent"></param>
+        /// <returns></returns>
         private bool IsFeatureInExtent(moFeature feature, moRectangle extent)
         {
             moRectangle sRect = feature.GetEnvelope();
@@ -757,7 +692,7 @@ namespace MyMapObjects
             { return true; }
         }
 
-        //要素的符号是否可见
+        //指定要素的符号是否可见
         private bool IsFeatureSymbolVisible(moFeature feature)
         {
             moSymbol sSymbol = feature.Symbol;
@@ -790,7 +725,15 @@ namespace MyMapObjects
             return sPoint;
         }
 
-        //获取注记的屏幕范围
+        /// <summary>
+        /// 获取指定注记的屏幕范围矩形
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="dmp"></param>
+        /// <param name="labelPoint">注记的定位点</param>
+        /// <param name="labelText">注记的文本</param>
+        /// <param name="textSymbol">注记的符号</param>
+        /// <returns></returns>
         private RectangleF GetLabelExtent(Graphics g, double dpm, PointF labelPoint, string labelText, moTextSymbol textSymbol)
         {
             //（1）测量注记大小
@@ -848,11 +791,13 @@ namespace MyMapObjects
             }
             else
             { throw new Exception("Invalid text symbol alignment!"); }
+
             //（4）返回注记范围矩形
             RectangleF sRect = new RectangleF(sTopLeftPoint, sLabelSize);
             return sRect;
         }
 
+        //指定矩形是否与指定矩形集合内的所有矩形存在相交
         private bool HasConflict(RectangleF labelExtent, List<RectangleF> placedLabelExtents)
         {
             Int32 sCount = placedLabelExtents.Count;
@@ -870,23 +815,16 @@ namespace MyMapObjects
                 else
                 { return true; }
             }
+
             return false;
         }
 
-        //有字段被删除
-        private void _AttributeFields_FieldRemoved(object sender, int fieldIndex, moField fieldRemoved)
-        {
-            //删除所有要素对应字段的属性值
-            Int32 sFeatureCount = _Features.Count;
-            for (Int32 i = 0;i<= sFeatureCount-1;i++)
-            {
-                moFeature sFeature = _Features.GetItem(i);
-                sFeature.Attributes.RemoveAt(fieldIndex);
-            }
-        }
-
-        //有字段被加入
-        private void _AttributeFields_FieldAppended(object sender, moField fieldAppended)
+        /// <summary>
+        /// 有字段被加入
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="fieldAppended"></param>
+        private void _AttributesFields_FieldAppended(object sender, moField fieldAppended)
         {
             //给所有要素增加一个属性值
             Int32 sFeatureCount = _Features.Count;
@@ -930,23 +868,22 @@ namespace MyMapObjects
             }
         }
 
-        private List<Int32> GetSelectIndex()
+        /// <summary>
+        /// 有字段被删除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="fieldIndex"></param>
+        /// <param name="fieldRemoved"></param>
+        private void _AttributesFields_FieldRemoved(object sender, int fieldIndex, moField fieldRemoved)
         {
-            List<Int32> selectIndex = new List<Int32>();
-            for(Int32 i = 0; i < _SelectedFeatures.Count; ++i)
+            Int32 sFeatureCount = _Features.Count;
+            for (int i = 0; i < sFeatureCount; i++)
             {
-                for(Int32 j = 0; j < _Features.Count; ++j)
-                {
-                    if (_Features.GetItem(j) == _SelectedFeatures.GetItem(i))
-                    {
-                        selectIndex.Add(j);
-                        break;
-                    }
-                }
+                moFeature sFeature = _Features.GetItem(i);
+                sFeature.Attributes.RemoveAt(fieldIndex);
             }
-            return selectIndex;
         }
 
-        #endregion
+        #endregion 私有函数
     }
 }

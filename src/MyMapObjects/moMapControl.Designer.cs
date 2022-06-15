@@ -1,4 +1,5 @@
-﻿namespace MyMapObjects
+﻿
+namespace MyMapObjects
 {
     partial class moMapControl
     {
@@ -32,15 +33,12 @@
             // 
             // moMapControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.DoubleBuffered = true;
             this.Name = "moMapControl";
             this.Size = new System.Drawing.Size(146, 146);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.moMapControl_Paint);
-            this.Resize += new System.EventHandler(this.moMapControl_Resize);
             this.ResumeLayout(false);
 
         }

@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyMapObjects
+﻿namespace MyMapObjects
 {
+    // 注记渲染类型（注记配置规则描述）
     public class moLabelRenderer
     {
         #region 字段
 
-        private bool _LabelFeatures = false;       //是否标注
-        private moTextSymbol _TextSymbol = new moTextSymbol();      //文本符号
-        private string _Field = "";                 //注记字段
+        private bool _LabelFeatures = false; //是否标注
+        private moTextSymbol _TextSymbol = new moTextSymbol(); //文本符号
+        private string _Field = ""; //注记字段
 
-        #endregion
+        #endregion 字段
 
         #region 属性
 
@@ -45,6 +40,6 @@ namespace MyMapObjects
             set { _Field = value; }
         }
 
-        #endregion
+        #endregion 属性
     }
 }

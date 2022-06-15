@@ -1,67 +1,91 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MyMapObjects
 {
     public partial class moMapControl : UserControl
     {
-
         #region 字段
 
-        //(1)设计时属性变量
-        private Color _SelectionColor = Color.Cyan;//绘制选择图形的颜色
-        private Color _FlashColor = Color.Green;//绘制闪烁图形的颜色
-        //(2)运行时属性变量
-        private moLayers _Layers = new moLayers();//图层集合
-        private moProjectionCS _ProjectionCS;//坐标系统
-        //(3)模块级变量
-        private moMapDrawingReference mMapDrawingReference;//地图绘制参考对象
-        private Bitmap mBufferMap1 = new Bitmap(10, 10);//缓冲位图，仅含所有要素（含注记）
-        private Bitmap mBufferMap2 = new Bitmap(10, 10);//缓冲位图，含所有要素（含注记）及跟踪图形
-        private Bitmap mBufferMap3 = new Bitmap(10, 10);//在屏幕上移动BufferMap2时，先将2绘制到3上，再将3绘制到屏幕上，以避免清除屏幕带来的闪烁
-        private moSimpleMarkerSymbol mSelectedPointSymbol;//选择点符号
-        private moSimpleLineSymbol mSelectedLineSymbol;//选择线符号
-        private moSimpleFillSymbol mSelectedFillSymbol;//选择面符号
-        private moShapeFlashControler mFlashControl = new moShapeFlashControler();//闪烁控制器
-        private moSimpleMarkerSymbol mFlashPointSymbol;//闪烁点符号
-        private moSimpleLineSymbol mFlashLineSymbol;//闪烁线符号
-        private moSimpleFillSymbol mFlashFillSymbol;//闪烁面符号
+        // (1) 设计时属性变量
+        //绘制选择图形的颜色
+        private Color _SelectionColor = Color.Cyan;
 
-        #endregion
+        //绘制闪烁图形的颜色
+        private Color _FlashColor = Color.Green;
+
+        // (2) 运行时属性变量
+        //图层集合
+        private moLayers _Layers = new moLayers();
+
+        //坐标系统
+        private moProjectionCS _ProjectionCS;
+
+        // (3) 模块级变量
+        //地图绘制参考对象
+        private moMapDrawingReference mMapDrawingReference;
+
+        //缓冲位图，仅含所有要素（含注记）
+        private Bitmap mBufferMap1 = new Bitmap(10, 10);
+
+        //缓冲位图，仅含所有要素（含注记）及跟踪图形
+        private Bitmap mBufferMap2 = new Bitmap(10, 10);
+
+        //在屏幕上移动BufferMap2时，先将2绘制到3上，再将3绘制到屏幕上，以避免清除屏幕带来的闪烁
+        private Bitmap mBufferMap3 = new Bitmap(10, 10);
+
+        //选择点符号
+        private moSimpleMarkerSymbol mSelectedPointSymbol;
+
+        //选择线符号
+        private moSimpleLineSymbol mSelectedLineSymbol;
+
+        //选择面符号
+        private moSimpleFillSymbol mSelectedFillSymbol;
+
+        //闪烁控制器
+        private moShapeFlashControler mFlashControl = new moShapeFlashControler();
+
+        //闪烁点符号
+        private moSimpleMarkerSymbol mFlashPointSymbol;
+
+        //闪烁线符号
+        private moSimpleLineSymbol mFlashLineSymbol;
+
+        //闪烁面符号
+        private moSimpleFillSymbol mFlashFillSymbol;
+
+        #endregion 字段
 
         #region 构造函数
+
         public moMapControl()
         {
             InitializeComponent();
             //创建默认投影坐标系统
             CreateDefaultProjectionCS();
-            //新建地图绘制参考对象
+            //新建地图绘制参考对象，解决地图坐标与屏幕坐标之间的换算问题
             CreateMapDrawingReference();
             //调整缓冲位图的尺寸
             ResizeBufferMap();
             //初始化选择和闪烁图形的符号
             InitializeSymbols();
             //加入闪烁控制器事件
-            mFlashControl.NeedClearFlashShapes += mFlashControl_NeedClearFlashShapes;
-            mFlashControl.NeedDrawFlashShapes += mFlashControl_NeedDrawFlashShapes;
+            mFlashControl.NeedClearFlashShapes += MFlashControl_NeedClearFlashShapes;
+            mFlashControl.NeedDrawFlashShapes += MFlashControl_NeedDrawFlashShapes;
         }
 
-
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
         /// <summary>
-        /// 获取或设置绘制选择图形的颜色
+        /// 获取或设置绘制选择要素的颜色
         /// </summary>
-        [Browsable(true),Description("获取或设置绘制选择图形的颜色")]
+        [Browsable(true), Description("获取或设置绘制选择要素的颜色")]
         public Color SelectionColor
         {
             get { return _SelectionColor; }
@@ -78,31 +102,26 @@ namespace MyMapObjects
             set { _FlashColor = value; }
         }
 
-        /// <summary>
-        /// 获取或设置投影坐标系统
-        /// </summary>
         [Browsable(false)]
         public moProjectionCS ProjectionCS
         {
             get { return _ProjectionCS; }
-            set 
+            set
             {
                 _ProjectionCS = value;
                 mMapDrawingReference.mpu = _ProjectionCS.ToMeters(1);
             }
         }
 
-        /// <summary>
-        /// 获取图层集合
-        /// </summary>
         [Browsable(false)]
         public moLayers Layers
         {
             get { return _Layers; }
+            set { _Layers = value; }
         }
 
         /// <summary>
-        /// 获取地图比例尺
+        /// 获取地图比例尺倒数
         /// </summary>
         public double MapScale
         {
@@ -125,12 +144,7 @@ namespace MyMapObjects
             get { return mMapDrawingReference.OffsetY; }
         }
 
-        public Bitmap BmpMap
-        {
-            get { return mBufferMap1; }
-        }
-
-        #endregion
+        #endregion 属性
 
         #region 方法
 
@@ -205,7 +219,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 在窗口内显示全部地图范围
+        /// 在窗口内显示地图全部范围
         /// </summary>
         public void FullExtent()
         {
@@ -213,56 +227,36 @@ namespace MyMapObjects
             if (sFullExtent.IsEmpty == false)
             {
                 Rectangle sClientRect = this.ClientRectangle;
-                mMapDrawingReference.ZoomExtentToWindow(sFullExtent,sClientRect.Width,sClientRect.Height);
+                mMapDrawingReference.ZoomExtentToWindow(sFullExtent, sClientRect.Width, sClientRect.Height); //实现三个参数的重新计算
                 this.UseWaitCursor = true;
                 DrawBufferMap1();
                 DrawBufferMap2();
                 this.UseWaitCursor = false;
                 Refresh();
-                //触发事件
-                if(MapScaleChanged != null)
-                {
-                    MapScaleChanged(this);
-                }
-            }
-        }
 
-        public void SetExtent(moRectangle sFullExtent)
-        {
-            if (sFullExtent.IsEmpty == false)
-            {
-                Rectangle sClientRect = this.ClientRectangle;
-                mMapDrawingReference.ZoomExtentToWindow(sFullExtent, sClientRect.Width, sClientRect.Height);
-                this.UseWaitCursor = true;
-                DrawBufferMap1();
-                DrawBufferMap2();
-                this.UseWaitCursor = false;
-                Refresh();
-                //触发事件
+                //触发事件，告诉应用程序比例尺发生了变化
                 if (MapScaleChanged != null)
-                {
                     MapScaleChanged(this);
-                }
             }
         }
 
         /// <summary>
-        /// 设置地图试图
+        /// 设置地图视图（直接设置三参数）
         /// </summary>
         /// <param name="offsetX"></param>
-        /// <param name="offsetY"></param>
+        /// <param name="offSetY"></param>
         /// <param name="mapScale"></param>
-        public void SetView(double offsetX,double offsetY,double mapScale)
+        public void SetView(double offsetX, double offsetY, double mapScale)
         {
             mMapDrawingReference.SetView(offsetX, offsetY, mapScale);
         }
 
         /// <summary>
-        /// 以指定中心和指定系数进行缩放
+        ///
         /// </summary>
         /// <param name="center"></param>
         /// <param name="ratio"></param>
-        public void ZoomByCenter(moPoint center,double ratio)
+        public void ZoomByCenter(moPoint center, double ratio)
         {
             mMapDrawingReference.ZoomByCenter(center, ratio);
             this.UseWaitCursor = true;
@@ -272,13 +266,11 @@ namespace MyMapObjects
             Refresh();
             //触发事件
             if (MapScaleChanged != null)
-            {
-                MapScaleChanged(this); 
-            }
+                MapScaleChanged(this);
         }
 
         /// <summary>
-        /// 在地图窗口内显示指定范围
+        ///
         /// </summary>
         /// <param name="extent"></param>
         public void ZoomToExtent(moRectangle extent)
@@ -293,16 +285,14 @@ namespace MyMapObjects
             Refresh();
             //触发事件
             if (MapScaleChanged != null)
-            {   
                 MapScaleChanged(this);
-            }
         }
 
         /// <summary>
         /// 将地图平移指定量
         /// </summary>
-        /// <param name="deltaX"></param>
-        /// <param name="deltaY"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public void PanDelta(double deltaX, double deltaY)
         {
             mMapDrawingReference.PanDelta(deltaX, deltaY);
@@ -314,24 +304,24 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 将屏幕坐标转换为地图坐标
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        public moPoint ToMapPoint(double x,double y)
-        {
-            moPoint sPoint = mMapDrawingReference.ToMapPoint(x,y);
-            return sPoint;
-        }
-
-        /// <summary>
         /// 将地图坐标转换为屏幕坐标
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public moPoint FromMapPoint(double x,double y)
+        public moPoint ToMapPoint(double x, double y)
+        {
+            moPoint sPoint = mMapDrawingReference.ToMapPoint(x, y);
+            return sPoint;
+        }
+
+        /// <summary>
+        /// 将屏幕坐标转换为地图坐标
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public moPoint FromMapPoint(double x, double y)
         {
             moPoint sPoint = mMapDrawingReference.FromMapPoint(x, y);
             return sPoint;
@@ -370,42 +360,46 @@ namespace MyMapObjects
             this.UseWaitCursor = false;
             Refresh();
         }
-        
+
         /// <summary>
         /// 重新绘制跟踪图形
         /// </summary>
         public void RedrawTrackingShapes()
         {
             this.UseWaitCursor = true;
+            DrawBufferMap1();
             DrawBufferMap2();
             this.UseWaitCursor = false;
             Refresh();
         }
 
         /// <summary>
-        /// 将地图图像移动到指定位置（屏幕坐标
+        /// 将地图图像移动到指定位置（屏幕坐标），这个方法可以将buffermap放到地图中的任一位置
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void PanMapImageTo(float x,float y)
+        public void PanMapImageTo(float x, float y)
         {
+            //先将buffer2绘制到buffer3上
             Graphics g = Graphics.FromImage(mBufferMap3);
             g.Clear(Color.White);
             g.DrawImage(mBufferMap2, x, y);
+
+            //再将buffer3绘制到地图控件上
             g = Graphics.FromHwnd(this.Handle);
             g.DrawImage(mBufferMap3, 0, 0);
             g.Dispose();
         }
 
         /// <summary>
-        /// 对指定的图形数组，以指定次数和时间间隔进行闪烁
+        /// 对指定的图形数组，以指定次数和时间间隔进行闪烁显示
         /// </summary>
         /// <param name="shapes"></param>
         /// <param name="times"></param>
         /// <param name="interval"></param>
-        public void FlashShapes(moShape[] shapes,Int32 times,Int32 interval)
+        public void FlashShapes(moShape[] shapes, Int32 times, Int32 interval)
         {
-            mFlashControl.StartFlash(shapes,times,interval);
+            mFlashControl.StartFlash(shapes, times, interval);
         }
 
         /// <summary>
@@ -425,80 +419,84 @@ namespace MyMapObjects
         /// <param name="selectingBox"></param>
         /// <param name="tolerance"></param>
         /// <param name="selectMethod"></param>
-        public void SelectByBox(moRectangle selectingBox,double tolerance,Int32 selectMethod)
+        public void SelectByBox(moRectangle selectingBox, double tolerance, Int32 selectMethod)
         {
             Int32 sLayerCount = _Layers.Count;
-            for(Int32 i=0;i<=sLayerCount-1;i++)
+            for (int i = 0; i < sLayerCount; i++)
             {
                 moMapLayer sLayer = _Layers.GetItem(i);
-                if(sLayer.Visible == true && sLayer.Selectable == true)
+                if (sLayer.Visible == true && sLayer.Selectable == true)
                 {
                     moFeatures sFeatures = sLayer.SearchByBox(selectingBox, tolerance);
                     sLayer.ExecuteSelect(sFeatures, 0);
                 }
-                else 
+                else
                 {
                     sLayer.SelectedFeatures.Clear();
                 }
             }
         }
 
-        /// <summary>
-        /// 根据指定选择盒与选择方法执行选择，限于指定图层
-        /// </summary>
-        /// <param name="selectingBox"></param>
-        /// <param name="tolerance"></param>
-        /// <param name="selectMethod"></param>
-        public void SelectLayerByBox(moRectangle selectingBox, double tolerance, Int32 index)
-        {
-            moMapLayer sLayer = _Layers.GetItem(index);
-            if (sLayer.Visible == true && sLayer.Selectable == true)
-            {
-                moFeatures sFeatures = sLayer.SearchByBox(selectingBox, tolerance);
-                sLayer.ExecuteSelect(sFeatures, 0);
-            }
-            else
-            {
-                sLayer.SelectedFeatures.Clear();
-            }
-        }
-
-        #endregion
+        #endregion 方法
 
         #region 事件
 
         public delegate void MapScaleChangedHandle(object sender);
+
         /// <summary>
         /// 地图比例尺发生了变化
         /// </summary>
-        [Browsable(true),Description("地图比例尺发生了变化")]
+        [Browsable(true), Description("地图比例尺发生了变化")]
         public event MapScaleChangedHandle MapScaleChanged;
-        public delegate void AfterTrackingLayerDrawHandle(object sender,moUserDrawingTool drawingTool);
+
+        public delegate void AfterTrackingLayerDrawHandle(object sender, moUserDrawingTool drawingTool);
+
         /// <summary>
-        /// 地图跟踪图形已经绘制完毕
+        /// 地图跟踪图形已绘制完毕
         /// </summary>
-        [Browsable(true), Description("地图跟踪图形已经绘制完毕")]
+        [Browsable(true), Description("地图跟踪图形已绘制完毕")]
         public event AfterTrackingLayerDrawHandle AfterTrackingLayerDraw;
 
-        #endregion
+        #endregion 事件
 
         #region 母版和对象的事件处理
 
-        //控件重绘
-        private void moMapControl_Paint(object sender, PaintEventArgs e)
+        /// <summary>
+        /// 控件重绘
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MyMapObjectsControls_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawImage(mBufferMap2, e.ClipRectangle, e.ClipRectangle, GraphicsUnit.Pixel);
         }
 
-        //控件大小调整
-        private void moMapControl_Resize(object sender, EventArgs e)
+        /// <summary>
+        /// 控件大小调整
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MyMapObjectsControls_Resize(object sender, EventArgs e)
         {
             ResizeBufferMap();
             RedrawMap();
         }
 
-        //需要绘制闪烁图形
-        private void mFlashControl_NeedDrawFlashShapes(object sender, moShape[] shapes)
+        /// <summary>
+        /// 需要清除闪烁图形
+        /// </summary>
+        /// <param name="sender"></param>
+        private void MFlashControl_NeedClearFlashShapes(object sender)
+        {
+            RedrawTrackingShapes();
+        }
+
+        /// <summary>
+        /// 需要绘制闪烁图形
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="shapes"></param>
+        private void MFlashControl_NeedDrawFlashShapes(object sender, moShape[] shapes)
         {
             double sMapScale = mMapDrawingReference.MapScale;
             double dpm = mMapDrawingReference.dpm;
@@ -513,11 +511,11 @@ namespace MyMapObjects
                     moPoint sPoint = (moPoint)shapes[i];
                     moMapDrawingTools.DrawPoint(g, sExtent, sMapScale, dpm, mpu, sPoint, mFlashPointSymbol);
                 }
-                else if (shapes[i].GetType() == typeof(moPoints))
-                {
-                    moPoints sPoints = (moPoints)shapes[i];
-                    moMapDrawingTools.DrawPoints(g, sExtent, sMapScale, dpm, mpu, sPoints, mFlashPointSymbol);
-                }
+                //else if (shapes[i].GetType() == typeof(moPoints))
+                //{
+                //    moPoints sPoints = (moPoints)shapes[i];
+                //    moMapDrawingTools.DrawPoints(g, sExtent, sMapScale, dpm, mpu, sPoints, mFlashPointSymbol);
+                //}
                 else if (shapes[i].GetType() == typeof(moRectangle))
                 {
                     moRectangle sRect = (moRectangle)shapes[i];
@@ -538,17 +536,13 @@ namespace MyMapObjects
             Refresh();
         }
 
-        //需要清除闪烁图形
-        private void mFlashControl_NeedClearFlashShapes(object sender)
-        {
-            RedrawTrackingShapes();
-        }
-
-        #endregion
+        #endregion 母版和对象的事件处理
 
         #region 私有函数
 
-        //创建默认投影坐标系统
+        /// <summary>
+        /// 创建一个默认的投影坐标系统
+        /// </summary>
         private void CreateDefaultProjectionCS()
         {
             string sProjCSName = "Beijing54 Lambert Conformal Conic 2SP";
@@ -571,7 +565,9 @@ namespace MyMapObjects
                 sFalseNorthing, sScaleFactor, sStandardParallelOne, sStandardParallelTwo, sLinearUnit);
         }
 
-        //新建地图绘制参考对象
+        /// <summary>
+        /// 创建地图-屏幕坐标转换对象
+        /// </summary>
         private void CreateMapDrawingReference()
         {
             Graphics g = Graphics.FromHwnd(this.Handle);
@@ -581,7 +577,9 @@ namespace MyMapObjects
             mMapDrawingReference = new moMapDrawingReference(0, 0, 1000000, dpm, mpu);
         }
 
-        //调整缓冲位图大小
+        /// <summary>
+        /// 调整缓冲位图大小，时刻保持缓冲位图与空间大小一致
+        /// </summary>
         private void ResizeBufferMap()
         {
             Rectangle sClientRectangle = this.ClientRectangle;
@@ -596,7 +594,6 @@ namespace MyMapObjects
             }
         }
 
-        //初始化符号
         private void InitializeSymbols()
         {
             //选择点符号
@@ -628,7 +625,9 @@ namespace MyMapObjects
             mFlashFillSymbol.Outline.Size = 0.35;
         }
 
-        //绘制缓冲位图1
+        /// <summary>
+        /// 绘制缓冲位图1
+        /// </summary>
         private void DrawBufferMap1()
         {
             //（1）获取地图窗口的范围
@@ -663,14 +662,16 @@ namespace MyMapObjects
             g.Dispose();
         }
 
-        //绘制缓冲位图2
+        /// <summary>
+        /// 绘制缓冲位图2
+        /// </summary>
         private void DrawBufferMap2()
         {
             //（1）获取地图窗口的范围
             moRectangle sExtent = GetExtent();
             if (sExtent.IsEmpty == true)
                 return;
-            //（2）绘制缓冲位图1
+            //（2）绘制缓冲位图2
             Graphics g = Graphics.FromImage(mBufferMap2);
             g.Clear(Color.White);
             Rectangle sRect = new Rectangle(0, 0, mBufferMap1.Width, mBufferMap1.Height);
@@ -695,10 +696,6 @@ namespace MyMapObjects
                 {
                     sLayer.DrawSelectedFeatures(g, sExtent, sMapScale, dpm, mpu, mSelectedFillSymbol);
                 }
-                else if (sLayer.ShapeType == moGeometryTypeConstant.MultiPoint)
-                {
-                    sLayer.DrawSelectedFeatures(g, sExtent, sMapScale, dpm, mpu, mSelectedPointSymbol);
-                }
             }
             //（4）触发事件，以便用户程序继续绘图
             if (AfterTrackingLayerDraw != null)
@@ -710,22 +707,17 @@ namespace MyMapObjects
             g.Dispose();
         }
 
-        //生成一个用户绘图工具
-        private moUserDrawingTool CreateDrawingTool(Graphics graphics)
+        private moUserDrawingTool CreateDrawingTool(Graphics g)
         {
             moRectangle sExtent = GetExtent();
             double sMapScale = mMapDrawingReference.MapScale;
             double dpm = mMapDrawingReference.dpm;
             double mpu = mMapDrawingReference.mpu;
-            moUserDrawingTool sDrawingTool = new moUserDrawingTool(graphics, sExtent, sMapScale, dpm, mpu);
+            moUserDrawingTool sDrawingTool = new moUserDrawingTool(g, sExtent, sMapScale, dpm, mpu);
+
             return sDrawingTool;
         }
-        
 
-        #endregion
-
-
-
-
+        #endregion 私有函数
     }
 }

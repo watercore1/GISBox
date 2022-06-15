@@ -1,24 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Security.Cryptography;
 
 namespace MyMapObjects
 {
+    // 简单点符号
     public class moSimpleMarkerSymbol : moSymbol
     {
         #region 字段
 
         private string _Label = ""; //符号标签
         private bool _Visible = true; //是否可见
-        private moSimpleMarkerSymbolStyleConstant _Style = moSimpleMarkerSymbolStyleConstant.SolidCircle; //形状
+        private moSimpleMarkerSymbolStyleConstant _Style = moSimpleMarkerSymbolStyleConstant.SolidCircle; //形状，为了和moMapDrawingTools契合，默认为实心圆
         private Color _Color = Color.LightPink; //颜色
-        private double _Size = 3; //尺寸，默认为毫米
+        private double _Size = 3; //尺寸，默认单位为毫米
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
@@ -27,39 +24,31 @@ namespace MyMapObjects
             CreateRandomColor();
         }
 
+        /// <summary>
+        /// 给定符号标签
+        /// </summary>
+        /// <param name="label">符号标签</param>
         public moSimpleMarkerSymbol(string label)
         {
             _Label = label;
             CreateRandomColor();
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
-        /// <summary>
-        /// 获取符号类型
-        /// </summary>
-        public override moSymbolTypeConstant SymbolType 
+        public override moSymbolTypeConstant SymbolType
         {
-            get
-            {
-                return moSymbolTypeConstant.SimpleMarkerSymbol;
-            }
+            get { return moSymbolTypeConstant.SimpleMarkerSymbol; }
         }
 
-        /// <summary>
-        /// 获取或设置符号标签
-        /// </summary>
         public string Label
         {
             get { return _Label; }
             set { _Label = value; }
         }
 
-        /// <summary>
-        /// 指示是否可见
-        /// </summary>
         public bool Visible
         {
             get { return _Visible; }
@@ -67,7 +56,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 获取或设置形状类型
+        /// 获取或设置简单点符号的形状类型
         /// </summary>
         public moSimpleMarkerSymbolStyleConstant Style
         {
@@ -76,7 +65,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 获取或设置颜色
+        /// 获取或设置简单点符号的颜色
         /// </summary>
         public Color Color
         {
@@ -85,7 +74,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 获取或设置尺寸
+        /// 获取或设置简单点符号的尺寸
         /// </summary>
         public double Size
         {
@@ -93,7 +82,7 @@ namespace MyMapObjects
             set { _Size = value; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
@@ -101,7 +90,6 @@ namespace MyMapObjects
         /// 克隆
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public override moSymbol Clone()
         {
             moSimpleMarkerSymbol sSymbol = new moSimpleMarkerSymbol();
@@ -113,7 +101,7 @@ namespace MyMapObjects
             return sSymbol;
         }
 
-        #endregion
+        #endregion 方法
 
         #region 私有函数
 
@@ -122,7 +110,7 @@ namespace MyMapObjects
         /// </summary>
         private void CreateRandomColor()
         {
-            //总体思想：每个随机颜色RGB中总有一个为252，其他两个值的取值范围为179-245，这样取值的目的在于让地图颜色偏浅，美观
+            //总体思想：每个随机颜色RGB中总有一个为252，其他两个值的取值范围为179-245，这样取值的目的在于让地图颜色偏浅，美观（其实比较适合面状符号）
             //生成4个元素的字节数组，第一个值决定哪个通道取252，另外三个中的两个值决定另外两个通道的值
             byte[] sBytes = new byte[4];
             RNGCryptoServiceProvider sChanelRng = new RNGCryptoServiceProvider();
@@ -150,6 +138,6 @@ namespace MyMapObjects
             _Color = Color.FromArgb(A, R, G, B);
         }
 
-        #endregion
+        #endregion 私有函数
     }
 }

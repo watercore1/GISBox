@@ -1,36 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyMapObjects
+﻿namespace MyMapObjects
 {
-    public class moPoint:moGeometry
+    // 点
+    public class moPoint : moGeometry
     {
         #region 字段
 
-        private double _X, _Y;
+        private double _X;
+        private double _Y;
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
         public moPoint()
         { }
 
-        public moPoint(double x,double y)
+        public moPoint(double x, double y)
         {
             _X = x;
             _Y = y;
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
         /// <summary>
-        /// 获取或设置X坐标
+        /// 设置或获取X坐标
         /// </summary>
         public double X
         {
@@ -39,7 +35,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 获取或设置Y坐标
+        /// 设置或获取Y坐标
         /// </summary>
         public double Y
         {
@@ -47,20 +43,20 @@ namespace MyMapObjects
             set { _Y = value; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
         /// <summary>
-        /// 克隆
+        /// 克隆一个点
         /// </summary>
         /// <returns></returns>
         public moPoint Clone()
         {
-            moPoint sPoint = new moPoint(_X, _Y);
+            moPoint sPoint = new moPoint(_X, _Y); //s表示sub，过程级，函数级
             return sPoint;
         }
 
-        #endregion
+        #endregion 方法
     }
 }

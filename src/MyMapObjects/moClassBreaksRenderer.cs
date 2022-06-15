@@ -1,30 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
+using System.Linq;
 
 namespace MyMapObjects
 {
+    // 分级渲染
     public class moClassBreaksRenderer : moRenderer
     {
         #region 字段
+
         private string _Field = ""; //绑定字段
-        private string _HeadTitle = "";     //在图层显示控件中的标题
-        private bool _ShowHead = true;      //在图层显示控件是否显示标题
-        private List<double> _BreakValues = new List<double>();       //分割值集合
-        private List<moSymbol> _Symbols = new List<moSymbol>();//符号集合，小于第一个分割值对应第一个符号，依此类推
-        private moSymbol _DefaultSymbol;    //默认符号
+        private string _HeadTitle = ""; //在图层显示控件中的标题
+        private bool _ShowHead = true; //在图层显示控件是否显示标题
+        private List<double> _BreakValues = new List<double>(); //分割值集合
+        private List<moSymbol> _Symbols = new List<moSymbol>(); //符号集合，第一个分割值对应第一个符号，依此类推
+        private moSymbol _DefaultSymbol; //默认符号
         private bool _ShowDefaultSymbol = true; //在图层显示控件中是否显示默认符号
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
-        public moClassBreaksRenderer()
-        { }
 
-        #endregion
+        public moClassBreaksRenderer()
+        {
+        }
+
+        #endregion 构造函数
 
         #region 属性
 
@@ -33,10 +35,7 @@ namespace MyMapObjects
         /// </summary>
         public override moRendererTypeConstant RendererType
         {
-            get
-            {
-                return moRendererTypeConstant.ClassBreaks;
-            }
+            get { return moRendererTypeConstant.ClassBreaks; }
         }
 
         /// <summary>
@@ -69,7 +68,7 @@ namespace MyMapObjects
             set { _DefaultSymbol = value; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
@@ -224,54 +223,10 @@ namespace MyMapObjects
                     }
                 }
             }
-
         }
 
         /// <summary>
-        /// 为所有符号生成渐变大小
-        /// </summary>
-        /// <param name="startSize"></param>
-        /// <param name="endSize"></param>
-        public void RampSize(double startSize, double endSize)
-        {
-            Int32 sBreakCount = _BreakValues.Count;
-            if (sBreakCount <= 0)
-                return;
-            double[] sSizes = new double[sBreakCount];
-            if (sBreakCount == 1)
-            {
-                sSizes[0] = startSize;
-            }
-            else
-            {
-                sSizes[0] = startSize;
-                sSizes[sBreakCount - 1] = endSize;
-                double sSizeStep = (endSize - startSize) / (sBreakCount - 1);
-                for (Int32 i = 1; i <= sBreakCount - 2; i++)
-                {
-                    sSizes[i] = sSizes[i - 1] + sSizeStep;
-                }
-            }
-            for (Int32 i = 0; i <= sBreakCount - 1; i++)
-            {
-                if (_Symbols[i] != null)
-                {
-                    if (_Symbols[i].SymbolType == moSymbolTypeConstant.SimpleMarkerSymbol)
-                    {
-                        moSimpleMarkerSymbol sSymbol = (moSimpleMarkerSymbol)_Symbols[i];
-                        sSymbol.Size = sSizes[i];
-                    }
-                    else if (_Symbols[i].SymbolType == moSymbolTypeConstant.SimpleLineSymbol)
-                    {
-                        moSimpleLineSymbol sSymbol = (moSimpleLineSymbol)_Symbols[i];
-                        sSymbol.Size = sSizes[i];
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 复制
+        /// 克隆
         /// </summary>
         /// <returns></returns>
         public override moRenderer Clone()
@@ -297,7 +252,8 @@ namespace MyMapObjects
             sRenderer._ShowDefaultSymbol = _ShowDefaultSymbol;
             return sRenderer;
         }
-        #endregion
+
+        #endregion 方法
 
         #region 私有函数
 
@@ -357,31 +313,37 @@ namespace MyMapObjects
                         G = (byte)cc;
                         B = (byte)aa;
                         break;
+
                     case 1:
                         R = (byte)bb;
                         G = (byte)V;
                         B = (byte)aa;
                         break;
+
                     case 2:
                         R = (byte)aa;
                         G = (byte)V;
                         B = (byte)cc;
                         break;
+
                     case 3:
                         R = (byte)aa;
                         G = (byte)bb;
                         B = (byte)V;
                         break;
+
                     case 4:
                         R = (byte)cc;
                         G = (byte)aa;
                         B = (byte)V;
                         break;
+
                     case 5:
                         R = (byte)V;
                         G = (byte)aa;
                         B = (byte)bb;
                         break;
+
                     default:
                         R = 0; G = 0; B = 0;
                         break;
@@ -392,6 +354,7 @@ namespace MyMapObjects
             sRGB[2] = B;
             return sRGB;
         }
-        #endregion
+
+        #endregion 私有函数
     }
 }

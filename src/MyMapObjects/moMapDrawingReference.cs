@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyMapObjects
+﻿namespace MyMapObjects
 {
-    //为地图显示、缩放、漫游定义的类，实现地图坐标与屏幕坐标的转换
+    // 为地图显示、缩放、漫游定义的类
+    // 实现地图坐标与屏幕坐标的转换
     internal class moMapDrawingReference
     {
         #region 字段
+
         private double _OffsetX, _OffsetY;              //绘图区域左上点（0，0）对应的投影坐标系中的点，即投影坐标系相对屏幕坐标系的平移量
         private double _MapScale = 10000;               //比例尺的倒数
-        private double _dpm = 96 / 0.0254;              //屏幕上每米代表的象素数
+        private double _dpm = 96 / 0.0254;              //屏幕上每米代表的像素数
         private double _mpu = 1.0;                      //1个地图坐标单位代表的米数，一般为1.
 
         private const double mcMaxMapScale = 10000000000;    //地图显示比例尺倒数的最大值,100亿
         private const double mcMinMapScale = 1000;
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
@@ -39,7 +35,7 @@ namespace MyMapObjects
             _mpu = mpu;
         }
 
-        #endregion
+        #endregion 构造函数
 
         #region 属性
 
@@ -73,7 +69,7 @@ namespace MyMapObjects
             set { _mpu = value; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
@@ -173,6 +169,7 @@ namespace MyMapObjects
             double sDis = dis / _MapScale * _dpm * _mpu;
             return sDis;
         }
-        #endregion
+
+        #endregion 方法
     }
 }

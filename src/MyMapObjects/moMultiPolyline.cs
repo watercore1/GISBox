@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyMapObjects
 {
-    public class moMultiPolyline:moGeometry
+    // 复合折线
+    public class moMultiPolyline : moGeometry
     {
         #region 字段
 
         private moParts _Parts;
-        double _MinX = double.MaxValue, _MaxX = double.MinValue;
-        double _MinY = double.MaxValue, _MaxY = double.MinValue;
+        private double _MinX = double.MaxValue;
+        private double _MaxX = double.MinValue;
+        private double _MinY = double.MaxValue;
+        private double _MaxY = double.MinValue;
 
-        #endregion
+        #endregion 字段
 
         #region 构造函数
 
@@ -33,12 +32,13 @@ namespace MyMapObjects
         {
             _Parts = parts;
         }
-        #endregion
+
+        #endregion 构造函数
 
         #region 属性
 
         /// <summary>
-        /// 获取或设置部分集合
+        /// 获取或设置部件集合
         /// </summary>
         public moParts Parts
         {
@@ -78,7 +78,7 @@ namespace MyMapObjects
             get { return _MaxY; }
         }
 
-        #endregion
+        #endregion 属性
 
         #region 方法
 
@@ -115,7 +115,7 @@ namespace MyMapObjects
             return sMultiPolyline;
         }
 
-        #endregion
+        #endregion 方法
 
         #region 私有函数
 
@@ -143,6 +143,6 @@ namespace MyMapObjects
             _MaxY = sMaxY;
         }
 
-        #endregion
+        #endregion 私有函数
     }
 }

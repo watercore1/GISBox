@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyMapObjects
+﻿namespace MyMapObjects
 {
     public abstract class moRenderer
     {
-        public abstract moRendererTypeConstant RendererType { get; }
-        public abstract moRenderer Clone();
+        public abstract moRendererTypeConstant RendererType { get; } //抽象属性：获取渲染类型
+
+        public abstract moRenderer Clone(); //抽象方法：克隆
     }
 }
