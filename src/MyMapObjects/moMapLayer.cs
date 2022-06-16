@@ -212,13 +212,13 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="features"></param>
         /// <param name="selectMethod"></param>
-        public void ExecuteSelect(moFeatures features, Int32 selectMethod)
+        public void ExecuteSelect(moFeatures features, int selectMethod)
         {
             //出于简化，此处只实现新建集合 selectMethod也不做成枚举了
             if (selectMethod == 0)
             {
                 _SelectedFeatures.Clear();
-                Int32 sFeatureCount = features.Count;
+                int sFeatureCount = features.Count;
                 for (int i = 0; i < sFeatureCount; i++)
                 {
                     _SelectedFeatures.Add(features.GetItem(i));
@@ -254,7 +254,7 @@ namespace MyMapObjects
             SetFeatureSymbols();
 
             // (2) 判断是否位于绘制范围，如是，则绘制
-            Int32 sFeatureCount = _Features.Count;
+            int sFeatureCount = _Features.Count;
             for (int i = 0; i < sFeatureCount; i++)
             {
                 moFeature sFeature = _Features.GetItem(i);
@@ -279,7 +279,7 @@ namespace MyMapObjects
         internal void DrawSelectedFeatures(Graphics g, moRectangle extent, double mapScale, double dpm, double mpu, moSymbol symbol)
         {
             //判断是否位于绘制范围内，如是，则绘制
-            Int32 sFeatureCount = _SelectedFeatures.Count;
+            int sFeatureCount = _SelectedFeatures.Count;
             for (int i = 0; i < sFeatureCount; i++)
             {
                 moFeature sFeature = _SelectedFeatures.GetItem(i);
@@ -306,11 +306,11 @@ namespace MyMapObjects
                 return;
             if (_LabelRenderer.LabelFeatures == false)
                 return;
-            Int32 sFieldIndex = _AttributeFields.FindField(_LabelRenderer.Field);
+            int sFieldIndex = _AttributeFields.FindField(_LabelRenderer.Field);
             if (sFieldIndex < 0)
                 return;
-            Int32 sFeatureCount = _Features.Count;
-            for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+            int sFeatureCount = _Features.Count;
+            for (int i = 0; i <= sFeatureCount - 1; i++)
             {
                 moFeature sFeature = _Features.GetItem(i);
                 if (IsFeatureInExtent(sFeature, extent) == false)
@@ -333,10 +333,10 @@ namespace MyMapObjects
                 //根据要素几何类型采用相应的配置方案，这里采用默认的配置方案
                 if (sFeature.ShapeType == moGeometryTypeConstant.Point)
                 {   //点要素，取点的右上为定位点，但要考虑点符号的大小
-                    //（1）复制符号
+                    //(1) 复制符号
                     moTextSymbol sTextSymbol;  //最终绘制注记所采用的符号
                     sTextSymbol = _LabelRenderer.TextSymbol.Clone();    //复制符号
-                    //（2）计算定位点并设置符号
+                    //(2) 计算定位点并设置符号
                     PointF sSrcLabelPoint;   //定位点的屏幕坐标
                     moPoint sPoint = (moPoint)sFeature.Geometry;
                     PointF sSrcPoint = FromMapPoint(extent, mapScale, dpm, mpu, sPoint);    //点要素的屏幕坐标
@@ -345,9 +345,9 @@ namespace MyMapObjects
                     //右上方并设置符号
                     sSrcLabelPoint = new PointF(sSrcPoint.X + sSymbolSize / 2, sSrcPoint.Y - sSymbolSize / 2);
                     sTextSymbol.Alignment = moTextSymbolAlignmentConstant.BottomLeft;
-                    //（3）计算注记的屏幕范围矩形
+                    //(3) 计算注记的屏幕范围矩形
                     RectangleF sLabelExtent = GetLabelExtent(g, dpm, sSrcLabelPoint, sLabelText, sTextSymbol);
-                    //（4）冲突检测
+                    //(4) 冲突检测
                     if (HasConflict(sLabelExtent, placedLabelExtents) == false)
                     {   //没有冲突，则绘制并将当前注记范围矩形加入placedLabelExtents
                         moMapDrawingTools.DrawLabel(g, dpm, sLabelExtent.Location, sLabelText, sTextSymbol);
@@ -356,12 +356,12 @@ namespace MyMapObjects
                 }
                 else if (sFeature.ShapeType == moGeometryTypeConstant.MultiPolyline)
                 {   //线要素，为每个部分的中点配置一个注记
-                    //（1）获取符号，线要素无需复制符号
+                    //(1) 获取符号，线要素无需复制符号
                     moTextSymbol sTextSymbol = _LabelRenderer.TextSymbol;
-                    //（2）对每个部分进行配置
+                    //(2) 对每个部分进行配置
                     moMultiPolyline sMultiPolyline = (moMultiPolyline)sFeature.Geometry;
-                    Int32 sPartCount = sMultiPolyline.Parts.Count;
-                    for (Int32 j = 0; j <= sPartCount - 1; j++)
+                    int sPartCount = sMultiPolyline.Parts.Count;
+                    for (int j = 0; j <= sPartCount - 1; j++)
                     {
                         //获取注记
                         moPoint sMapLabelPoint = moMapTools.GetMidPointOfPolyline(sMultiPolyline.Parts.GetItem(j));
@@ -378,15 +378,15 @@ namespace MyMapObjects
                 }
                 else if (sFeature.ShapeType == moGeometryTypeConstant.MultiPolygon)
                 {   //面要素，为面积最大的外环及其包含的内环所构成的多边形配置一个注记
-                    //（1）获取符号，面要素无需复制符号
+                    //(1) 获取符号，面要素无需复制符号
                     moTextSymbol sTextSymbol = _LabelRenderer.TextSymbol;
-                    //（2）获取注记点
+                    //(2) 获取注记点
                     moMultiPolygon sMultiPolygon = (moMultiPolygon)sFeature.Geometry;
                     moPoint sMapLabelPoint = moMapTools.GetLabelPointOfMultiPolygon(sMultiPolygon);
                     PointF sSrcLabelPoint = FromMapPoint(extent, mapScale, dpm, mpu, sMapLabelPoint);
-                    //（3）计算注记的屏幕范围矩形
+                    //(3) 计算注记的屏幕范围矩形
                     RectangleF sLabelExtent = GetLabelExtent(g, dpm, sSrcLabelPoint, sLabelText, _LabelRenderer.TextSymbol);
-                    //（4）冲突检测
+                    //(4) 冲突检测
                     if (HasConflict(sLabelExtent, placedLabelExtents) == false)
                     {   //没有冲突，则绘制并将当前注记范围矩形加入placedLabelExtents
                         moMapDrawingTools.DrawLabel(g, dpm, sLabelExtent.Location, sLabelText, sTextSymbol);
@@ -441,12 +441,12 @@ namespace MyMapObjects
         /// </summary>
         private void CalExtent()
         {
-            double sMinX = Double.MaxValue;
-            double sMaxX = Double.MinValue;
-            double sMinY = Double.MaxValue;
-            double sMaxY = Double.MinValue;
-            Int32 sFeatureCount = _Features.Count;
-            for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+            double sMinX = double.MaxValue;
+            double sMaxX = double.MinValue;
+            double sMinY = double.MaxValue;
+            double sMaxY = double.MinValue;
+            int sFeatureCount = _Features.Count;
+            for (int i = 0; i <= sFeatureCount - 1; i++)
             {
                 moRectangle sExtent = _Features.GetItem(i).GetEnvelope();
                 if (sExtent.MinX < sMinX)
@@ -470,8 +470,8 @@ namespace MyMapObjects
         private moFeatures SearchFeaturesByPoint(moPoint point, double tolerance)
         {
             moFeatures sSelectedFeatures = new moFeatures();
-            Int32 sFeatureCount = _Features.Count;
-            for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+            int sFeatureCount = _Features.Count;
+            for (int i = 0; i <= sFeatureCount - 1; i++)
             {
                 if (_ShapeType == moGeometryTypeConstant.Point)
                 {
@@ -509,8 +509,8 @@ namespace MyMapObjects
         private moFeatures SearchFeaturesByBox(moRectangle selectingBox)
         {
             moFeatures sSelectedFeatures = new moFeatures();
-            Int32 sFeatureCount = _Features.Count;
-            for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+            int sFeatureCount = _Features.Count;
+            for (int i = 0; i <= sFeatureCount - 1; i++)
             {
                 if (_ShapeType == moGeometryTypeConstant.Point)
                 {
@@ -547,23 +547,23 @@ namespace MyMapObjects
         private moFeature CreateNewFeature()
         {
             moAttributes sAttributes = new moAttributes();
-            Int32 sFieldCount = _AttributeFields.Count;
-            for (Int32 i = 0; i <= sFieldCount - 1; i++)
+            int sFieldCount = _AttributeFields.Count;
+            for (int i = 0; i <= sFieldCount - 1; i++)
             {
                 moField sField = _AttributeFields.GetItem(i);
                 if (sField.ValueType == moValueTypeConstant.dInt16)
                 {
-                    Int16 sValue = 0;
+                    short sValue = 0;
                     sAttributes.Append(sValue);
                 }
                 else if (sField.ValueType == moValueTypeConstant.dInt32)
                 {
-                    Int32 sValue = 0;
+                    int sValue = 0;
                     sAttributes.Append(sValue);
                 }
                 else if (sField.ValueType == moValueTypeConstant.dInt64)
                 {
-                    Int64 sValue = 0;
+                    long sValue = 0;
                     sAttributes.Append(sValue);
                 }
                 else if (sField.ValueType == moValueTypeConstant.dSingle)
@@ -578,7 +578,7 @@ namespace MyMapObjects
                 }
                 else if (sField.ValueType == moValueTypeConstant.dText)
                 {
-                    String sValue = "";
+                    string sValue = "";
                     sAttributes.Append(sValue);
                 }
                 else
@@ -595,11 +595,11 @@ namespace MyMapObjects
         /// </summary>
         private void SetFeatureSymbols()
         {
-            Int32 sFeatureCount = _Features.Count;
+            int sFeatureCount = _Features.Count;
             if (_Renderer.RendererType == moRendererTypeConstant.Simple)
             {
                 moSimpleRenderer sRenderer = (moSimpleRenderer)_Renderer;
-                for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+                for (int i = 0; i <= sFeatureCount - 1; i++)
                 {
                     _Features.GetItem(i).Symbol = sRenderer.Symbol;
                 }
@@ -608,10 +608,10 @@ namespace MyMapObjects
             {
                 moUniqueValueRenderer sRenderer = (moUniqueValueRenderer)_Renderer;
                 string sFieldName = sRenderer.Field;
-                Int32 sFieldIndex = _AttributeFields.FindField(sFieldName);
+                int sFieldIndex = _AttributeFields.FindField(sFieldName);
                 if (sFieldIndex >= 0)
                 {
-                    for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+                    for (int i = 0; i <= sFeatureCount - 1; i++)
                     {
                         string sValueString = GetValueString(_Features.GetItem(i).Attributes.GetItem(sFieldIndex));
                         _Features.GetItem(i).Symbol = sRenderer.FindSymbol(sValueString);
@@ -619,7 +619,7 @@ namespace MyMapObjects
                 }
                 else
                 {
-                    for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+                    for (int i = 0; i <= sFeatureCount - 1; i++)
                         _Features.GetItem(i).Symbol = null;
                 }
             }
@@ -627,19 +627,19 @@ namespace MyMapObjects
             {
                 moClassBreaksRenderer sRenderer = (moClassBreaksRenderer)_Renderer;
                 string sFieldName = sRenderer.Field;
-                Int32 sFieldIndex = _AttributeFields.FindField(sFieldName);
+                int sFieldIndex = _AttributeFields.FindField(sFieldName);
                 moValueTypeConstant sValueType = _AttributeFields.GetItem(sFieldIndex).ValueType;
                 if (sFieldIndex >= 0)
                 {
-                    for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+                    for (int i = 0; i <= sFeatureCount - 1; i++)
                     {
                         double sValue = 0;
                         if (sValueType == moValueTypeConstant.dInt16)
-                            sValue = (Int16)_Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValue = (short)_Features.GetItem(i).Attributes.GetItem(sFieldIndex);
                         else if (sValueType == moValueTypeConstant.dInt32)
-                            sValue = (Int32)_Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValue = (int)_Features.GetItem(i).Attributes.GetItem(sFieldIndex);
                         else if (sValueType == moValueTypeConstant.dInt64)
-                            sValue = (Int64)_Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValue = (long)_Features.GetItem(i).Attributes.GetItem(sFieldIndex);
                         else if (sValueType == moValueTypeConstant.dSingle)
                             sValue = (float)_Features.GetItem(i).Attributes.GetItem(sFieldIndex);
                         else if (sValueType == moValueTypeConstant.dDouble)
@@ -652,7 +652,7 @@ namespace MyMapObjects
                 }
                 else
                 {
-                    for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+                    for (int i = 0; i <= sFeatureCount - 1; i++)
                         _Features.GetItem(i).Symbol = null;
                 }
             }
@@ -736,13 +736,13 @@ namespace MyMapObjects
         /// <returns></returns>
         private RectangleF GetLabelExtent(Graphics g, double dpm, PointF labelPoint, string labelText, moTextSymbol textSymbol)
         {
-            //（1）测量注记大小
+            //(1) 测量注记大小
             SizeF sLabelSize = g.MeasureString(labelText, textSymbol.Font);     //注记的尺寸
-            //（2）计算偏移量
+            //(2) 计算偏移量
             float sLabelOffsetX, sLabelOffsetY;       //注记偏移量（屏幕坐标），向右、向上位正
             sLabelOffsetX = (float)(textSymbol.OffsetX / 1000 * dpm);
             sLabelOffsetY = (float)(textSymbol.OffsetY / 1000 * dpm);
-            //（3）根据布局计算左上点
+            //(3) 根据布局计算左上点
             PointF sTopLeftPoint = new PointF();        //注记左上点坐标（屏幕坐标）
             if (textSymbol.Alignment == moTextSymbolAlignmentConstant.TopLeft)
             {
@@ -792,7 +792,7 @@ namespace MyMapObjects
             else
             { throw new Exception("Invalid text symbol alignment!"); }
 
-            //（4）返回注记范围矩形
+            //(4) 返回注记范围矩形
             RectangleF sRect = new RectangleF(sTopLeftPoint, sLabelSize);
             return sRect;
         }
@@ -800,10 +800,10 @@ namespace MyMapObjects
         //指定矩形是否与指定矩形集合内的所有矩形存在相交
         private bool HasConflict(RectangleF labelExtent, List<RectangleF> placedLabelExtents)
         {
-            Int32 sCount = placedLabelExtents.Count;
+            int sCount = placedLabelExtents.Count;
             float sMinX1 = labelExtent.X, sMaxX1 = labelExtent.X + labelExtent.Width;
             float sMinY1 = labelExtent.Y, sMaxY1 = labelExtent.Y + labelExtent.Height;
-            for (Int32 i = 0; i <= sCount - 1; i++)
+            for (int i = 0; i <= sCount - 1; i++)
             {
                 RectangleF sCurExtent = placedLabelExtents[i];
                 float sMinX2 = sCurExtent.X, sMaxX2 = sCurExtent.X + sCurExtent.Width;
@@ -827,23 +827,23 @@ namespace MyMapObjects
         private void _AttributesFields_FieldAppended(object sender, moField fieldAppended)
         {
             //给所有要素增加一个属性值
-            Int32 sFeatureCount = _Features.Count;
-            for (Int32 i = 0; i <= sFeatureCount - 1; i++)
+            int sFeatureCount = _Features.Count;
+            for (int i = 0; i <= sFeatureCount - 1; i++)
             {
                 moFeature sFeature = _Features.GetItem(i);
                 if (fieldAppended.ValueType == moValueTypeConstant.dInt16)
                 {
-                    Int16 sValue = 0;
+                    short sValue = 0;
                     sFeature.Attributes.Append(sValue);
                 }
                 else if (fieldAppended.ValueType == moValueTypeConstant.dInt32)
                 {
-                    Int32 sValue = 0;
+                    int sValue = 0;
                     sFeature.Attributes.Append(sValue);
                 }
                 else if (fieldAppended.ValueType == moValueTypeConstant.dInt64)
                 {
-                    Int64 sValue = 0;
+                    long sValue = 0;
                     sFeature.Attributes.Append(sValue);
                 }
                 else if (fieldAppended.ValueType == moValueTypeConstant.dSingle)
@@ -876,7 +876,7 @@ namespace MyMapObjects
         /// <param name="fieldRemoved"></param>
         private void _AttributesFields_FieldRemoved(object sender, int fieldIndex, moField fieldRemoved)
         {
-            Int32 sFeatureCount = _Features.Count;
+            int sFeatureCount = _Features.Count;
             for (int i = 0; i < sFeatureCount; i++)
             {
                 moFeature sFeature = _Features.GetItem(i);

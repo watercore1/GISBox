@@ -28,7 +28,7 @@ namespace MyMapObjects
         /// <summary>
         /// 获取字段集中元素的数目（字段的数目）
         /// </summary>
-        public Int32 Count
+        public int Count
         {
             get { return _Fields.Count; }
         }
@@ -60,10 +60,10 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public Int32 FindField(string name)
+        public int FindField(string name)
         {
-            Int32 sFieldCount = _Fields.Count;
-            for (Int32 i = 0; i <= sFieldCount - 1; i++)
+            int sFieldCount = _Fields.Count;
+            for (int i = 0; i <= sFieldCount - 1; i++)
             {
                 //字段名不区分大小写
                 if (_Fields[i].Name.ToLower() == name.ToLower())
@@ -79,7 +79,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public moField GetItem(Int32 index)
+        public moField GetItem(int index)
         {
             return _Fields[index];
         }
@@ -91,7 +91,7 @@ namespace MyMapObjects
         /// <returns></returns>
         public moField GetItem(string name)
         {
-            Int32 sIndex = FindField(name);
+            int sIndex = FindField(name);
             if (sIndex >= 0)
                 return _Fields[sIndex];
             else
@@ -121,7 +121,7 @@ namespace MyMapObjects
         /// 删除指定索引号的字段
         /// </summary>
         /// <param name="index"></param>
-        public void RemoveAt(Int32 index)
+        public void RemoveAt(int index)
         {
             moField sField = _Fields[index];
             _Fields.RemoveAt(index);
@@ -142,7 +142,7 @@ namespace MyMapObjects
         /// </summary>
         internal event FieldAppendedHandle FieldAppended;
 
-        internal delegate void FieldRemovedHandle(object sender, Int32 fieldIndex, moField fieldRemoved);
+        internal delegate void FieldRemovedHandle(object sender, int fieldIndex, moField fieldRemoved);
 
         /// <summary>
         /// 有字段被删除了

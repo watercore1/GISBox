@@ -138,17 +138,17 @@ namespace MyMapObjects
         /// <param name="point"></param>
         /// <param name="polygon"></param>
         /// <returns></returns>
-        internal static Int32 GetIntersectionCountBetweenRayAndPolygon(moPoint point, moPoints points)
+        internal static int GetIntersectionCountBetweenRayAndPolygon(moPoint point, moPoints points)
         {
-            Int32 sIntersectionCount = 0;
-            Int32 sPointCount = points.Count;
+            int sIntersectionCount = 0;
+            int sPointCount = points.Count;
             if (IsRayCrossSegment(point, points.GetItem(sPointCount - 1), points.GetItem(0)) == true)
             {
                 //起点与最后一点的连线与射线有交点
                 sIntersectionCount = sIntersectionCount + 1;
             }
             //求射线与其他边的交点
-            for (Int32 i = 0; i <= sPointCount - 2; i++)
+            for (int i = 0; i <= sPointCount - 2; i++)
             {
                 if (IsRayCrossSegment(point, points.GetItem(i), points.GetItem(i + 1)) == true)
                 {
@@ -166,7 +166,7 @@ namespace MyMapObjects
         /// <returns></returns>
         internal static List<double> GetIntersectionsBetweenScanAndPolygon(double scanY, moPoints points)
         {
-            Int32 sPointCount = points.Count;
+            int sPointCount = points.Count;
             List<double> sIntersections = new List<double>(); //交点X坐标序列
             if (IsScanCrossSegment(scanY, points.GetItem(sPointCount - 1), points.GetItem(0)) == true)
             {   //起点与最后一点的连线与扫描线有交点
@@ -176,7 +176,7 @@ namespace MyMapObjects
                 sIntersections.Add(x);
             }
             //求扫描线与其他边的交点
-            for (Int32 i = 0; i <= sPointCount - 2; i++)
+            for (int i = 0; i <= sPointCount - 2; i++)
             {
                 if (IsScanCrossSegment(scanY, points.GetItem(i), points.GetItem(i + 1)) == true)
                 {
@@ -274,10 +274,10 @@ namespace MyMapObjects
         /// <returns></returns>
         internal static double GetPolygonSquare(moPoints points)
         {
-            Int32 sPointCount = points.Count;
+            int sPointCount = points.Count;
             double s = 0;
             double x0 = points.GetItem(0).X, y0 = points.GetItem(0).Y;
-            for (Int32 i = 1; i <= sPointCount - 2; i++)
+            for (int i = 1; i <= sPointCount - 2; i++)
             {
                 s = s + (points.GetItem(i).X - x0) * (points.GetItem(i + 1).Y - y0) - (points.GetItem(i + 1).X - x0) * (points.GetItem(i).Y - y0);
             }
@@ -316,8 +316,8 @@ namespace MyMapObjects
             moRectangle sBox = new moRectangle(points.MinX - tolerance, points.MaxX + tolerance, points.MinY - tolerance, points.MaxY + tolerance);
             if (IsPointWithinBox(point, sBox) == false)
                 return false;
-            Int32 sPointCount = points.Count;
-            for (Int32 i = 0; i <= sPointCount - 2; i++)
+            int sPointCount = points.Count;
+            for (int i = 0; i <= sPointCount - 2; i++)
             {
                 if (GetDistanceFromPointToSegment(point.X, point.Y, points.GetItem(i).X, points.GetItem(i).Y,
                     points.GetItem(i + 1).X, points.GetItem(i + 1).Y) <= tolerance)
@@ -339,8 +339,8 @@ namespace MyMapObjects
                 multiPolyline.MinY - tolerance, multiPolyline.MaxY + tolerance);
             if (IsPointWithinBox(point, sBox) == false)
                 return false;
-            Int32 sPartCount = multiPolyline.Parts.Count;
-            for (Int32 i = 0; i <= sPartCount - 1; i++)
+            int sPartCount = multiPolyline.Parts.Count;
+            for (int i = 0; i <= sPartCount - 1; i++)
             {
                 if (IsPointOnPolyline(point, multiPolyline.Parts.GetItem(i), tolerance) == true)
                     return true;
@@ -370,16 +370,16 @@ namespace MyMapObjects
         /// <returns></returns>
         public static bool IsPointWithinMultiPolygon(moPoint point, moMultiPolygon multiPolygon)
         {
-            //（1）判断点是否位于外包矩形内，如否则返回否
+            //(1) 判断点是否位于外包矩形内，如否则返回否
             moRectangle sExtent = multiPolygon.GetEnvelope();
             if (IsPointWithinBox(point, sExtent) == false)
             {
                 return false;
             }
-            //（2）射线法求交点个数
-            Int32 sIntersectionCount = 0;       //交点个数
-            Int32 sPartCount = multiPolygon.Parts.Count;
-            for (Int32 i = 0; i <= sPartCount - 1; i++)
+            //(2) 射线法求交点个数
+            int sIntersectionCount = 0;       //交点个数
+            int sPartCount = multiPolygon.Parts.Count;
+            for (int i = 0; i <= sPartCount - 1; i++)
             {
                 sIntersectionCount = sIntersectionCount + GetIntersectionCountBetweenRayAndPolygon(point, multiPolygon.Parts.GetItem(i));
             }
@@ -400,35 +400,35 @@ namespace MyMapObjects
         public static bool IsMultiPolylinePartiallyWithinBox(moMultiPolyline multipolyline, moRectangle box)
         {
             //思路：先判断矩形盒是否相交，如是，按如下顺序，满足任何一个条件，则返回True
-            //（1）复合折线任何一个点位于矩形盒内;
-            //（2）矩形盒与复合折线有交点
+            //(1) 复合折线任何一个点位于矩形盒内;
+            //(2) 矩形盒与复合折线有交点
             moRectangle sBox = multipolyline.GetEnvelope();
             if (AreBoxesCross(sBox, box) == false)
                 return false;
-            //（1）复合折线任何一个点位于矩形盒内;
-            Int32 sPartCount = multipolyline.Parts.Count;
-            for (Int32 i = 0; i <= sPartCount - 1; i++)
+            //(1) 复合折线任何一个点位于矩形盒内;
+            int sPartCount = multipolyline.Parts.Count;
+            for (int i = 0; i <= sPartCount - 1; i++)
             {
-                Int32 sPointCount = multipolyline.Parts.GetItem(i).Count;
-                for (Int32 j = 0; j <= sPointCount - 1; j++)
+                int sPointCount = multipolyline.Parts.GetItem(i).Count;
+                for (int j = 0; j <= sPointCount - 1; j++)
                 {
                     moPoint sCurPoint = multipolyline.Parts.GetItem(i).GetItem(j);
                     if (IsPointWithinBox(sCurPoint, box) == true)
                         return true;
                 }
             }
-            //（2）矩形盒与复合折线有交点
-            for (Int32 i = 0; i <= sPartCount - 1; i++)
+            //(2) 矩形盒与复合折线有交点
+            for (int i = 0; i <= sPartCount - 1; i++)
             {
                 moPoints sPoints = multipolyline.Parts.GetItem(i);
-                Int32 sPointCount = sPoints.Count;
-                for (Int32 j = 0; j <= sPointCount - 2; j++)
+                int sPointCount = sPoints.Count;
+                for (int j = 0; j <= sPointCount - 2; j++)
                 {
                     if (IsSegmentCrossBox(sPoints.GetItem(j), sPoints.GetItem(j + 1), box) == true)
                         return true;
                 }
             }
-            //（3）都不满足，返回false
+            //(3) 都不满足，返回false
             return false;
         }
 
@@ -441,25 +441,25 @@ namespace MyMapObjects
         public static bool IsMultiPolygonPartiallyWithinBox(moMultiPolygon multipolygon, moRectangle box)
         {
             //思路：先判断矩形盒是否相交，如是，按如下顺序，满足任何一个条件，则返回True
-            //（1）复合多边形任何一个点位于矩形盒内;
-            //（2）矩形盒任何一个顶点位于复合多边形内
-            //（3）矩形盒与复合多边形有交点
+            //(1) 复合多边形任何一个点位于矩形盒内;
+            //(2) 矩形盒任何一个顶点位于复合多边形内
+            //(3) 矩形盒与复合多边形有交点
             moRectangle sBox = multipolygon.GetEnvelope();
             if (AreBoxesCross(sBox, box) == false)
                 return false;
-            //（1）多边形任何一个点位于矩形盒内
-            Int32 sPartCount = multipolygon.Parts.Count;
-            for (Int32 i = 0; i <= sPartCount - 1; i++)
+            //(1) 多边形任何一个点位于矩形盒内
+            int sPartCount = multipolygon.Parts.Count;
+            for (int i = 0; i <= sPartCount - 1; i++)
             {
-                Int32 sPointCount = multipolygon.Parts.GetItem(i).Count;
-                for (Int32 j = 0; j <= sPointCount - 1; j++)
+                int sPointCount = multipolygon.Parts.GetItem(i).Count;
+                for (int j = 0; j <= sPointCount - 1; j++)
                 {
                     moPoint sCurPoint = multipolygon.Parts.GetItem(i).GetItem(j);
                     if (IsPointWithinBox(sCurPoint, box) == true)
                         return true;
                 }
             }
-            //（2）矩形盒任何一个顶点位于多边形内
+            //(2) 矩形盒任何一个顶点位于多边形内
             moPoint sRectPoint = new moPoint(box.MinX, box.MinY);   //左下点
             if (IsPointWithinMultiPolygon(sRectPoint, multipolygon) == true)
                 return true;
@@ -472,12 +472,12 @@ namespace MyMapObjects
             sRectPoint = new moPoint(box.MaxX, box.MinY);           //右下点
             if (IsPointWithinMultiPolygon(sRectPoint, multipolygon) == true)
                 return true;
-            //（3）矩形盒与复合多边形有交点
-            for (Int32 i = 0; i <= sPartCount - 1; i++)
+            //(3) 矩形盒与复合多边形有交点
+            for (int i = 0; i <= sPartCount - 1; i++)
             {
                 moPoints sPoints = multipolygon.Parts.GetItem(i);
-                Int32 sPointCount = sPoints.Count;
-                for (Int32 j = 0; j <= sPointCount - 2; j++)
+                int sPointCount = sPoints.Count;
+                for (int j = 0; j <= sPointCount - 2; j++)
                 {
                     if (IsSegmentCrossBox(sPoints.GetItem(j), sPoints.GetItem(j + 1), box) == true)
                         return true;
@@ -485,7 +485,7 @@ namespace MyMapObjects
                 if (IsSegmentCrossBox(sPoints.GetItem(sPointCount - 1), sPoints.GetItem(0), box) == true)
                     return true;
             }
-            //（4）都不满足，返回false
+            //(4) 都不满足，返回false
             return false;
         }
 
@@ -496,18 +496,18 @@ namespace MyMapObjects
         /// <returns></returns>
         public static moPoint GetMidPointOfPolyline(moPoints points)
         {
-            Int32 sPointCount = points.Count;
+            int sPointCount = points.Count;
             List<double> sDises = new List<double>();     //所有顶点至起点的距离
             sDises.Add(0);  //第一个点至起点的距离
-            for (Int32 i = 1; i <= sPointCount - 1; i++)
+            for (int i = 1; i <= sPointCount - 1; i++)
             {
                 double sCurDis = sDises.Last() + GetDistance(points.GetItem(i).X, points.GetItem(i).Y, points.GetItem(i - 1).X, points.GetItem(i - 1).Y);
                 sDises.Add(sCurDis);
             }
             //查找中点所在的线段索引号
-            Int32 sIndex = 0;
+            int sIndex = 0;
             double sMidDis = sDises.Last() / 2; //中点与起点的距离
-            for (Int32 i = 0; i <= sPointCount - 2; i++)
+            for (int i = 0; i <= sPointCount - 2; i++)
             {
                 if (sMidDis >= sDises[i] && sMidDis < sDises[i + 1])
                 {
@@ -537,10 +537,10 @@ namespace MyMapObjects
             //最小和最大两个交点P1和P2。
             //该扫描线与其他所有环求交点，如果交点位于P1和P2之间，则加入Intersections，否则不加入。
             //对Intersections按照X坐标排序，然后两两配对，找出长度最大的一对交点，其中点即为注记点
-            Int32 sPartCount = multiPolygon.Parts.Count;
-            //（1）求面积最大的环
+            int sPartCount = multiPolygon.Parts.Count;
+            //(1) 求面积最大的环
             moPoints sMaxRing;  //面积最大的环
-            Int32 sPartIndex = 0;   //面积最大环的索引号
+            int sPartIndex = 0;   //面积最大环的索引号
             if (sPartCount == 0)
             { throw new Exception("MultiPolygon has no one part!"); }
             else if (sPartCount == 1)
@@ -553,7 +553,7 @@ namespace MyMapObjects
                 //求第一个环的面积
                 double sMaxS = GetPolygonSquare(multiPolygon.Parts.GetItem(0));
                 //求其他环的面积，保留面积最大者
-                for (Int32 i = 1; i <= sPartCount - 1; i++)
+                for (int i = 1; i <= sPartCount - 1; i++)
                 {
                     double sCurS = GetPolygonSquare(multiPolygon.Parts.GetItem(i));
                     if (sCurS > sMaxS)
@@ -564,31 +564,31 @@ namespace MyMapObjects
                 }
                 sMaxRing = multiPolygon.Parts.GetItem(sPartIndex);
             }
-            //（2）求扫描线和面积最大环的交点序列
+            //(2) 求扫描线和面积最大环的交点序列
             sMaxRing.UpdateExtent();
             double sScanY = (sMaxRing.MinY + sMaxRing.MaxY) / 2;    //扫描线Y坐标
             List<double> sIntersections = GetIntersectionsBetweenScanAndPolygon(sScanY, sMaxRing);
             double sMinX = sIntersections.Min(), sMaxX = sIntersections.Max();  //最小最大X坐标
-            //（3）求扫描线与其他环的交点
-            for (Int32 i = 0; i <= sPartCount - 1; i++)
+            //(3) 求扫描线与其他环的交点
+            for (int i = 0; i <= sPartCount - 1; i++)
             {
                 if (i == sPartIndex)
                     continue;               //不用再计算最大环的交点
                 //与当前环的交点
                 List<double> sCurIntersections = GetIntersectionsBetweenScanAndPolygon(sScanY, multiPolygon.Parts.GetItem(i));
                 //加入sIntersections
-                for (Int32 j = 0; j <= sCurIntersections.Count - 1; j++)
+                for (int j = 0; j <= sCurIntersections.Count - 1; j++)
                     if (sCurIntersections[j] > sMinX && sCurIntersections[j] < sMaxX)
                     {
                         sIntersections.Add(sCurIntersections[j]);
                     }
             }
-            //（4）对交点序列排序，并两两配对，求出距离最大者
+            //(4) 对交点序列排序，并两两配对，求出距离最大者
             sIntersections.Sort();
-            Int32 sIntersectionCount = sIntersections.Count;
+            int sIntersectionCount = sIntersections.Count;
             double sMaxDis = double.MinValue;
-            Int32 sIntersectionIndex = 0;
-            for (Int32 i = 0; i <= sIntersectionCount - 2; i += 2)
+            int sIntersectionIndex = 0;
+            for (int i = 0; i <= sIntersectionCount - 2; i += 2)
             {
                 double sCurDis = sIntersections[i + 1] - sIntersections[i];
                 if (sCurDis > sMaxDis)
@@ -597,7 +597,7 @@ namespace MyMapObjects
                     sIntersectionIndex = i;
                 }
             }
-            //（5）计算距离最大的一对交点的中点
+            //(5) 计算距离最大的一对交点的中点
             double sLabelPointX = (sIntersections[sIntersectionIndex] + sIntersections[sIntersectionIndex + 1]) / 2;
             moPoint sLabelPoint = new moPoint(sLabelPointX, sScanY);
             return sLabelPoint;

@@ -33,7 +33,7 @@ namespace MyMapObjects
 
         #region 属性
 
-        public Int32 Count
+        public int Count
         {
             get { return _Parts.Count; }
         }
@@ -47,7 +47,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public moPoints GetItem(Int32 index)
+        public moPoints GetItem(int index)
         {
             return _Parts[index];
         }
@@ -57,7 +57,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <param name="part"></param>
-        public void SetItem(Int32 index, moPoints part)
+        public void SetItem(int index, moPoints part)
         {
             _Parts[index] = part;
         }
@@ -90,8 +90,8 @@ namespace MyMapObjects
         public moParts Clone()
         {
             moParts sParts = new moParts();
-            Int32 sPartCount = _Parts.Count;
-            for (Int32 i = 0; i <= sPartCount - 1; i++)
+            int sPartCount = _Parts.Count;
+            for (int i = 0; i <= sPartCount - 1; i++)
             {
                 moPoints sPart = _Parts[i].Clone();
                 sParts.Add(sPart);

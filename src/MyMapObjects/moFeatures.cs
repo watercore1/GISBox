@@ -23,7 +23,7 @@ namespace MyMapObjects
 
         #region 属性
 
-        public Int32 Count
+        public int Count
         {
             get { return _Features.Count; }
         }
@@ -32,12 +32,12 @@ namespace MyMapObjects
 
         #region 方法
 
-        public moFeature GetItem(Int32 index)
+        public moFeature GetItem(int index)
         {
             return _Features[index];
         }
 
-        public void SetItem(Int32 index, moFeature feature)
+        public void SetItem(int index, moFeature feature)
         {
             _Features[index] = feature;
         }
@@ -47,7 +47,7 @@ namespace MyMapObjects
             _Features.Add(feature);
         }
 
-        public void RemoveAt(Int32 index)
+        public void RemoveAt(int index)
         {
             _Features.RemoveAt(index);
         }

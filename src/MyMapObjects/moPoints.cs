@@ -36,7 +36,7 @@ namespace MyMapObjects
         /// <summary>
         /// 获取点数目
         /// </summary>
-        public Int32 Count
+        public int Count
         {
             get { return _Points.Count; }
         }
@@ -82,7 +82,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public moPoint GetItem(Int32 index)
+        public moPoint GetItem(int index)
         {
             return _Points[index];
         }
@@ -110,7 +110,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <param name="points"></param>
-        public void InsertRange(Int32 index, moPoint[] points)
+        public void InsertRange(int index, moPoint[] points)
         {
             _Points.InsertRange(index, points);
         }
@@ -120,7 +120,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <param name="point"></param>
-        public void Insert(Int32 index, moPoint point)
+        public void Insert(int index, moPoint point)
         {
             _Points.Insert(index, point);
         }
@@ -128,7 +128,7 @@ namespace MyMapObjects
         /// <summary>
         /// 删除指定索引号的元素
         /// </summary>
-        public void RemoveAt(Int32 index)
+        public void RemoveAt(int index)
         {
             _Points.RemoveAt(index);
         }
@@ -175,8 +175,8 @@ namespace MyMapObjects
         public moPoints Clone()
         {
             moPoints sPoints = new moPoints();
-            Int32 sPointCount = _Points.Count;
-            for (Int32 i = 0; i <= sPointCount - 1; i++)
+            int sPointCount = _Points.Count;
+            for (int i = 0; i <= sPointCount - 1; i++)
             {
                 moPoint sPoint = new moPoint(_Points[i].X, _Points[i].Y);
                 sPoints.Add(sPoint);
@@ -199,8 +199,8 @@ namespace MyMapObjects
             double sMaxX = double.MinValue;
             double sMinY = double.MaxValue;
             double sMaxY = double.MinValue;
-            Int32 sPointCount = _Points.Count;
-            for (Int32 i = 0; i <= sPointCount - 1; i++)
+            int sPointCount = _Points.Count;
+            for (int i = 0; i <= sPointCount - 1; i++)
             {
                 if (_Points[i].X < sMinX)
                     sMinX = _Points[i].X;

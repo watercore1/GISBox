@@ -5,8 +5,8 @@ namespace MyMapObjects
     public class moProjectionCS
     {
         //说明：
-        //（1）本类型的所有算法均将地理坐标系的本初子午线默认为格林威治0度经线；
-        //（2）仅实现了Lambert_Conformal_Conic_2SP投影下的地理坐标与投影坐标的互换
+        //(1) 本类型的所有算法均将地理坐标系的本初子午线默认为格林威治0度经线；
+        //(2) 仅实现了Lambert_Conformal_Conic_2SP投影下的地理坐标与投影坐标的互换
 
         #region 字段
 
@@ -69,7 +69,7 @@ namespace MyMapObjects
 
         #region 构造函数
 
-        public moProjectionCS(String projCSName, String geoCSName, String datumName, string spheroidName, double semiMajor, double inverseFlattening,
+        public moProjectionCS(string projCSName, string geoCSName, string datumName, string spheroidName, double semiMajor, double inverseFlattening,
             moProjectionTypeConstant projType, double originLatitude, double centralMeridian, double falseEasting, double falseNorthing, double scaleFactor,
                 double standardParallelOne, double standardParallelTwo, moLinearUnitConstant linearUnit)
         {
@@ -454,7 +454,7 @@ namespace MyMapObjects
                 t = Math.Pow((r / af0), _1n);
                 lat = HALF_PI - 2.0 * Math.Atan(t);
                 double eSinLat, dphi;
-                Int32 I;
+                int I;
                 for (I = 0; I <= 4; I++)
                 {
                     eSinLat = e * Math.Sin(lat);

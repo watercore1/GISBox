@@ -117,7 +117,7 @@ namespace MyMapObjects
             byte[] sBytes = new byte[4];
             RNGCryptoServiceProvider sChanelRng = new RNGCryptoServiceProvider();
             sChanelRng.GetBytes(sBytes);
-            Int32 sChanelValue = sBytes[0];
+            int sChanelValue = sBytes[0];
             byte A = 255, R, G, B;
             if (sChanelValue <= 85)
             {

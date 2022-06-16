@@ -9,10 +9,10 @@ namespace MyMapObjects
         #region 字段
 
         private moShape[] mShapes;      //图形集合
-        private Int32 mTimes;           //闪烁次数，m表示模块级变量
-        private Int32 mInterval;        //闪烁的时间间隔，单位毫秒
-        private Int32 mSteps;           //时钟循环总次数=_Times*2
-        private Int32 mCurStep;         //时钟循环当前次数
+        private int mTimes;           //闪烁次数，m表示模块级变量
+        private int mInterval;        //闪烁的时间间隔，单位毫秒
+        private int mSteps;           //时钟循环总次数=_Times*2
+        private int mCurStep;         //时钟循环当前次数
         private Timer mTimer = new Timer();     //时钟，用于时间控制
         private bool mIsInFlash = false;    //是否正处于闪烁控制中。
 
@@ -36,7 +36,7 @@ namespace MyMapObjects
         /// <param name="shapes"></param>
         /// <param name="times"></param>
         /// <param name="interval"></param>
-        internal void StartFlash(moShape[] shapes, Int32 times, Int32 interval)
+        internal void StartFlash(moShape[] shapes, int times, int interval)
         {
             if (shapes.Length == 0)
                 return;

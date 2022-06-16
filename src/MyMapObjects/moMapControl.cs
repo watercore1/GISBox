@@ -186,19 +186,19 @@ namespace MyMapObjects
         /// <returns></returns>
         public moRectangle GetFullExtent()
         {
-            //（1）新建一个空矩形
+            //(1) 新建一个空矩形
             double sMinX = double.MaxValue, sMaxX = double.MinValue;
             double sMinY = double.MaxValue, sMaxY = double.MinValue;
             moRectangle sFullExtent;
-            //（2）如果图层数量为0，则返回空矩形
-            Int32 sLayerCount = _Layers.Count;
+            //(2) 如果图层数量为0，则返回空矩形
+            int sLayerCount = _Layers.Count;
             if (sLayerCount == 0)
             {
                 sFullExtent = new moRectangle(sMinX, sMaxX, sMinY, sMaxY);
                 return sFullExtent;
             }
-            //（3）计算范围矩形
-            for (Int32 i = 0; i <= sLayerCount - 1; i++)
+            //(3) 计算范围矩形
+            for (int i = 0; i <= sLayerCount - 1; i++)
             {
                 moMapLayer sLayer = _Layers.GetItem(i);
                 moRectangle sExtent = sLayer.Extent;
@@ -397,7 +397,7 @@ namespace MyMapObjects
         /// <param name="shapes"></param>
         /// <param name="times"></param>
         /// <param name="interval"></param>
-        public void FlashShapes(moShape[] shapes, Int32 times, Int32 interval)
+        public void FlashShapes(moShape[] shapes, int times, int interval)
         {
             mFlashControl.StartFlash(shapes, times, interval);
         }
@@ -419,9 +419,9 @@ namespace MyMapObjects
         /// <param name="selectingBox"></param>
         /// <param name="tolerance"></param>
         /// <param name="selectMethod"></param>
-        public void SelectByBox(moRectangle selectingBox, double tolerance, Int32 selectMethod)
+        public void SelectByBox(moRectangle selectingBox, double tolerance, int selectMethod)
         {
-            Int32 sLayerCount = _Layers.Count;
+            int sLayerCount = _Layers.Count;
             for (int i = 0; i < sLayerCount; i++)
             {
                 moMapLayer sLayer = _Layers.GetItem(i);
@@ -503,8 +503,8 @@ namespace MyMapObjects
             double mpu = mMapDrawingReference.mpu;
             moRectangle sExtent = GetExtent();
             Graphics g = Graphics.FromImage(mBufferMap2);
-            Int32 sShapeCount = shapes.Length;
-            for (Int32 i = 0; i <= sShapeCount - 1; i++)
+            int sShapeCount = shapes.Length;
+            for (int i = 0; i <= sShapeCount - 1; i++)
             {
                 if (shapes[i].GetType() == typeof(moPoint))
                 {
@@ -630,18 +630,18 @@ namespace MyMapObjects
         /// </summary>
         private void DrawBufferMap1()
         {
-            //（1）获取地图窗口的范围
+            //(1) 获取地图窗口的范围
             moRectangle sExtent = GetExtent();
             if (sExtent.IsEmpty == true)
                 return;
-            //（2）绘制所有图层的要素，采用倒序
+            //(2) 绘制所有图层的要素，采用倒序
             double sMapScale = mMapDrawingReference.MapScale;
             double dpm = mMapDrawingReference.dpm;
             double mpu = mMapDrawingReference.mpu;
             Graphics g = Graphics.FromImage(mBufferMap1);
             g.Clear(Color.White);
-            Int32 sLayerCount = _Layers.Count;
-            for (Int32 i = sLayerCount - 1; i >= 0; i--)
+            int sLayerCount = _Layers.Count;
+            for (int i = sLayerCount - 1; i >= 0; i--)
             {
                 moMapLayer sLayer = _Layers.GetItem(i);
                 if (sLayer.Visible == true)
@@ -649,9 +649,9 @@ namespace MyMapObjects
                     sLayer.DrawFeatures(g, sExtent, sMapScale, dpm, mpu);
                 }
             }
-            //（3）绘制所有图层的注记，依然倒序
+            //(3) 绘制所有图层的注记，依然倒序
             List<RectangleF> sPlacedLabelExtents = new List<RectangleF>();
-            for (Int32 i = sLayerCount - 1; i >= 0; i--)
+            for (int i = sLayerCount - 1; i >= 0; i--)
             {
                 moMapLayer sLayer = _Layers.GetItem(i);
                 if (sLayer.Visible == true)
@@ -667,21 +667,21 @@ namespace MyMapObjects
         /// </summary>
         private void DrawBufferMap2()
         {
-            //（1）获取地图窗口的范围
+            //(1) 获取地图窗口的范围
             moRectangle sExtent = GetExtent();
             if (sExtent.IsEmpty == true)
                 return;
-            //（2）绘制缓冲位图2
+            //(2) 绘制缓冲位图2
             Graphics g = Graphics.FromImage(mBufferMap2);
             g.Clear(Color.White);
             Rectangle sRect = new Rectangle(0, 0, mBufferMap1.Width, mBufferMap1.Height);
             g.DrawImage(mBufferMap1, sRect, sRect, GraphicsUnit.Pixel);
-            //（3）绘制所有图层的选择要素，采用倒序
+            //(3) 绘制所有图层的选择要素，采用倒序
             double sMapScale = mMapDrawingReference.MapScale;
             double dpm = mMapDrawingReference.dpm;
             double mpu = mMapDrawingReference.mpu;
-            Int32 sLayerCount = _Layers.Count;
-            for (Int32 i = sLayerCount - 1; i >= 0; i--)
+            int sLayerCount = _Layers.Count;
+            for (int i = sLayerCount - 1; i >= 0; i--)
             {
                 moMapLayer sLayer = _Layers.GetItem(i);
                 if (sLayer.ShapeType == moGeometryTypeConstant.Point)
@@ -697,7 +697,7 @@ namespace MyMapObjects
                     sLayer.DrawSelectedFeatures(g, sExtent, sMapScale, dpm, mpu, mSelectedFillSymbol);
                 }
             }
-            //（4）触发事件，以便用户程序继续绘图
+            //(4) 触发事件，以便用户程序继续绘图
             if (AfterTrackingLayerDraw != null)
             {
                 //新建绘图工具

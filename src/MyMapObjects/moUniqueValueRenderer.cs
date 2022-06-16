@@ -45,7 +45,7 @@ namespace MyMapObjects
         /// <summary>
         /// 获取唯一值数目
         /// </summary>
-        public Int32 ValueCount
+        public int ValueCount
         {
             get { return _Values.Count; }
         }
@@ -70,7 +70,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public string GetValue(Int32 index)
+        public string GetValue(int index)
         {
             return _Values[index];
         }
@@ -80,7 +80,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <param name="value"></param>
-        public void SetValue(Int32 index, string value)
+        public void SetValue(int index, string value)
         {
             _Values[index] = value;
         }
@@ -90,7 +90,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public moSymbol GetSymbol(Int32 index)
+        public moSymbol GetSymbol(int index)
         {
             return _Symbols[index];
         }
@@ -100,7 +100,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <param name="symbol"></param>
-        public void SetSymbol(Int32 index, moSymbol symbol)
+        public void SetSymbol(int index, moSymbol symbol)
         {
             _Symbols[index] = symbol;
         }
@@ -137,7 +137,7 @@ namespace MyMapObjects
         /// <returns></returns>
         public moSymbol FindSymbol(string value)
         {
-            Int32 sValueCount = _Values.Count;
+            int sValueCount = _Values.Count;
 
             for (int i = 0; i < sValueCount; i++)
             {
@@ -158,8 +158,8 @@ namespace MyMapObjects
             sRenderer._Field = _Field;
             sRenderer._HeadTitle = _HeadTitle;
             sRenderer._ShowHead = _ShowHead;
-            Int32 sValueCount = _Values.Count;
-            for (Int32 i = 0; i <= sValueCount - 1; i++)
+            int sValueCount = _Values.Count;
+            for (int i = 0; i <= sValueCount - 1; i++)
             {
                 string sValue = _Values[i];
                 moSymbol sSymbol = null;

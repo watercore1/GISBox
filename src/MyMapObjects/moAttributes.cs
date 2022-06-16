@@ -30,12 +30,12 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public object GetItem(Int32 index)
+        public object GetItem(int index)
         {
             return _Attributes[index];
         }
 
-        public void SetItem(Int32 index, object attributeValue)
+        public void SetItem(int index, object attributeValue)
         {
             _Attributes[index] = attributeValue;
         }
@@ -72,7 +72,7 @@ namespace MyMapObjects
         /// 删除指定索引号的元素
         /// </summary>
         /// <param name="index"></param>
-        public void RemoveAt(Int32 index)
+        public void RemoveAt(int index)
         {
             _Attributes.RemoveAt(index);
         }

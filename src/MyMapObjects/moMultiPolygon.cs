@@ -108,8 +108,8 @@ namespace MyMapObjects
         {
             double sMinX = double.MaxValue, sMaxX = double.MinValue;
             double sMinY = double.MaxValue, sMaxY = double.MinValue;
-            Int32 sPartCount = _Parts.Count;
-            for (Int32 i = 0; i <= sPartCount - 1; i++)
+            int sPartCount = _Parts.Count;
+            for (int i = 0; i <= sPartCount - 1; i++)
             {
                 _Parts.GetItem(i).UpdateExtent();
                 if (_Parts.GetItem(i).MinX < sMinX)

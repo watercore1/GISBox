@@ -10,7 +10,7 @@ namespace MyMapObjects
         private string _Name = ""; //字段名称
         private string _AliasName = ""; //字段别名
         private moValueTypeConstant _ValueType = moValueTypeConstant.dInt32; //字段类型
-        private Int32 _Length = 0; //字段长度，因为对于一些数据库系统，对字段长度有所限制，注意不是字段名的长度，是字段所储存的数据长度
+        private int _Length = 0; //字段长度，因为对于一些数据库系统，对字段长度有所限制，注意不是字段名的长度，是字段所储存的数据长度
 
         #endregion 字段
 
@@ -52,7 +52,7 @@ namespace MyMapObjects
             get { return _ValueType; }
         }
 
-        public Int32 Length
+        public int Length
         {
             get { return _Length; }
         }

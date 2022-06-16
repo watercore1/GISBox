@@ -24,7 +24,7 @@ namespace MyMapObjects
         /// <summary>
         /// 获取图层数量
         /// </summary>
-        public Int32 Count
+        public int Count
         {
             get { return _Layers.Count; }
         }
@@ -38,7 +38,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public moMapLayer GetItem(Int32 index)
+        public moMapLayer GetItem(int index)
         {
             return _Layers[index];
         }
@@ -50,6 +50,16 @@ namespace MyMapObjects
         public void Add(moMapLayer mapLayer)
         {
             _Layers.Add(mapLayer);
+        }
+
+        /// <summary>
+        /// 在索引处添加一个图层
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="mapLayer"></param>
+        public void Insert(int index, moMapLayer mapLayer)
+        {
+            _Layers.Insert(index, mapLayer);
         }
 
         /// <summary>
@@ -65,7 +75,7 @@ namespace MyMapObjects
         /// 移除指定索引号的图层
         /// </summary>
         /// <param name="index"></param>
-        public void RemoveAt(Int32 index)
+        public void RemoveAt(int index)
         {
             _Layers.RemoveAt(index);
         }
@@ -83,7 +93,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="fromIndex"></param>
         /// <param name="toIndex"></param>
-        public void MoveTo(Int32 fromIndex, Int32 toIndex)
+        public void MoveTo(int fromIndex, int toIndex)
         {
             if (fromIndex == toIndex)
                 return;

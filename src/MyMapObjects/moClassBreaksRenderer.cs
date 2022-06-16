@@ -54,7 +54,7 @@ namespace MyMapObjects
         /// <summary>
         /// 获取分割值数目
         /// </summary>
-        public Int32 BreakCount
+        public int BreakCount
         {
             get { return _BreakValues.Count; }
         }
@@ -77,7 +77,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public double GetBreakValue(Int32 index)
+        public double GetBreakValue(int index)
         {
             return _BreakValues[index];
         }
@@ -87,7 +87,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <param name="value"></param>
-        public void SetBreakValue(Int32 index, double breakValue)
+        public void SetBreakValue(int index, double breakValue)
         {
             _BreakValues[index] = breakValue;
         }
@@ -97,7 +97,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public moSymbol GetSymbol(Int32 index)
+        public moSymbol GetSymbol(int index)
         {
             return _Symbols[index];
         }
@@ -107,7 +107,7 @@ namespace MyMapObjects
         /// </summary>
         /// <param name="index"></param>
         /// <param name="value"></param>
-        public void SetSymbol(Int32 index, moSymbol symbol)
+        public void SetSymbol(int index, moSymbol symbol)
         {
             _Symbols[index] = symbol;
         }
@@ -145,7 +145,7 @@ namespace MyMapObjects
         /// <returns></returns>
         public moSymbol FindSymbol(double value)
         {
-            Int32 sBreakCount = _BreakValues.Count;
+            int sBreakCount = _BreakValues.Count;
             if (sBreakCount == 0)
                 return _DefaultSymbol;
             if (value < _BreakValues[0])    //小于第一个分割值
@@ -154,7 +154,7 @@ namespace MyMapObjects
             }
             else
             {
-                for (Int32 i = 0; i <= sBreakCount - 2; i++)
+                for (int i = 0; i <= sBreakCount - 2; i++)
                 {
                     if (i < sBreakCount - 2 && value >= _BreakValues[i] && value < _BreakValues[i + 1])
                         return _Symbols[i + 1];
@@ -172,12 +172,12 @@ namespace MyMapObjects
         /// <param name="endColor"></param>
         public void RampColor(Color startColor, Color endColor)
         {
-            Int32 sBreakCount = _BreakValues.Count;
+            int sBreakCount = _BreakValues.Count;
             if (sBreakCount <= 0)
                 return;
-            Int32 A1 = startColor.A, R1 = startColor.R, G1 = startColor.G, B1 = startColor.B;
-            Int32 A2 = endColor.A, R2 = endColor.R, G2 = endColor.G, B2 = endColor.B;
-            Int32 A, R, G, B;
+            int A1 = startColor.A, R1 = startColor.R, G1 = startColor.G, B1 = startColor.B;
+            int A2 = endColor.A, R2 = endColor.R, G2 = endColor.G, B2 = endColor.B;
+            int A, R, G, B;
             double H, S, V;
             Color[] sColors = new Color[sBreakCount];
             if (sBreakCount == 1)
@@ -189,7 +189,7 @@ namespace MyMapObjects
                 double[] sEndHSV = RGBToHSV(endColor.R, endColor.G, endColor.B);
                 sColors[0] = startColor;
                 sColors[sBreakCount - 1] = endColor;
-                for (Int32 i = 1; i <= sBreakCount - 2; i++)
+                for (int i = 1; i <= sBreakCount - 2; i++)
                 {
                     H = sStartHSV[0] + i * (sEndHSV[0] - sStartHSV[0]) / sBreakCount;
                     S = sStartHSV[1] + i * (sEndHSV[1] - sStartHSV[1]) / sBreakCount;
@@ -202,7 +202,7 @@ namespace MyMapObjects
                     sColors[i] = Color.FromArgb(A, R, G, B);
                 }
             }
-            for (Int32 i = 0; i <= sBreakCount - 1; i++)
+            for (int i = 0; i <= sBreakCount - 1; i++)
             {
                 if (_Symbols[i] != null)
                 {
@@ -236,8 +236,8 @@ namespace MyMapObjects
             sRenderer._HeadTitle = _HeadTitle;
             sRenderer._ShowHead = _ShowHead;
 
-            Int32 sBreakCount = _BreakValues.Count;
-            for (Int32 i = 0; i <= sBreakCount - 1; i++)
+            int sBreakCount = _BreakValues.Count;
+            for (int i = 0; i <= sBreakCount - 1; i++)
             {
                 double sBreakValue = _BreakValues[i];
                 moSymbol sSymbol = null;
@@ -301,7 +301,7 @@ namespace MyMapObjects
             else
             {
                 H = H / 60;
-                Int32 i = (Int32)H;
+                int i = (int)H;
                 double f = H - i;
                 double aa = V * (1 - S);
                 double bb = V * (1 - S * f);
