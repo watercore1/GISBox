@@ -105,120 +105,81 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form\Add_field.cs">
+    <Compile Include="Forms\AddNewField.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Add_field.Designer.cs">
-      <DependentUpon>Add_field.cs</DependentUpon>
+    <Compile Include="Forms\AddNewField.Designer.cs">
+      <DependentUpon>AddNewField.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\AttributeTable.cs">
+    <Compile Include="Forms\AttributeTable.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\AttributeTable.Designer.cs">
+    <Compile Include="Forms\AttributeTable.Designer.cs">
       <DependentUpon>AttributeTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\CreateLayer.cs">
+    <Compile Include="Forms\CreateNewLayer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\CreateLayer.Designer.cs">
-      <DependentUpon>CreateLayer.cs</DependentUpon>
+    <Compile Include="Forms\CreateNewLayer.Designer.cs">
+      <DependentUpon>CreateNewLayer.cs</DependentUpon>
     </Compile>
-    <Compile Include="DbfFileField.cs" />
-    <Compile Include="DbfFileHeader.cs" />
-    <Compile Include="DbfFileProcessor.cs" />
-    <Compile Include="Enum.cs" />
-    <Compile Include="Form\Identify.cs">
+    <Compile Include="Forms\Identify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Identify.Designer.cs">
+    <Compile Include="Forms\Identify.Designer.cs">
       <DependentUpon>Identify.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\Label.cs">
+    <Compile Include="Forms\SelectByAttribute.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Label.Designer.cs">
-      <DependentUpon>Label.cs</DependentUpon>
+    <Compile Include="Forms\SelectByAttribute.Designer.cs">
+      <DependentUpon>SelectByAttribute.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\LayerAttributes.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\LayerAttributes.Designer.cs">
-      <DependentUpon>LayerAttributes.cs</DependentUpon>
-    </Compile>
+    <Compile Include="MapVariable\LabelVariable.cs" />
+    <Compile Include="MapVariable\OperationVariable.cs" />
+    <Compile Include="MapVariable\SettingVariable.cs" />
+    <Compile Include="MapVariable\RenderVariable.cs" />
+    <Compile Include="ShapeFile\MoAttributesList.cs" />
+    <Compile Include="ShapeFile\ShapeFileProcessor.cs" />
+    <Compile Include="ShapeFile\DbfFieldDescriptor.cs" />
+    <Compile Include="ShapeFile\DbfFileHeader.cs" />
+    <Compile Include="ShapeFile\DbfFileProcessor.cs" />
+    <Compile Include="Enum.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\PointRenderer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\PointRenderer.Designer.cs">
-      <DependentUpon>PointRenderer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form\PolygonRenderer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\PolygonRenderer.Designer.cs">
-      <DependentUpon>PolygonRenderer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form\PolylineRenderer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\PolylineRenderer.Designer.cs">
-      <DependentUpon>PolylineRenderer.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Form\Research.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\Research.Designer.cs">
-      <DependentUpon>Research.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ShpFileHeader.cs" />
-    <Compile Include="ShxShpFileProcessor.cs" />
-    <Compile Include="ShxFileProcessor.cs" />
+    <Compile Include="ShapeFile\ShpFileHeader.cs" />
+    <Compile Include="ShapeFile\ShpFileProcessor.cs" />
+    <Compile Include="ShapeFile\ShxFileProcessor.cs" />
     <Compile Include="Util.cs" />
-    <EmbeddedResource Include="Form\Add_field.resx">
-      <DependentUpon>Add_field.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AddNewField.resx">
+      <DependentUpon>AddNewField.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\AttributeTable.resx">
+    <EmbeddedResource Include="Forms\AttributeTable.resx">
       <DependentUpon>AttributeTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\CreateLayer.resx">
-      <DependentUpon>CreateLayer.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\CreateNewLayer.resx">
+      <DependentUpon>CreateNewLayer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Identify.resx">
+    <EmbeddedResource Include="Forms\Identify.resx">
       <DependentUpon>Identify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Label.resx">
-      <DependentUpon>Label.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\LayerAttributes.resx">
-      <DependentUpon>LayerAttributes.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SelectByAttribute.resx">
+      <DependentUpon>SelectByAttribute.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\PointRenderer.resx">
-      <DependentUpon>PointRenderer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\PolygonRenderer.resx">
-      <DependentUpon>PolygonRenderer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\PolylineRenderer.resx">
-      <DependentUpon>PolylineRenderer.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\Research.resx">
-      <DependentUpon>Research.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -264,9 +225,6 @@
     <None Include="Resources\全图.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\编辑节点.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 和 x64%29</ProductName>
@@ -278,6 +236,50 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\删除节点.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\添加节点.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\移动节点.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\保存编辑.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\清除所选要素.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\del.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\node.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pan.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GISBox.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\全部选择.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\删除字段.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\开始编辑.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\添加字段.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

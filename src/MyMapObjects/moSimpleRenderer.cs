@@ -9,30 +9,27 @@
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moSimpleRenderer()
         {
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
-        public override moRendererTypeConstant RendererType
-        {
-            get { return moRendererTypeConstant.Simple; }
-        }
+        public override moRendererTypeConstant RendererType => moRendererTypeConstant.Simple;
 
         public moSymbol Symbol
         {
-            get { return _Symbol; }
-            set { _Symbol = value; }
+            get => _Symbol;
+            set => _Symbol = value;
         }
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 克隆
@@ -46,6 +43,6 @@
             return sRenderer;
         }
 
-        #endregion 方法
+        #endregion Methods
     }
 }

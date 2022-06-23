@@ -15,7 +15,7 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moSimpleFillSymbol()
         {
@@ -30,22 +30,28 @@ namespace MyMapObjects
             InitializeOutline();
         }
 
-        #endregion 构造函数
+        public moSimpleFillSymbol(Color boxColor)
+        {
+            _Color = Color.Transparent;
+            _Outline = new moSimpleLineSymbol
+            {
+                Color = boxColor,
+            };
+        }
+
+        #endregion Constructors
 
         #region 属性
 
-        public override moSymbolTypeConstant SymbolType
-        {
-            get { return moSymbolTypeConstant.SimpleFillSymbol; }
-        }
+        public override moSymbolTypeConstant SymbolType => moSymbolTypeConstant.SimpleFillSymbol;
 
         /// <summary>
         /// 获取或设置标签
         /// </summary>
         public string Label
         {
-            get { return _Label; }
-            set { _Label = value; }
+            get => _Label;
+            set => _Label = value;
         }
 
         /// <summary>
@@ -53,8 +59,8 @@ namespace MyMapObjects
         /// </summary>
         public bool Visible
         {
-            get { return _Visible; }
-            set { _Visible = value; }
+            get => _Visible;
+            set => _Visible = value;
         }
 
         /// <summary>
@@ -62,8 +68,8 @@ namespace MyMapObjects
         /// </summary>
         public Color Color
         {
-            get { return _Color; }
-            set { _Color = value; }
+            get => _Color;
+            set => _Color = value;
         }
 
         /// <summary>
@@ -71,13 +77,13 @@ namespace MyMapObjects
         /// </summary>
         public moSimpleLineSymbol Outline
         {
-            get { return _Outline; }
-            set { _Outline = value; }
+            get => _Outline;
+            set => _Outline = value;
         }
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 克隆
@@ -93,7 +99,7 @@ namespace MyMapObjects
             return sSymbol;
         }
 
-        #endregion 方法
+        #endregion Methods
 
         #region 私有函数
 

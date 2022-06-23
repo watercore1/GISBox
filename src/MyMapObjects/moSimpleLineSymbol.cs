@@ -17,7 +17,7 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moSimpleLineSymbol()
         {
@@ -30,25 +30,27 @@ namespace MyMapObjects
             CreateRandomColor(); //生成随机颜色
         }
 
-        #endregion 构造函数
+        public moSimpleLineSymbol(Color color)
+        {
+            _Color = color;
+        }
+
+        #endregion Constructors
 
         #region 属性
 
         /// <summary>
         /// 获取符号类型
         /// </summary>
-        public override moSymbolTypeConstant SymbolType
-        {
-            get { return moSymbolTypeConstant.SimpleLineSymbol; }
-        }
+        public override moSymbolTypeConstant SymbolType => moSymbolTypeConstant.SimpleLineSymbol;
 
         /// <summary>
         /// 获取或设置标签
         /// </summary>
         public string Label
         {
-            get { return _Label; }
-            set { _Label = value; }
+            get => _Label;
+            set => _Label = value;
         }
 
         /// <summary>
@@ -56,8 +58,8 @@ namespace MyMapObjects
         /// </summary>
         public bool Visible
         {
-            get { return _Visible; }
-            set { _Visible = value; }
+            get => _Visible;
+            set => _Visible = value;
         }
 
         /// <summary>
@@ -65,8 +67,8 @@ namespace MyMapObjects
         /// </summary>
         public moSimpleLineSymbolStyleConstant Style
         {
-            get { return _Style; }
-            set { _Style = value; }
+            get => _Style;
+            set => _Style = value;
         }
 
         /// <summary>
@@ -74,8 +76,8 @@ namespace MyMapObjects
         /// </summary>
         public Color Color
         {
-            get { return _Color; }
-            set { _Color = value; }
+            get => _Color;
+            set => _Color = value;
         }
 
         /// <summary>
@@ -83,13 +85,13 @@ namespace MyMapObjects
         /// </summary>
         public double Size
         {
-            get { return _Size; }
-            set { _Size = value; }
+            get => _Size;
+            set => _Size = value;
         }
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 克隆
@@ -105,7 +107,7 @@ namespace MyMapObjects
             return sSymbol;
         }
 
-        #endregion 方法
+        #endregion Methods
 
         #region 私有函数
 

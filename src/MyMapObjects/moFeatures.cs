@@ -12,25 +12,22 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moFeatures()
         {
             _Features = new List<moFeature>();
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
-        public int Count
-        {
-            get { return _Features.Count; }
-        }
+        public int Count => _Features.Count;
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         public moFeature GetItem(int index)
         {
@@ -52,6 +49,34 @@ namespace MyMapObjects
             _Features.RemoveAt(index);
         }
 
+        // <summary>
+        /// 获取该要素所处的位置
+        /// </summary>
+        /// <param name="feature"></param>
+        /// <returns></returns>
+        public int Find(moFeature feature)
+        {
+            object[] temp = feature.Attributes.ToArray();
+            object[] temp1;
+            bool judge = true;
+            for (int i = 0; i < this.Count; i++)
+            {
+                temp1 = this.GetItem(i).Attributes.ToArray();
+                for (int j = 0; j < this.GetItem(i).Attributes.Count; j++)
+                {
+                    if (temp1[j] != temp[j])
+                    {
+                        judge = false;
+                        break;
+                    }
+                }
+                if (judge == true)
+                    return i;
+                judge = true;
+            }
+            return -1;
+        }
+
         /// <summary>
         /// 清除所有元素
         /// </summary>
@@ -60,6 +85,6 @@ namespace MyMapObjects
             _Features.Clear();
         }
 
-        #endregion 方法
+        #endregion Methods
     }
 }

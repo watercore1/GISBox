@@ -1,9 +1,9 @@
 ﻿namespace GISBox
 {
     /// <summary>
-    /// shape file 要素类型
+    /// shape file feature type
     /// </summary>
-    public enum ShapeFileType
+    public enum ShapeFileType:int
     {
         //NullShape = 0,
         Point = 1,
@@ -22,20 +22,36 @@
     }
 
     /// <summary>
-    /// 地图操作
+    /// use one byte to represent dbf Field Type
+    /// divide all types into four case
+    /// </summary>
+    public enum DbfFieldType:byte
+    {
+        Int= (byte)'I',
+        Single = (byte)'F',
+        Double = (byte)'D',
+        Text = (byte)'C',
+    }
+
+    /// <summary>
+    /// different map states
     /// </summary>
     public enum MapOpStyle
     {
-        None=0,         //无
-        ZoomIn=1,       //放大
-        ZoomOut=2,      //缩小
-        Move = 3,       //移动视图
-        Select = 4,     //选择要素
-        Identify = 5,   //识别要素
-        Edit = 6,       //选择要编辑要素，并移动选中的要素
-        Create = 7,     //创建新要素
-        MoveNode = 8,   //移动节点
-        AddNode = 9,    //添加节点
-        DeleteNode =10  //删除节点
+        None=0,        
+        ZoomIn=1,       
+        ZoomOut=2,      
+        Pan = 3,       
+        Select = 4,     // select feature
+        Identify = 5,   // identify feature
+        /// <summary>
+        /// select the feature to edit
+        /// and can move the selected feature in this style
+        /// </summary>
+        SelectAndMoveFeature = 6,
+        MoveNode = 7,   // move node
+        AddNode = 8,    // add node
+        DelNode =9,  // del node
+        Create = 10,    // create feature
     }
 }

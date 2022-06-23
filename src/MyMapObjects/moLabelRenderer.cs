@@ -18,8 +18,8 @@
         /// </summary>
         public bool LabelFeatures
         {
-            get { return _LabelFeatures; }
-            set { _LabelFeatures = value; }
+            get => _LabelFeatures;
+            set => _LabelFeatures = value;
         }
 
         /// <summary>
@@ -27,8 +27,8 @@
         /// </summary>
         public moTextSymbol TextSymbol
         {
-            get { return _TextSymbol; }
-            set { _TextSymbol = value; }
+            get => _TextSymbol;
+            set => _TextSymbol = value;
         }
 
         /// <summary>
@@ -36,8 +36,8 @@
         /// </summary>
         public string Field
         {
-            get { return _Field; }
-            set { _Field = value; }
+            get => _Field;
+            set => _Field = value;
         }
 
         #endregion 属性

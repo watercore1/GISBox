@@ -12,26 +12,23 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moLayers()
         { }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
         /// <summary>
         /// 获取图层数量
         /// </summary>
-        public int Count
-        {
-            get { return _Layers.Count; }
-        }
+        public int Count => _Layers.Count;
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 获取指定索引号的图层
@@ -105,6 +102,6 @@ namespace MyMapObjects
             }
         }
 
-        #endregion 方法
+        #endregion Methods
     }
 }

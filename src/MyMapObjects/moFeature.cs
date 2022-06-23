@@ -12,7 +12,7 @@
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moFeature(moGeometryTypeConstant shapeType, moGeometry geometry, moAttributes attributes)
         {
@@ -21,20 +21,20 @@
             _Attributes = attributes;
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
         public moGeometryTypeConstant ShapeType
         {
-            get { return _ShapeType; }
-            set { _ShapeType = value; }
+            get => _ShapeType;
+            set => _ShapeType = value;
         }
 
         public moGeometry Geometry
         {
-            get { return _Geometry; }
-            set { _Geometry = value; }
+            get => _Geometry;
+            set => _Geometry = value;
         }
 
         /// <summary>
@@ -42,8 +42,8 @@
         /// </summary>
         public moAttributes Attributes
         {
-            get { return _Attributes; }
-            set { _Attributes = value; }
+            get => _Attributes;
+            set => _Attributes = value;
         }
 
         /// <summary>
@@ -51,13 +51,13 @@
         /// </summary>
         internal moSymbol Symbol
         {
-            get { return _Symbol; }
-            set { _Symbol = value; }
+            get => _Symbol;
+            set => _Symbol = value;
         }
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 获取要素的外包矩形（最小绑定矩形）
@@ -114,6 +114,6 @@
             return sFeature;
         }
 
-        #endregion 方法
+        #endregion Methods
     }
 }

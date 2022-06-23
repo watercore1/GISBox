@@ -14,7 +14,7 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moField(string name)
         {
@@ -29,37 +29,28 @@ namespace MyMapObjects
             _ValueType = valueType;
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
         /// <summary>
         /// 获取字段名称
         /// </summary>
-        public string Name
-        {
-            get { return _Name; }
-        }
+        public string Name => _Name;
 
         public string AliasName
         {
-            get { return _AliasName; }
-            set { _AliasName = value; }
+            get => _AliasName;
+            set => _AliasName = value;
         }
 
-        public moValueTypeConstant ValueType
-        {
-            get { return _ValueType; }
-        }
+        public moValueTypeConstant ValueType => _ValueType;
 
-        public int Length
-        {
-            get { return _Length; }
-        }
+        public int Length => _Length;
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 克隆
@@ -73,6 +64,6 @@ namespace MyMapObjects
             return sField;
         }
 
-        #endregion 方法
+        #endregion Methods
     }
 }

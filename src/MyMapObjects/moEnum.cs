@@ -57,9 +57,10 @@
     /// </summary>
     public enum moGeometryTypeConstant
     {
-        Point = 0,
-        MultiPolyline = 1,
-        MultiPolygon = 2
+        None = 0,
+        Point = 1,
+        MultiPolyline = 2,
+        MultiPolygon = 3
     }
 
     /// <summary>

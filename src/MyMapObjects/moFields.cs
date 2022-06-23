@@ -14,32 +14,29 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moFields()
         {
             _Fields = new List<moField>();
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
         /// <summary>
         /// 获取字段集中元素的数目（字段的数目）
         /// </summary>
-        public int Count
-        {
-            get { return _Fields.Count; }
-        }
+        public int Count => _Fields.Count;
 
         /// <summary>
         /// 获取或设置主字段
         /// </summary>
         public string PrimaryField
         {
-            get { return _PrimaryField; }
-            set { _PrimaryField = value; }
+            get => _PrimaryField;
+            set => _PrimaryField = value;
         }
 
         /// <summary>
@@ -47,13 +44,13 @@ namespace MyMapObjects
         /// </summary>
         public bool ShowAlias
         {
-            get { return _ShowAlias; }
-            set { _ShowAlias = value; }
+            get => _ShowAlias;
+            set => _ShowAlias = value;
         }
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 查找指定名称的字段，并返回其索引号，如无，则返回-1
@@ -131,7 +128,7 @@ namespace MyMapObjects
                 FieldRemoved(this, index, sField);
         }
 
-        #endregion 方法
+        #endregion Methods
 
         #region 事件 放出消息，广播，由Layer监听
 

@@ -16,10 +16,10 @@
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         /// <summary>
-        /// 构造函数
+        /// Constructors
         /// </summary>
         /// <param name="offsetX">绘图区域左上点在地图坐标系中的X坐标</param>
         /// <param name="offsetY">绘图区域左上点在地图坐标系中的Y坐标</param>
@@ -35,43 +35,43 @@
             _mpu = mpu;
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
         internal double OffsetX
         {
-            get { return _OffsetX; }
-            set { _OffsetX = value; }
+            get => _OffsetX;
+            set => _OffsetX = value;
         }
 
         internal double OffsetY
         {
-            get { return _OffsetY; }
-            set { _OffsetY = value; }
+            get => _OffsetY;
+            set => _OffsetY = value;
         }
 
         internal double MapScale
         {
-            get { return _MapScale; }
-            set { _MapScale = value; }
+            get => _MapScale;
+            set => _MapScale = value;
         }
 
         internal double dpm
         {
-            get { return _dpm; }
-            set { _dpm = value; }
+            get => _dpm;
+            set => _dpm = value;
         }
 
         internal double mpu
         {
-            get { return _mpu; }
-            set { _mpu = value; }
+            get => _mpu;
+            set => _mpu = value;
         }
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         //设置视图
         internal void SetView(double offsetX, double offsetY, double mapScale)
@@ -170,6 +170,6 @@
             return sDis;
         }
 
-        #endregion 方法
+        #endregion Methods
     }
 }

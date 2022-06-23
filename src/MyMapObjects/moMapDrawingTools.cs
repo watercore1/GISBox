@@ -7,7 +7,7 @@ namespace MyMapObjects
     // 绘图工具
     internal static class moMapDrawingTools
     {
-        #region 程序集方法
+        #region 程序集Methods
 
         internal static void DrawGeometry(Graphics g, moRectangle extent, double mapScale, double dpm, double mpu, moGeometry geometry, moSymbol symbol)
         {
@@ -163,7 +163,7 @@ namespace MyMapObjects
             g.SmoothingMode = sSmoothMode;
         }
 
-        #endregion 程序集方法
+        #endregion 程序集Methods
 
         #region 私有函数
 

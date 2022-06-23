@@ -24,8 +24,8 @@ namespace MyMapObjects
         /// </summary>
         public Font Font
         {
-            get { return _Font; }
-            set { _Font = value; }
+            get => _Font;
+            set => _Font = value;
         }
 
         /// <summary>
@@ -33,8 +33,8 @@ namespace MyMapObjects
         /// </summary>
         public Color FontColor
         {
-            get { return _FontColor; }
-            set { _FontColor = value; }
+            get => _FontColor;
+            set => _FontColor = value;
         }
 
         /// <summary>
@@ -42,8 +42,8 @@ namespace MyMapObjects
         /// </summary>
         public moTextSymbolAlignmentConstant Alignment
         {
-            get { return _Alignment; }
-            set { _Alignment = value; }
+            get => _Alignment;
+            set => _Alignment = value;
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace MyMapObjects
         /// </summary>
         public double OffsetX
         {
-            get { return _OffsetX; }
-            set { _OffsetX = value; }
+            get => _OffsetX;
+            set => _OffsetX = value;
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace MyMapObjects
         /// </summary>
         public double OffsetY
         {
-            get { return _OffsetY; }
-            set { _OffsetY = value; }
+            get => _OffsetY;
+            set => _OffsetY = value;
         }
 
         /// <summary>
@@ -69,8 +69,8 @@ namespace MyMapObjects
         /// </summary>
         public bool UseMask
         {
-            get { return _UseMask; }
-            set { _UseMask = value; }
+            get => _UseMask;
+            set => _UseMask = value;
         }
 
         /// <summary>
@@ -78,8 +78,8 @@ namespace MyMapObjects
         /// </summary>
         public Color MaskColor
         {
-            get { return _MaskColor; }
-            set { _MaskColor = value; }
+            get => _MaskColor;
+            set => _MaskColor = value;
         }
 
         /// <summary>
@@ -87,13 +87,13 @@ namespace MyMapObjects
         /// </summary>
         public double MaskWidth
         {
-            get { return _MaskWidth; }
-            set { _MaskWidth = value; }
+            get => _MaskWidth;
+            set => _MaskWidth = value;
         }
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 克隆
@@ -113,6 +113,6 @@ namespace MyMapObjects
             return sTextSymbol;
         }
 
-        #endregion 方法
+        #endregion Methods
     }
 }

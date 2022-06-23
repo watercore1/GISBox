@@ -12,7 +12,7 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moParts()
         {
@@ -20,7 +20,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 有参构造函数
+        /// 有参Constructors
         /// </summary>
         /// <param name="parts">点集的数组</param>
         public moParts(moPoints[] parts)
@@ -29,18 +29,15 @@ namespace MyMapObjects
             _Parts.AddRange(parts);
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
-        public int Count
-        {
-            get { return _Parts.Count; }
-        }
+        public int Count => _Parts.Count;
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 获取指定索引号的部件
@@ -99,6 +96,6 @@ namespace MyMapObjects
             return sParts;
         }
 
-        #endregion 方法
+        #endregion Methods
     }
 }

@@ -5,15 +5,15 @@ using System.Text;
 namespace GISBox
 {
     /// <summary>
-    /// 工具类 自定义静态函数
+    /// Tool Class, contains static functions
     /// </summary>
     internal class Util
     {
         /// <summary>
-        /// 将字符串转换为指定大小的字节数组
+        /// convert string to bytes array of specific length
         /// </summary>
-        /// <param name="convertedStr">待转换的字符串</param>
-        /// <param name="bytesLength">字节数组的长度</param>
+        /// <param name="convertedStr">converted string</param>
+        /// <param name="bytesLength">the length of bytes array</param>
         /// <returns></returns>
         public static byte[] ConvertStringToBytes(string convertedStr, int bytesLength)
         {
@@ -35,11 +35,11 @@ namespace GISBox
         }
 
         /// <summary>
-        /// 以大端序读取 uint 整数
+        /// read an int number from binary reader in big endian, and return the number
         /// </summary>
         /// <param name="br"></param>
         /// <returns></returns>
-        public static uint ReadBigEndianUInt32(BinaryReader br)
+        public static int ReadInt32InBigEndian(BinaryReader br)
         {
             byte[] intBytes = new byte[4];
             for (int i = 3; i >= 0; --i)
@@ -47,20 +47,36 @@ namespace GISBox
                 int b = br.ReadByte();
                 intBytes[i] = (byte)b;
             }
-            return BitConverter.ToUInt32(intBytes, 0);
+            return BitConverter.ToInt32(intBytes, 0);
         }
 
         /// <summary>
-        /// 返回当前时间，用三个字节表示
+        /// write an int number to file in big endian
+        /// </summary>
+        /// <param name="integer">integer to write</param>
+        /// <param name="bw"></param>
+        public static void WriteInt32InBigEndian(int integer, BinaryWriter bw)
+        {
+            byte[] buffer = BitConverter.GetBytes(integer);
+            for (int i = 3; i >= 0; --i)
+            {
+                bw.Write(buffer[i]);
+            }
+        }
+
+        /// <summary>
+        /// return current time in byte[3], formatted as YY-MM-DD
         /// </summary>
         /// <returns></returns>
         public static byte[] CurDateAsBytes()
         {
-            byte[] curDate = new byte[3];   //接下来3个字节写入修改时的年月日
-            curDate[0] = Convert.ToByte(DateTime.Now.Year - 1900);  //年要减去1900
+            byte[] curDate = new byte[3]; 
+            curDate[0] = Convert.ToByte(DateTime.Now.Year - 1900);  // Start With 1900
             curDate[1] = Convert.ToByte(DateTime.Now.Month);
             curDate[2] = (byte)(DateTime.Now.Day);
             return curDate;
         }
+
+        
     }
 }

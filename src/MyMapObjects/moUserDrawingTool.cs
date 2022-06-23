@@ -15,7 +15,7 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         internal moUserDrawingTool(Graphics graphics, moRectangle extent, double mapScale, double dpm, double mpu)
         {
@@ -26,40 +26,31 @@ namespace MyMapObjects
             _mpu = mpu;
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
         internal Graphics MyGraphics
         {
-            get { return _MyGraphics; }
-            set { _MyGraphics = value; }
+            get => _MyGraphics;
+            set => _MyGraphics = value;
         }
 
         internal moRectangle Extent
         {
-            get { return _Extent; }
-            set { _Extent = value; }
+            get => _Extent;
+            set => _Extent = value;
         }
 
-        internal double MapScale
-        {
-            get { return _MapScale; }
-        }
+        internal double MapScale => _MapScale;
 
-        internal double dpm
-        {
-            get { return _dpm; }
-        }
+        internal double dpm => _dpm;
 
-        internal double mpu
-        {
-            get { return _mpu; }
-        }
+        internal double mpu => _mpu;
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 以指定符号绘制指定点
@@ -142,6 +133,6 @@ namespace MyMapObjects
             moMapDrawingTools.DrawMultiPolygon(_MyGraphics, _Extent, _MapScale, _dpm, _mpu, multiPolygon, symbol);
         }
 
-        #endregion 方法
+        #endregion Methods
     }
 }

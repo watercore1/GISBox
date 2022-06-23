@@ -12,18 +12,21 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moAttributes()
         {
             _Attributes = new List<object>();
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
+        public Int32 Count
+        {
+            get { return _Attributes.Count; }
+        }
 
-
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 获取指定索引号的元素
@@ -88,6 +91,6 @@ namespace MyMapObjects
             return sAttributes;
         }
 
-        #endregion 方法
+        #endregion Methods
     }
 }

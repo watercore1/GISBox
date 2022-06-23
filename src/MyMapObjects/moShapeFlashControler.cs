@@ -18,7 +18,7 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         internal moShapeFlashControler()
         {
@@ -26,9 +26,9 @@ namespace MyMapObjects
             mTimer.Enabled = false;
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 开始闪烁
@@ -82,7 +82,7 @@ namespace MyMapObjects
             }
         }
 
-        #endregion 方法
+        #endregion Methods
 
         #region 时钟事件处理
 

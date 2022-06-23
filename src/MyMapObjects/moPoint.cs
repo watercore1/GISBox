@@ -10,7 +10,7 @@
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moPoint()
         { }
@@ -21,7 +21,7 @@
             _Y = y;
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
@@ -30,8 +30,8 @@
         /// </summary>
         public double X
         {
-            get { return _X; }
-            set { _X = value; }
+            get => _X;
+            set => _X = value;
         }
 
         /// <summary>
@@ -39,13 +39,13 @@
         /// </summary>
         public double Y
         {
-            get { return _Y; }
-            set { _Y = value; }
+            get => _Y;
+            set => _Y = value;
         }
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 克隆一个点
@@ -57,6 +57,6 @@
             return sPoint;
         }
 
-        #endregion 方法
+        #endregion Methods
     }
 }

@@ -15,7 +15,7 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moMultiPolyline()
         {
@@ -33,7 +33,7 @@ namespace MyMapObjects
             _Parts = parts;
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
@@ -42,8 +42,8 @@ namespace MyMapObjects
         /// </summary>
         public moParts Parts
         {
-            get { return _Parts; }
-            set { _Parts = value; }
+            get => _Parts;
+            set => _Parts = value;
         }
 
         /// <summary>
@@ -51,7 +51,8 @@ namespace MyMapObjects
         /// </summary>
         public double MinX
         {
-            get { return _MinX; }
+            get => _MinX;
+            set => _MinX = value;
         }
 
         /// <summary>
@@ -59,7 +60,8 @@ namespace MyMapObjects
         /// </summary>
         public double MaxX
         {
-            get { return _MaxX; }
+            get => _MaxX;
+            set => _MaxX = value;
         }
 
         /// <summary>
@@ -67,7 +69,8 @@ namespace MyMapObjects
         /// </summary>
         public double MinY
         {
-            get { return _MinY; }
+            get => _MinY;
+            set => _MinY = value;
         }
 
         /// <summary>
@@ -75,12 +78,13 @@ namespace MyMapObjects
         /// </summary>
         public double MaxY
         {
-            get { return _MaxY; }
+            get => _MaxY;
+            set => _MaxY = value;
         }
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 获取外包矩形
@@ -115,7 +119,7 @@ namespace MyMapObjects
             return sMultiPolyline;
         }
 
-        #endregion 方法
+        #endregion Methods
 
         #region 私有函数
 

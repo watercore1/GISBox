@@ -18,52 +18,46 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moUniqueValueRenderer()
         {
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
-        public override moRendererTypeConstant RendererType
-        {
-            get { return moRendererTypeConstant.UniqueValue; }
-        }
+        public override moRendererTypeConstant RendererType => moRendererTypeConstant.UniqueValue;
 
         /// <summary>
         /// 获取或设置唯一值的绑定字段
         /// </summary>
         public string Field
         {
-            get { return _Field; }
-            set { _Field = value; }
+            get => _Field;
+            set => _Field = value;
         }
 
         /// <summary>
         /// 获取唯一值数目
         /// </summary>
-        public int ValueCount
-        {
-            get { return _Values.Count; }
-        }
+        public int ValueCount => _Values.Count;
 
         /// <summary>
         /// 获取或设置默认符号
         /// </summary>
         public moSymbol DefaultSymbol
         {
-            get { return _DefaultSymbol; }
-            set { _DefaultSymbol = value; }
+            get => _DefaultSymbol;
+            set => _DefaultSymbol = value;
         }
 
         //其他属性不再编写，自行添加
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 获取指定索引号的唯一值
@@ -173,6 +167,6 @@ namespace MyMapObjects
             return sRenderer;
         }
 
-        #endregion 方法
+        #endregion Methods
     }
 }

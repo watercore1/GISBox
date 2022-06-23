@@ -24,8 +24,8 @@ namespace MyMapObjects
         #region 组件设计器生成的代码
 
         /// <summary> 
-        /// 设计器支持所需的方法 - 不要修改
-        /// 使用代码编辑器修改此方法的内容。
+        /// 设计器支持所需的Methods - 不要修改
+        /// 使用代码编辑器修改此Methods的内容。
         /// </summary>
         private void InitializeComponent()
         {
@@ -37,8 +37,11 @@ namespace MyMapObjects
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.DoubleBuffered = true;
             this.Name = "moMapControl";
             this.Size = new System.Drawing.Size(146, 146);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.moMapControl_Paint);
+            this.Resize += new System.EventHandler(this.moMapControl_Resize);
             this.ResumeLayout(false);
 
         }

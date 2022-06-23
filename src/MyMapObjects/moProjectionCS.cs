@@ -67,7 +67,7 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moProjectionCS(string projCSName, string geoCSName, string datumName, string spheroidName, double semiMajor, double inverseFlattening,
             moProjectionTypeConstant projType, double originLatitude, double centralMeridian, double falseEasting, double falseNorthing, double scaleFactor,
@@ -96,121 +96,67 @@ namespace MyMapObjects
             InitializeVars();
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
         //获取投影坐标系统名称
-        public string ProjCSName
-        {
-            get { return _ProjCSName; }
-        }
+        public string ProjCSName => _ProjCSName;
 
         //获取地理坐标系统名称
-        public string GeoCSName
-        {
-            get { return _GeoCSName; }
-        }
+        public string GeoCSName => _GeoCSName;
 
         //获取大地基准面名称
-        public string DatumName
-        {
-            get { return _DatumName; }
-        }
+        public string DatumName => _DatumName;
 
         //获取椭球体名称
-        public string SpheroidName
-        {
-            get { return _SpheroidName; }
-        }
+        public string SpheroidName => _SpheroidName;
 
         //获取椭球体长半轴
-        public double SemiMajor
-        {
-            get { return _SemiMajor; }
-        }
+        public double SemiMajor => _SemiMajor;
 
         //获取椭球体短半轴
-        public double SemiMinor
-        {
-            get { return _SemiMinor; }
-        }
+        public double SemiMinor => _SemiMinor;
 
         //获取椭球体扁率倒数
-        public double InverseFlattening
-        {
-            get { return _InverseFlattening; }
-        }
+        public double InverseFlattening => _InverseFlattening;
 
         //获取本初子午线名称
-        public string PrimeMeridian
-        {
-            get { return _PrimeMeridian; }
-        }
+        public string PrimeMeridian => _PrimeMeridian;
 
         //获取投影类型
-        public moProjectionTypeConstant ProjType
-        {
-            get { return _ProjType; }
-        }
+        public moProjectionTypeConstant ProjType => _ProjType;
 
         //获取投影名称
-        public string ProjName
-        {
-            get { return _ProjName; }
-        }
+        public string ProjName => _ProjName;
 
         //获取中央经线（度）
-        public double CentralMeridian
-        {
-            get { return _CentralMeridian; }
-        }
+        public double CentralMeridian => _CentralMeridian;
 
         //获取原点纬度（度）
-        public double OriginLatitude
-        {
-            get { return _OriginLatitude; }
-        }
+        public double OriginLatitude => _OriginLatitude;
 
         //获取第一标准纬线（度）
-        public double StandardParallelOne
-        {
-            get { return _StandardParallelOne; }
-        }
+        public double StandardParallelOne => _StandardParallelOne;
 
         //获取第二标准纬线（度）
-        public double StandardParallelTwo
-        {
-            get { return _StandardParallelTwo; }
-        }
+        public double StandardParallelTwo => _StandardParallelTwo;
 
         //获取投影比例因子
-        public double ScaleFactor
-        {
-            get { return _ScaleFactor; }
-        }
+        public double ScaleFactor => _ScaleFactor;
 
         //获取东伪偏移值
-        public double FalseEasting
-        {
-            get { return _FalseEasting; }
-        }
+        public double FalseEasting => _FalseEasting;
 
         //获取北伪偏移值
-        public double FalseNorthing
-        {
-            get { return _FalseNorthing; }
-        }
+        public double FalseNorthing => _FalseNorthing;
 
         //获取投影后的长度单位
-        public moLinearUnitConstant LinearUnit
-        {
-            get { return _LinearUnit; }
-        }
+        public moLinearUnitConstant LinearUnit => _LinearUnit;
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 将经纬度转换为投影坐标
@@ -308,7 +254,7 @@ namespace MyMapObjects
             return sDataOut;
         }
 
-        #endregion 方法
+        #endregion Methods
 
         #region 私有函数
 

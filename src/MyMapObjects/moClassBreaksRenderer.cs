@@ -20,30 +20,27 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moClassBreaksRenderer()
         {
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
         /// <summary>
         /// 获取渲染类型
         /// </summary>
-        public override moRendererTypeConstant RendererType
-        {
-            get { return moRendererTypeConstant.ClassBreaks; }
-        }
+        public override moRendererTypeConstant RendererType => moRendererTypeConstant.ClassBreaks;
 
         /// <summary>
         /// 获取或设置绑定字段名称
         /// </summary>
         public string Field
         {
-            get { return _Field; }
+            get => _Field;
             set
             {
                 _Field = value;
@@ -54,23 +51,20 @@ namespace MyMapObjects
         /// <summary>
         /// 获取分割值数目
         /// </summary>
-        public int BreakCount
-        {
-            get { return _BreakValues.Count; }
-        }
+        public int BreakCount => _BreakValues.Count;
 
         /// <summary>
         /// 获取或设置默认符号
         /// </summary>
         public moSymbol DefaultSymbol
         {
-            get { return _DefaultSymbol; }
-            set { _DefaultSymbol = value; }
+            get => _DefaultSymbol;
+            set => _DefaultSymbol = value;
         }
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 获取指定索引号的分割值
@@ -253,7 +247,7 @@ namespace MyMapObjects
             return sRenderer;
         }
 
-        #endregion 方法
+        #endregion Methods
 
         #region 私有函数
 

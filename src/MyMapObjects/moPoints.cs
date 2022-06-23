@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace MyMapObjects
 {
     // 点集，即点的集合
-    public class moPoints
+    public class moPoints: moGeometry
     {
         #region 字段
 
@@ -16,7 +16,7 @@ namespace MyMapObjects
 
         #endregion 字段
 
-        #region 构造函数
+        #region Constructors
 
         public moPoints()
         {
@@ -29,53 +29,38 @@ namespace MyMapObjects
             _Points.AddRange(points);
         }
 
-        #endregion 构造函数
+        #endregion Constructors
 
         #region 属性
 
         /// <summary>
         /// 获取点数目
         /// </summary>
-        public int Count
-        {
-            get { return _Points.Count; }
-        }
+        public int Count => _Points.Count;
 
         /// <summary>
         /// 获取最小X坐标
         /// </summary>
-        public double MinX
-        {
-            get { return _MinX; }
-        }
+        public double MinX => _MinX;
 
         /// <summary>
         /// 获取最大X坐标
         /// </summary>
-        public double MaxX
-        {
-            get { return _MaxX; }
-        }
+        public double MaxX => _MaxX;
 
         /// <summary>
         /// 获取最小Y坐标
         /// </summary>
-        public double MinY
-        {
-            get { return _MinY; }
-        }
+        public double MinY => _MinY;
 
         /// <summary>
         /// 获取最大Y坐标
         /// </summary>
-        public double MaxY
-        {
-            get { return _MaxY; }
-        }
+        public double MaxY => _MaxY;
 
         #endregion 属性
 
-        #region 方法
+        #region Methods
 
         /// <summary>
         /// 根据指定索引号返回点
@@ -188,7 +173,7 @@ namespace MyMapObjects
             return sPoints;
         }
 
-        #endregion 方法
+        #endregion Methods
 
         #region 私有函数
 
