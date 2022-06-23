@@ -1,6 +1,6 @@
-﻿namespace GISBox
+﻿namespace GISBox.Forms
 {
-    partial class Label
+    partial class LabelForm
     {
         /// <summary>
         /// Required designer variable.
@@ -201,7 +201,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboField);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Label";
+            this.Name = "LabelForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "注记";
             this.groupBox1.ResumeLayout(false);

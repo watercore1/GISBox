@@ -10,7 +10,7 @@ namespace GISBox.Forms
         #region 字段
 
         private string _layerName;
-        private MyMapObjects.moGeometryTypeConstant _layerType;
+        private moGeometryTypeConstant _layerType;
         private string _savePath;
 
         #endregion
@@ -47,15 +47,15 @@ namespace GISBox.Forms
         {
             if(cboLayerType.SelectedIndex == 0)
             {
-                _layerType = MyMapObjects.moGeometryTypeConstant.Point;
+                _layerType = moGeometryTypeConstant.Point;
             }
             else if (cboLayerType.SelectedIndex == 1)
             {
-                _layerType = MyMapObjects.moGeometryTypeConstant.MultiPolyline;
+                _layerType = moGeometryTypeConstant.MultiPolyline;
             }
             else if (cboLayerType.SelectedIndex == 2)
             {
-                _layerType = MyMapObjects.moGeometryTypeConstant.MultiPolygon;
+                _layerType = moGeometryTypeConstant.MultiPolygon;
             }
 
             _savePath = textSavePath.Text;

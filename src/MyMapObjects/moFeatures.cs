@@ -59,10 +59,10 @@ namespace MyMapObjects
             object[] temp = feature.Attributes.ToArray();
             object[] temp1;
             bool judge = true;
-            for (int i = 0; i < this.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
-                temp1 = this.GetItem(i).Attributes.ToArray();
-                for (int j = 0; j < this.GetItem(i).Attributes.Count; j++)
+                temp1 = GetItem(i).Attributes.ToArray();
+                for (int j = 0; j < GetItem(i).Attributes.Count; j++)
                 {
                     if (temp1[j] != temp[j])
                     {

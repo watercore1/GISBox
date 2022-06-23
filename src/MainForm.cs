@@ -23,14 +23,14 @@ namespace GISBox
         private OperationVariable _operation;
 
         // variable about render
-        private RenderVariable _render;
+        internal RenderVariable Render;
 
         // variable about label
-        private LabelVariable _label;
+        internal LabelVariable Label;
 
         // Attribute Data
         public List<AttributeTable> AttributeTables { get; set; }
-        public static int AttributeTableIndex = 0;
+        public static int AttributeTableIndex;
 
         public moGeometryTypeConstant EditingLayerShape
         {
@@ -361,7 +361,6 @@ namespace GISBox
                 return;
             }
             moMapLayer sMapLayer1 = mapControl.Layers.GetItem(sIndex1);
-
             moMapLayer sMapLayer2 = mapControl.Layers.GetItem(sIndex2);
             mapControl.Layers.RemoveAt(sIndex1);
             mapControl.Layers.Insert(sIndex1, sMapLayer2);
@@ -417,6 +416,431 @@ namespace GISBox
                 _operation.SelectedLayerIndex = currentNode.Index;
             }
         }
+
+        private void btnScale1000000_Click(object sender, EventArgs e)
+        {
+            moPoint point = mapControl.ToMapPoint(mapControl.Width / 2.0, mapControl.Height / 2.0);
+            double zoomRatio = mapControl.MapScale / 1000000.0;
+            mapControl.ZoomByCenter(point, zoomRatio);
+        }
+
+        private void btnScale5000000_Click(object sender, EventArgs e)
+        {
+            moPoint point = mapControl.ToMapPoint(mapControl.Width / 2.0, mapControl.Height / 2.0);
+            double zoomRatio = mapControl.MapScale / 5000000.0;
+            mapControl.ZoomByCenter(point, zoomRatio);
+        }
+
+        private void btnScale10000000_Click(object sender, EventArgs e)
+        {
+            moPoint point = mapControl.ToMapPoint(mapControl.Width / 2.0, mapControl.Height / 2.0);
+            double zoomRatio = mapControl.MapScale / 10000000.0;
+            mapControl.ZoomByCenter(point, zoomRatio);
+        }
+
+        private void btnScale20000000_Click(object sender, EventArgs e)
+        {
+            moPoint point = mapControl.ToMapPoint(mapControl.Width / 2.0, mapControl.Height / 2.0);
+            double zoomRatio = mapControl.MapScale / 20000000.0;
+            mapControl.ZoomByCenter(point, zoomRatio);
+        }
+
+        private void extentToLayerMenuItem_Click(object sender, EventArgs e)
+        {
+            moMapLayer sLayer = mapControl.Layers.GetItem(_operation.SelectedLayerIndex);
+            sLayer.UpdateExtent();
+            moRectangle sRect = sLayer.Extent;
+            mapControl.SetExtent(sRect);
+        }
+
+        private void upOneMenuItem_Click(object sender, EventArgs e)
+        {
+            int upIndex = _operation.SelectedLayerIndex;
+            if (upIndex == 0) return;
+
+            moMapLayer sLayer = mapControl.Layers.GetItem(upIndex);
+            mapControl.Layers.RemoveAt(upIndex);
+            mapControl.Layers.Insert(upIndex - 1, sLayer);
+            RefreshLayersTree();    //刷新图层列表
+            mapControl.RedrawMap();  //刷新地图
+        }
+
+        private void downOneMenuItem_Click(object sender, EventArgs e)
+        {
+            int downIndex = _operation.SelectedLayerIndex;
+            if (downIndex == mapControl.Layers.Count - 1) return;
+
+            moMapLayer sLayer = mapControl.Layers.GetItem(downIndex);
+            mapControl.Layers.RemoveAt(downIndex);
+            mapControl.Layers.Insert(downIndex + 1, sLayer);
+            RefreshLayersTree();    //刷新图层列表
+            mapControl.RedrawMap();  //刷新地图
+        }
+
+        private void upTopMenuItem_Click(object sender, EventArgs e)
+        {
+            int upIndex = _operation.SelectedLayerIndex;
+            if (upIndex == 0) return;
+
+            moMapLayer sLayer = mapControl.Layers.GetItem(upIndex);
+            mapControl.Layers.RemoveAt(upIndex);
+            mapControl.Layers.Insert(0, sLayer);
+            RefreshLayersTree();    //刷新图层列表
+            mapControl.RedrawMap();  //刷新地图
+        }
+
+        private void downBottomMenuItem_Click(object sender, EventArgs e)
+        {
+            int downIndex = _operation.SelectedLayerIndex;
+            if (downIndex == mapControl.Layers.Count - 1) return;
+            moMapLayer sLayer = mapControl.Layers.GetItem(downIndex);
+            mapControl.Layers.RemoveAt(downIndex);
+            mapControl.Layers.Insert(mapControl.Layers.Count, sLayer);
+            RefreshLayersTree();    //刷新图层列表
+            mapControl.RedrawMap();  //刷新地图
+        }
+
+        private void openAttributesListMenuItem_Click(object sender, EventArgs e)
+        {
+            AttributeTable attributeTable = new AttributeTable(this, _operation.SelectedLayerIndex);
+            attributeTable.Owner = this;
+            attributeTable.Name = mapControl.Layers.GetItem(_operation.SelectedLayerIndex).Name;
+            attributeTable.Show();
+            attributeTable.SetDesktopLocation(Location.X + (Width - attributeTable.Width) / 2,
+                Location.Y + (Height - attributeTable.Height) / 2);
+            attributeTable.RefreshDataFormByMainForm();
+            AttributeTables.Add(attributeTable);//将新打开的添加进去
+            attributeTable.FormIndex = AttributeTableIndex;
+            AttributeTableIndex++;
+        }
+
+        private void renderMenuItem_Click(object sender, EventArgs e)
+        {
+            Render.mIsInRenderer = false;
+            moMapLayer sLayer = mapControl.Layers.GetItem(_operation.SelectedLayerIndex);//待渲染的图层
+            if (sLayer.ShapeType == moGeometryTypeConstant.Point)
+            {
+                PointRenderer mPointRenderer = new PointRenderer(mapControl.Layers.GetItem(_operation.SelectedLayerIndex));
+                mPointRenderer.Owner = this;
+                mPointRenderer.ShowDialog();
+                if (Render.mIsInRenderer == false)
+                {
+                    return;
+                }
+                //简单渲染
+                if (Render.mPointRendererMode == 0)
+                {
+                    moSimpleRenderer sRenderer = new moSimpleRenderer();
+                    moSimpleMarkerSymbol sSymbol = new moSimpleMarkerSymbol();
+                    sSymbol.Style = (moSimpleMarkerSymbolStyleConstant)Render.mPointSymbolStyle;//修改样式
+                    sSymbol.Color = Render.mPointSimpleRendererColor;//修改颜色
+                    sSymbol.Size = Render.mPointSimpleRendererSize;//修改尺寸
+                    sRenderer.Symbol = sSymbol;
+                    sLayer.Renderer = sRenderer;
+                    mapControl.RedrawMap();
+                }
+                //唯一值渲染
+                else if (Render.mPointRendererMode == 1)
+                {
+                    moUniqueValueRenderer sRenderer = new moUniqueValueRenderer();
+                    sRenderer.Field = sLayer.AttributeFields.GetItem(Render.mPointUniqueFieldIndex).Name;
+                    List<string> sValues = new List<string>();
+                    Int32 sFeatrueCount = sLayer.Features.Count;
+                    for (Int32 i = 0; i < sFeatrueCount; i++) //加入所有要素的属性值
+                    {
+                        string sValue = Convert.ToString(sLayer.Features.GetItem(i).Attributes.GetItem(Render.mPointUniqueFieldIndex));
+                        sValues.Add(sValue);
+                    }
+                    //去除重复
+                    sValues = sValues.Distinct().ToList();
+                    //生成符号
+                    Int32 sValueCount = sValues.Count;
+                    for (Int32 i = 0; i < sValueCount; i++)
+                    {
+                        moSimpleMarkerSymbol sSymbol = new moSimpleMarkerSymbol();
+                        sSymbol.Style = (moSimpleMarkerSymbolStyleConstant)Render.mPointSymbolStyle;//修改样式
+                        sSymbol.Size = Render.mPointSimpleRendererSize;//修改尺寸
+                        sRenderer.AddUniqueValue(sValues[i], sSymbol);
+                    }
+                    sRenderer.DefaultSymbol = new moSimpleMarkerSymbol();
+                    sLayer.Renderer = sRenderer;
+                    mapControl.RedrawMap();
+                }
+                //分级渲染
+                else if (Render.mPointRendererMode == 2)
+                {
+                    moClassBreaksRenderer sRenderer = new moClassBreaksRenderer();
+                    sRenderer.Field = sLayer.AttributeFields.GetItem(Render.mPointClassBreaksFieldIndex).Name;
+                    List<double> sValues = new List<double>();
+                    Int32 sFeatrueCount = sLayer.Features.Count;
+                    Int32 sFieldIndex = sLayer.AttributeFields.FindField(sRenderer.Field);
+                    moValueTypeConstant sValueType = sLayer.AttributeFields.GetItem(sFieldIndex).ValueType;
+                    if (sValueType == moValueTypeConstant.dText)
+                    {
+                        MessageBox.Show(@"该字段不是数值字段，不支持分级渲染！");
+                        return;
+                    }
+                    try
+                    {
+                        for (Int32 i = 0; i < sFeatrueCount; i++)
+                        {
+                            double sValue = Convert.ToDouble(sLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex));
+                            sValues.Add(sValue);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show(@"该字段不是数值字段，不支持分级渲染！");
+                        return;
+                    }
+                    double sMinValue = sValues.Min();
+                    double sMaxValue = sValues.Max();
+                    for (Int32 i = 0; i < Render.mPointClassBreaksNum; i++)
+                    {
+                        double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / Render.mPointClassBreaksNum;
+                        moSimpleMarkerSymbol sSymbol = new moSimpleMarkerSymbol();
+                        sSymbol.Color = Render.mPointClassBreaksRendererColor;
+                        sSymbol.Style = (moSimpleMarkerSymbolStyleConstant)Render.mPointSymbolStyle;
+                        sRenderer.AddBreakValue(sValue, sSymbol);
+                    }
+                    double sMinSize = Render.mPointClassBreaksRendererMinSize;
+                    double sMaxSize = Render.mPointClassBreaksRendererMaxSize;
+                    sRenderer.RampSize(sMinSize, sMaxSize);
+                    sRenderer.DefaultSymbol = new moSimpleMarkerSymbol();
+                    sLayer.Renderer = sRenderer;
+                    mapControl.RedrawMap();
+                }
+            }
+            else if (sLayer.ShapeType == moGeometryTypeConstant.MultiPolyline)
+            {
+                PolylineRenderer mPolylineRenderer = new PolylineRenderer(mapControl.Layers.GetItem(_operation.SelectedLayerIndex));
+                mPolylineRenderer.Owner = this;
+                mPolylineRenderer.ShowDialog();
+                if (Render.mIsInRenderer == false)
+                {
+                    return;
+                }
+                //简单渲染
+                if (Render.mPolylineRendererMode == 0)
+                {
+                    moSimpleRenderer sRenderer = new moSimpleRenderer();
+                    moSimpleLineSymbol sSymbol = new moSimpleLineSymbol();
+                    sSymbol.Style = (moSimpleLineSymbolStyleConstant)Render.mPolylineSymbolStyle;//传参修改
+                    sSymbol.Color = Render.mPolylineSimpleRendererColor;//修改颜色
+                    sSymbol.Size = Render.mPolylineSimpleRendererSize;//修改尺寸
+                    sRenderer.Symbol = sSymbol;
+                    sLayer.Renderer = sRenderer;
+                    mapControl.RedrawMap();
+                }
+                //唯一值渲染
+                else if (Render.mPolylineRendererMode == 1)
+                {
+                    moUniqueValueRenderer sRenderer = new moUniqueValueRenderer();
+                    sRenderer.Field = sLayer.AttributeFields.GetItem(Render.mPolylineUniqueFieldIndex).Name;
+                    List<string> sValues = new List<string>();
+                    Int32 sFeatrueCount = sLayer.Features.Count;
+                    for (Int32 i = 0; i < sFeatrueCount; i++)
+                    {
+                        string sValue = Convert.ToString(sLayer.Features.GetItem(i).Attributes.GetItem(Render.mPolylineUniqueFieldIndex));
+                        sValues.Add(sValue);
+                    }
+                    //去除重复
+                    sValues = sValues.Distinct().ToList();
+                    //生成符号
+                    Int32 sValueCount = sValues.Count;
+                    for (Int32 i = 0; i < sValueCount; i++)
+                    {
+                        moSimpleLineSymbol sSymbol = new moSimpleLineSymbol();
+                        sSymbol.Style = (moSimpleLineSymbolStyleConstant)Render.mPolylineSymbolStyle;//修改样式
+                        sSymbol.Size = Render.mPolylineUniqueRendererSize;//修改尺寸
+                        sRenderer.AddUniqueValue(sValues[i], sSymbol);
+                    }
+                    sRenderer.DefaultSymbol = new moSimpleLineSymbol();
+                    sLayer.Renderer = sRenderer;
+                    mapControl.RedrawMap();
+                }
+                //分级渲染
+                else if (Render.mPolylineRendererMode == 2)
+                {
+                    moClassBreaksRenderer sRenderer = new moClassBreaksRenderer();
+                    sRenderer.Field = sLayer.AttributeFields.GetItem(Render.mPolylineClassBreaksFieldIndex).Name;
+                    List<double> sValues = new List<double>();
+                    Int32 sFeatrueCount = sLayer.Features.Count;
+                    Int32 sFieldIndex = sLayer.AttributeFields.FindField(sRenderer.Field);
+                    moValueTypeConstant sValueType = sLayer.AttributeFields.GetItem(sFieldIndex).ValueType;
+                    if (sValueType == moValueTypeConstant.dText)
+                    {
+                        MessageBox.Show(@"该字段不是数值字段，不支持分级渲染！");
+                        return;
+                    }
+                    try
+                    {
+                        for (Int32 i = 0; i < sFeatrueCount; i++)
+                        {
+                            double sValue = Convert.ToDouble(sLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex));
+                            sValues.Add(sValue);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show(@"该字段不是数值字段，不支持分级渲染！");
+                        return;
+                    }
+
+                    double sMinValue = sValues.Min();
+                    double sMaxValue = sValues.Max();
+                    for (Int32 i = 0; i < Render.mPolylineClassBreaksNum; i++)
+                    {
+                        double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / Render.mPolylineClassBreaksNum;
+                        moSimpleLineSymbol sSymbol = new moSimpleLineSymbol();
+                        sSymbol.Color = Render.mPolylineClassBreaksRendererColor;
+                        sSymbol.Style = (moSimpleLineSymbolStyleConstant)Render.mPolylineSymbolStyle;
+                        sRenderer.AddBreakValue(sValue, sSymbol);
+                    }
+                    double sMinSize = Render.mPolylineClassBreaksRendererMinSize;
+                    double sMaxSize = Render.mPolylineClassBreaksRendererMaxSize;
+                    sRenderer.RampSize(sMinSize, sMaxSize);
+                    sRenderer.DefaultSymbol = new moSimpleLineSymbol();
+                    sLayer.Renderer = sRenderer;
+                    mapControl.RedrawMap();
+                }
+            }
+            else if (sLayer.ShapeType == moGeometryTypeConstant.MultiPolygon)
+            {
+                PolygonRenderer mPolygonRenderer = new PolygonRenderer(mapControl.Layers.GetItem(_operation.SelectedLayerIndex));
+                mPolygonRenderer.Owner = this;
+                mPolygonRenderer.ShowDialog();
+                if (Render.mIsInRenderer == false)
+                {
+                    return;
+                }
+                //简单渲染
+                if (Render.mPolygonRendererMode == 0)
+                {
+                    moSimpleRenderer sRenderer = new moSimpleRenderer();
+                    moSimpleFillSymbol sSymbol = new moSimpleFillSymbol();
+                    sSymbol.Color = Render.mPolygonSimpleRendererColor;
+                    sRenderer.Symbol = sSymbol;
+                    sLayer.Renderer = sRenderer;
+                    mapControl.RedrawMap();
+                }
+                //唯一值渲染
+                else if (Render.mPolygonRendererMode == 1)
+                {
+                    moUniqueValueRenderer sRenderer = new moUniqueValueRenderer();
+                    sRenderer.Field = sLayer.AttributeFields.GetItem(Render.mPolygonUniqueFieldIndex).Name;
+                    List<string> sValues = new List<string>();
+                    Int32 sFeatrueCount = sLayer.Features.Count;
+                    for (Int32 i = 0; i < sFeatrueCount; i++)
+                    {
+                        string sValue = Convert.ToString(sLayer.Features.GetItem(i).Attributes.GetItem(Render.mPolygonUniqueFieldIndex));
+                        sValues.Add(sValue);
+                    }
+                    //去除重复
+                    sValues = sValues.Distinct().ToList();
+                    //生成符号
+                    Int32 sValueCount = sValues.Count;
+                    for (Int32 i = 0; i <= sValueCount - 1; i++)
+                    {
+                        moSimpleFillSymbol sSymbol = new moSimpleFillSymbol();
+                        sRenderer.AddUniqueValue(sValues[i], sSymbol);
+                    }
+                    sRenderer.DefaultSymbol = new moSimpleFillSymbol();
+                    sLayer.Renderer = sRenderer;
+                    mapControl.RedrawMap();
+                }
+                //分级渲染
+                else if (Render.mPolygonRendererMode == 2)
+                {
+                    moClassBreaksRenderer sRenderer = new moClassBreaksRenderer();
+                    sRenderer.Field = sLayer.AttributeFields.GetItem(Render.mPolygonClassBreaksFieldIndex).Name;
+                    List<double> sValues = new List<double>();
+                    Int32 sFeatrueCount = sLayer.Features.Count;
+                    Int32 sFieldIndex = sLayer.AttributeFields.FindField(sRenderer.Field);
+                    moValueTypeConstant sValueType = sLayer.AttributeFields.GetItem(sFieldIndex).ValueType;
+                    if (sValueType == moValueTypeConstant.dText)
+                    {
+                        MessageBox.Show(@"该字段不是数值字段，不支持分级渲染！");
+                        return;
+                    }
+                    try
+                    {
+                        for (Int32 i = 0; i < sFeatrueCount; i++)
+                        {
+                            double sValue = Convert.ToDouble(sLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex));
+                            sValues.Add(sValue);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show(@"该字段不是数值字段，不支持分级渲染！");
+                        return;
+                    }
+                    //获取最小最大值并分5级
+                    double sMinValue = sValues.Min();
+                    double sMaxValue = sValues.Max();
+                    for (Int32 i = 0; i < Render.mPolygonClassBreaksNum; i++)
+                    {
+                        double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / Render.mPolygonClassBreaksNum;
+                        moSimpleFillSymbol sSymbol = new moSimpleFillSymbol();
+                        sRenderer.AddBreakValue(sValue, sSymbol);
+                    }
+                    Color sStartColor = Render.mPolygonClassBreaksRendererStartColor;
+                    Color sEndColor = Render.mPolygonClassBreaksRendererEndColor;
+                    sRenderer.RampColor(sStartColor, sEndColor);
+                    sRenderer.DefaultSymbol = new moSimpleFillSymbol();
+                    sLayer.Renderer = sRenderer;
+                    mapControl.RedrawMap();
+                }
+            }
+        }
+
+        private void annotationMenuItem_Click(object sender, EventArgs e)
+        {
+            moMapLayer sLayer = mapControl.Layers.GetItem(_operation.SelectedLayerIndex);//待显示注记的图层
+            LabelForm mLabelForm = new LabelForm(sLayer);
+            mLabelForm.Owner = this;
+            mLabelForm.ShowDialog();
+            moLabelRenderer sLabelRenderer = new moLabelRenderer();
+            sLabelRenderer.Field = sLayer.AttributeFields.GetItem(Label.mLabelFieldIndex).Name;
+            sLabelRenderer.TextSymbol.Font = Label.mLabelFont;
+            sLabelRenderer.TextSymbol.FontColor = Label.mLabelColor;
+            sLabelRenderer.TextSymbol.UseMask = Label.mLabelUseMask;
+            sLabelRenderer.LabelFeatures = Label.mLabelVisible;
+            sLayer.LabelRenderer = sLabelRenderer;
+            mapControl.RedrawMap();
+        }
+
+        private void delLayerMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_operation.EditedLayerIndex == _operation.SelectedLayerIndex)
+            {
+                endEditMenuItem_Click(sender, e);
+            }
+            mapControl.Layers.RemoveAt(_operation.SelectedLayerIndex);
+            _operation.SelectedLayerIndex = -1;
+            RefreshLayersTree();
+            mapControl.RedrawMap();
+        }
+
+        private void finishDrawPartMenuItem_Click(object sender, EventArgs e)
+        {
+            EndCreatePart();
+        }
+
+        private void finishDrawFeatureMenuItem_Click(object sender, EventArgs e)
+        {
+            EndCreateFeature();
+        }
+
+        private void delFeatureMenuItem_Click(object sender, EventArgs e)
+        {
+            _operation.IsLayerChanged = true;
+            mapControl.Layers.GetItem(_operation.SelectedLayerIndex).RemoveSelection();
+            mapControl.RedrawMap();
+        }
+
+
 
         #endregion Forms and controls event handling
 
@@ -512,7 +936,7 @@ namespace GISBox
 
         private void mapControl_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right) return;
+            ShowCoordinate(e.Location);
             switch (_operation.MapStyle)
             {
                 case MapOpStyle.ZoomIn:
@@ -630,8 +1054,8 @@ namespace GISBox
         {
             _setting = new SettingVariable();
             _operation = new OperationVariable();
-            _render = new RenderVariable();
-            _label = new LabelVariable();
+            Render = new RenderVariable();
+            Label = new LabelVariable();
             AttributeTables = new List<AttributeTable>();
             MouseWheel += mapControl_MouseWheel;
         }
@@ -835,15 +1259,18 @@ namespace GISBox
             }
             layersTreeView.Refresh();
             _operation.MapStyle = MapOpStyle.None;
-            layersTreeView.Nodes[_operation.SelectedLayerIndex].BackColor = Color.LightGray;
+            if(_operation.SelectedLayerIndex != -1)
+                layersTreeView.Nodes[_operation.SelectedLayerIndex].BackColor = Color.LightGray;
         }
 
         private void SaveEdit()
         {
+            return;
         }
 
         private void CancelEdit()
         {
+            return;
         }
 
         private void SaveNodeEdit()
@@ -853,9 +1280,9 @@ namespace GISBox
                 moMapLayer layer = mapControl.Layers.GetItem(_operation.EditedLayerIndex);
                 layer.SelectedFeatures.GetItem(0).Geometry = _operation.EditingNodeGeometry;
                 layer.UpdateExtent();
-                mapControl.RedrawMap();
             }
             _operation.EndEditNode();
+            mapControl.RedrawMap();
         }
 
         private void AddNode_MouseClick(MouseEventArgs e)
@@ -1080,6 +1507,7 @@ namespace GISBox
             }
             _operation.EndCreateFeature();
             mapControl.RedrawMap();
+            moveFeatureButton_Click(new object(),EventArgs.Empty);
         }
 
         private void CreateFeature_MouseDoubleClick()
@@ -1815,7 +2243,7 @@ namespace GISBox
             else
             {
                 moRectangle sBox = mapControl.GetMapRectByTwoPoints(_operation.StartMouseLocation, e.Location);
-                mapControl.ZoomToExtent(sBox);
+                mapControl.ZoomOutToExtent(sBox);
             }
             Cursor = Cursors.Default;
         }
@@ -1946,19 +2374,34 @@ namespace GISBox
             AddLayerToMap(sMapLayer);
         }
 
+        private void ShowCoordinate(PointF point)
+        {
+            moPoint sPoint = mapControl.ToMapPoint(point.X, point.Y);
+            if (!isProjectionCheckBox.Checked)
+            {
+                moPoint sLngLat = mapControl.ProjectionCS.TransferToLngLat(sPoint);
+                double sX = Math.Round(sLngLat.X, 4);
+                double sY = Math.Round(sLngLat.Y, 4);
+                string lng = " °E ";
+                string lat = " °N ";
+                if (sX < 0) lng = " °W ";
+                if (sY < 0) lat = " °S ";
+                coordinateStatusLabel.Text = sX + lng + @" , " + sY + lat;
+            }
+            else
+            {
+                double sX = Math.Round(sPoint.X);
+                double sY = Math.Round(sPoint.Y);
+                coordinateStatusLabel.Text = @"X: " + sX + @", Y: " + sY;
 
+            }
+        }
 
 
 
         #endregion Private functions
 
-        private void extentToLayerMenuItem_Click(object sender, EventArgs e)
-        {
-            MyMapObjects.moMapLayer sLayer = mapControl.Layers.GetItem(_operation.SelectedLayerIndex);
-            sLayer.UpdateExtent();
-            MyMapObjects.moRectangle sRect = sLayer.Extent;
-            mapControl.SetExtent(sRect);
-        }
+        
 
         
     }

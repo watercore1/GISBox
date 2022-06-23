@@ -196,7 +196,7 @@ namespace MyMapObjects
 
         public void RemoveSelection()
         {
-            MyMapObjects.moFeatures sFeatures = new MyMapObjects.moFeatures();
+            moFeatures sFeatures = new moFeatures();
             for (Int32 i = 0; i < _Features.Count; ++i)
             {
                 if (SelectIndex.Contains(i) == false)

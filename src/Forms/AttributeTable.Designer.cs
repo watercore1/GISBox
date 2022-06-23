@@ -119,6 +119,7 @@
             this.btnSelectByAttribute.Name = "btnSelectByAttribute";
             this.btnSelectByAttribute.Size = new System.Drawing.Size(32, 32);
             this.btnSelectByAttribute.Text = "按属性选择";
+            this.btnSelectByAttribute.Click += new System.EventHandler(this.btnSelectByAttribute_Click);
             // 
             // btnSelectAll
             // 

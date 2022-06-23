@@ -146,7 +146,7 @@ namespace MyMapObjects
             double sMinY = double.MaxValue, sMaxY = double.MinValue;
             moRectangle sExtent;
             //如果工作区为空，则返回空矩形
-            Rectangle sClientRect = this.ClientRectangle;
+            Rectangle sClientRect = ClientRectangle;
             if (sClientRect.IsEmpty == true)
             {
                 sExtent = new moRectangle(sMinX, sMaxX, sMinY, sMaxY);
@@ -213,12 +213,12 @@ namespace MyMapObjects
             moRectangle sFullExtent = GetFullExtent();
             if (sFullExtent.IsEmpty == false)
             {
-                Rectangle sClientRect = this.ClientRectangle;
+                Rectangle sClientRect = ClientRectangle;
                 mMapDrawingReference.ZoomExtentToWindow(sFullExtent, sClientRect.Width, sClientRect.Height);
-                this.UseWaitCursor = true;
+                UseWaitCursor = true;
                 DrawBufferMap1();
                 DrawBufferMap2();
-                this.UseWaitCursor = false;
+                UseWaitCursor = false;
                 Refresh();
                 //触发事件
                 if (MapScaleChanged != null)
@@ -232,12 +232,12 @@ namespace MyMapObjects
         {
             if (sFullExtent.IsEmpty == false)
             {
-                Rectangle sClientRect = this.ClientRectangle;
+                Rectangle sClientRect = ClientRectangle;
                 mMapDrawingReference.ZoomExtentToWindow(sFullExtent, sClientRect.Width, sClientRect.Height);
-                this.UseWaitCursor = true;
+                UseWaitCursor = true;
                 DrawBufferMap1();
                 DrawBufferMap2();
-                this.UseWaitCursor = false;
+                UseWaitCursor = false;
                 Refresh();
                 //触发事件
                 if (MapScaleChanged != null)
@@ -266,10 +266,10 @@ namespace MyMapObjects
         public void ZoomByCenter(moPoint center, double ratio)
         {
             mMapDrawingReference.ZoomByCenter(center, ratio);
-            this.UseWaitCursor = true;
+            UseWaitCursor = true;
             DrawBufferMap1();
             DrawBufferMap2();
-            this.UseWaitCursor = false;
+            UseWaitCursor = false;
             Refresh();
             //触发事件
             if (MapScaleChanged != null)
@@ -284,13 +284,13 @@ namespace MyMapObjects
         /// <param name="extent"></param>
         public void ZoomToExtent(moRectangle extent)
         {
-            double sWindowWidth = this.ClientRectangle.Width;
-            double sWindowHeight = this.ClientRectangle.Height;
+            double sWindowWidth = ClientRectangle.Width;
+            double sWindowHeight = ClientRectangle.Height;
             mMapDrawingReference.ZoomExtentToWindow(extent, sWindowWidth, sWindowHeight);
-            this.UseWaitCursor = true;
+            UseWaitCursor = true;
             DrawBufferMap1();
             DrawBufferMap2();
-            this.UseWaitCursor = false;
+            UseWaitCursor = false;
             Refresh();
             //触发事件
             if (MapScaleChanged != null)
@@ -307,10 +307,10 @@ namespace MyMapObjects
         public void PanDelta(double deltaX, double deltaY)
         {
             mMapDrawingReference.PanDelta(deltaX, deltaY);
-            this.UseWaitCursor = true;
+            UseWaitCursor = true;
             DrawBufferMap1();
             DrawBufferMap2();
-            this.UseWaitCursor = false;
+            UseWaitCursor = false;
             Refresh();
         }
 
@@ -365,10 +365,10 @@ namespace MyMapObjects
         /// </summary>
         public void RedrawMap()
         {
-            this.UseWaitCursor = true;
+            UseWaitCursor = true;
             DrawBufferMap1();
             DrawBufferMap2();
-            this.UseWaitCursor = false;
+            UseWaitCursor = false;
             Refresh();
         }
 
@@ -377,9 +377,9 @@ namespace MyMapObjects
         /// </summary>
         public void RedrawTrackingShapes()
         {
-            this.UseWaitCursor = true;
+            UseWaitCursor = true;
             DrawBufferMap2();
-            this.UseWaitCursor = false;
+            UseWaitCursor = false;
             Refresh();
         }
 
@@ -393,7 +393,7 @@ namespace MyMapObjects
             Graphics g = Graphics.FromImage(mBufferMap3);
             g.Clear(Color.White);
             g.DrawImage(mBufferMap2, x, y);
-            g = Graphics.FromHwnd(this.Handle);
+            g = Graphics.FromHwnd(Handle);
             g.DrawImage(mBufferMap3, 0, 0);
             g.Dispose();
         }
@@ -415,7 +415,7 @@ namespace MyMapObjects
         /// <returns></returns>
         public moUserDrawingTool GetDrawingTool()
         {
-            Graphics g = Graphics.FromHwnd(this.Handle);
+            Graphics g = Graphics.FromHwnd(Handle);
             moUserDrawingTool sDrawingTool = CreateDrawingTool(g);
             return sDrawingTool;
         }
@@ -577,7 +577,7 @@ namespace MyMapObjects
         //新建地图绘制参考对象
         private void CreateMapDrawingReference()
         {
-            Graphics g = Graphics.FromHwnd(this.Handle);
+            Graphics g = Graphics.FromHwnd(Handle);
             double dpm = g.DpiX / 0.0254;
             g.Dispose();
             double mpu = _ProjectionCS.ToMeters(1);
@@ -587,7 +587,7 @@ namespace MyMapObjects
         //调整缓冲位图大小
         private void ResizeBufferMap()
         {
-            Rectangle sClientRectangle = this.ClientRectangle;
+            Rectangle sClientRectangle = ClientRectangle;
             if (sClientRectangle.Width > 0 && sClientRectangle.Height > 0)
             {
                 if (sClientRectangle.Width != mBufferMap1.Width || sClientRectangle.Height != mBufferMap1.Height)
@@ -726,16 +726,31 @@ namespace MyMapObjects
         /// <param name="point1"></param>
         /// <param name="point2"></param>
         /// <returns></returns>
-        public MyMapObjects.moRectangle GetMapRectByTwoPoints(PointF point1, PointF point2)
+        public moRectangle GetMapRectByTwoPoints(PointF point1, PointF point2)
         {
-            MyMapObjects.moPoint sPoint1 = ToMapPoint(point1.X, point1.Y);
-            MyMapObjects.moPoint sPoint2 = ToMapPoint(point2.X, point2.Y);
+            moPoint sPoint1 = ToMapPoint(point1.X, point1.Y);
+            moPoint sPoint2 = ToMapPoint(point2.X, point2.Y);
             double sMinX = Math.Min(sPoint1.X, sPoint2.X);
             double sMaxX = Math.Max(sPoint1.X, sPoint2.X);
             double sMinY = Math.Min(sPoint1.Y, sPoint2.Y);
             double sMaxY = Math.Max(sPoint1.Y, sPoint2.Y);
-            MyMapObjects.moRectangle sRect = new MyMapObjects.moRectangle(sMinX, sMaxX, sMinY, sMaxY);
+            moRectangle sRect = new moRectangle(sMinX, sMaxX, sMinY, sMaxY);
             return sRect;
+        }
+
+        public void ZoomOutToExtent(moRectangle extent)
+        {
+            double sWindowWidth = ClientRectangle.Width;
+            double sWindowHeight = ClientRectangle.Height;
+            mMapDrawingReference.ZoomOutToWindow(extent, sWindowWidth, sWindowHeight);
+            UseWaitCursor = true;
+            DrawBufferMap1();
+            DrawBufferMap2();
+            UseWaitCursor = false;
+            Refresh();
+            //触发事件
+            if (MapScaleChanged != null)
+                MapScaleChanged(this);
         }
 
         #endregion

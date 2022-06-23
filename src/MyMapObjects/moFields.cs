@@ -103,7 +103,7 @@ namespace MyMapObjects
         {
             if (FindField(field.Name) >= 0)
             {
-                string sMessage = MyMapObjects.Properties.Resources.String001;
+                string sMessage = Properties.Resources.String001;
                 throw new Exception(sMessage);
             }
 

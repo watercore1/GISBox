@@ -57,16 +57,8 @@
             this.createFeatureButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.mapScaleSplitButton = new System.Windows.Forms.ToolStripSplitButton();
-            this.scale1000000MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scale500000MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scale250000MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scale100000MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scale50000MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scale25000MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scale10000MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scale5000MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.coordinateStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.isProjectioncheckBox = new System.Windows.Forms.CheckBox();
+            this.isProjectionCheckBox = new System.Windows.Forms.CheckBox();
             this.layersTreeView = new System.Windows.Forms.TreeView();
             this.layerRightMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.stackOrderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,14 +69,18 @@
             this.extentToLayerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openAttributesListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.annotaionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.annotationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.delLayerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mapControl = new MyMapObjects.moMapControl();
             this.moveFeatureRightMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.delFeatureMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createFeatureRightMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.finishDrawPartMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.finishDrawFeatureMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnScale1000000 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnScale5000000 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnScale10000000 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnScale20000000 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mapControl = new MyMapObjects.moMapControl();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -362,68 +358,16 @@
             this.mapScaleSplitButton.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.mapScaleSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.mapScaleSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.scale1000000MenuItem,
-            this.scale500000MenuItem,
-            this.scale250000MenuItem,
-            this.scale100000MenuItem,
-            this.scale50000MenuItem,
-            this.scale25000MenuItem,
-            this.scale10000MenuItem,
-            this.scale5000MenuItem});
+            this.btnScale20000000,
+            this.btnScale10000000,
+            this.btnScale5000000,
+            this.btnScale1000000});
             this.mapScaleSplitButton.Image = ((System.Drawing.Image)(resources.GetObject("mapScaleSplitButton.Image")));
             this.mapScaleSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mapScaleSplitButton.Name = "mapScaleSplitButton";
             this.mapScaleSplitButton.RightToLeftAutoMirrorImage = true;
             this.mapScaleSplitButton.Size = new System.Drawing.Size(200, 28);
             this.mapScaleSplitButton.Text = "地图比例尺";
-            // 
-            // scale1000000MenuItem
-            // 
-            this.scale1000000MenuItem.Name = "scale1000000MenuItem";
-            this.scale1000000MenuItem.Size = new System.Drawing.Size(167, 26);
-            this.scale1000000MenuItem.Text = "1 : 1000000";
-            // 
-            // scale500000MenuItem
-            // 
-            this.scale500000MenuItem.Name = "scale500000MenuItem";
-            this.scale500000MenuItem.Size = new System.Drawing.Size(167, 26);
-            this.scale500000MenuItem.Text = "1 : 500000";
-            // 
-            // scale250000MenuItem
-            // 
-            this.scale250000MenuItem.Name = "scale250000MenuItem";
-            this.scale250000MenuItem.Size = new System.Drawing.Size(167, 26);
-            this.scale250000MenuItem.Text = "1 : 250000";
-            // 
-            // scale100000MenuItem
-            // 
-            this.scale100000MenuItem.Name = "scale100000MenuItem";
-            this.scale100000MenuItem.Size = new System.Drawing.Size(167, 26);
-            this.scale100000MenuItem.Text = "1 : 100000";
-            // 
-            // scale50000MenuItem
-            // 
-            this.scale50000MenuItem.Name = "scale50000MenuItem";
-            this.scale50000MenuItem.Size = new System.Drawing.Size(167, 26);
-            this.scale50000MenuItem.Text = "1 : 50000";
-            // 
-            // scale25000MenuItem
-            // 
-            this.scale25000MenuItem.Name = "scale25000MenuItem";
-            this.scale25000MenuItem.Size = new System.Drawing.Size(167, 26);
-            this.scale25000MenuItem.Text = "1 : 25000";
-            // 
-            // scale10000MenuItem
-            // 
-            this.scale10000MenuItem.Name = "scale10000MenuItem";
-            this.scale10000MenuItem.Size = new System.Drawing.Size(167, 26);
-            this.scale10000MenuItem.Text = "1 : 10000";
-            // 
-            // scale5000MenuItem
-            // 
-            this.scale5000MenuItem.Name = "scale5000MenuItem";
-            this.scale5000MenuItem.Size = new System.Drawing.Size(167, 26);
-            this.scale5000MenuItem.Text = "1 : 5000";
             // 
             // coordinateStatusLabel
             // 
@@ -437,16 +381,16 @@
             this.coordinateStatusLabel.Size = new System.Drawing.Size(200, 24);
             this.coordinateStatusLabel.Text = "坐标";
             // 
-            // isProjectioncheckBox
+            // isProjectionCheckBox
             // 
-            this.isProjectioncheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.isProjectioncheckBox.AutoSize = true;
-            this.isProjectioncheckBox.Location = new System.Drawing.Point(532, 597);
-            this.isProjectioncheckBox.Name = "isProjectioncheckBox";
-            this.isProjectioncheckBox.Size = new System.Drawing.Size(104, 19);
-            this.isProjectioncheckBox.TabIndex = 4;
-            this.isProjectioncheckBox.Text = "投影坐标系";
-            this.isProjectioncheckBox.UseVisualStyleBackColor = true;
+            this.isProjectionCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.isProjectionCheckBox.AutoSize = true;
+            this.isProjectionCheckBox.Location = new System.Drawing.Point(532, 597);
+            this.isProjectionCheckBox.Name = "isProjectionCheckBox";
+            this.isProjectionCheckBox.Size = new System.Drawing.Size(104, 19);
+            this.isProjectionCheckBox.TabIndex = 4;
+            this.isProjectionCheckBox.Text = "投影坐标系";
+            this.isProjectionCheckBox.UseVisualStyleBackColor = true;
             // 
             // layersTreeView
             // 
@@ -473,7 +417,7 @@
             this.extentToLayerMenuItem,
             this.openAttributesListMenuItem,
             this.renderMenuItem,
-            this.annotaionMenuItem,
+            this.annotationMenuItem,
             this.delLayerMenuItem});
             this.layerRightMenu.Name = "layerRightMenu";
             this.layerRightMenu.Size = new System.Drawing.Size(159, 148);
@@ -492,26 +436,30 @@
             // upOneMenuItem
             // 
             this.upOneMenuItem.Name = "upOneMenuItem";
-            this.upOneMenuItem.Size = new System.Drawing.Size(188, 26);
+            this.upOneMenuItem.Size = new System.Drawing.Size(224, 26);
             this.upOneMenuItem.Text = "上移一层";
+            this.upOneMenuItem.Click += new System.EventHandler(this.upOneMenuItem_Click);
             // 
             // downOneMenuItem
             // 
             this.downOneMenuItem.Name = "downOneMenuItem";
-            this.downOneMenuItem.Size = new System.Drawing.Size(188, 26);
+            this.downOneMenuItem.Size = new System.Drawing.Size(224, 26);
             this.downOneMenuItem.Text = "下移一层";
+            this.downOneMenuItem.Click += new System.EventHandler(this.downOneMenuItem_Click);
             // 
             // upTopMenuItem
             // 
             this.upTopMenuItem.Name = "upTopMenuItem";
-            this.upTopMenuItem.Size = new System.Drawing.Size(188, 26);
+            this.upTopMenuItem.Size = new System.Drawing.Size(224, 26);
             this.upTopMenuItem.Text = "上移到最顶层";
+            this.upTopMenuItem.Click += new System.EventHandler(this.upTopMenuItem_Click);
             // 
             // downBottomMenuItem
             // 
             this.downBottomMenuItem.Name = "downBottomMenuItem";
-            this.downBottomMenuItem.Size = new System.Drawing.Size(188, 26);
+            this.downBottomMenuItem.Size = new System.Drawing.Size(224, 26);
             this.downBottomMenuItem.Text = "下移到最低层";
+            this.downBottomMenuItem.Click += new System.EventHandler(this.downBottomMenuItem_Click);
             // 
             // extentToLayerMenuItem
             // 
@@ -523,26 +471,96 @@
             // openAttributesListMenuItem
             // 
             this.openAttributesListMenuItem.Name = "openAttributesListMenuItem";
-            this.openAttributesListMenuItem.Size = new System.Drawing.Size(158, 24);
+            this.openAttributesListMenuItem.Size = new System.Drawing.Size(210, 24);
             this.openAttributesListMenuItem.Text = "打开属性表";
+            this.openAttributesListMenuItem.Click += new System.EventHandler(this.openAttributesListMenuItem_Click);
             // 
             // renderMenuItem
             // 
             this.renderMenuItem.Name = "renderMenuItem";
-            this.renderMenuItem.Size = new System.Drawing.Size(158, 24);
+            this.renderMenuItem.Size = new System.Drawing.Size(210, 24);
             this.renderMenuItem.Text = "渲染";
+            this.renderMenuItem.Click += new System.EventHandler(this.renderMenuItem_Click);
             // 
-            // annotaionMenuItem
+            // annotationMenuItem
             // 
-            this.annotaionMenuItem.Name = "annotaionMenuItem";
-            this.annotaionMenuItem.Size = new System.Drawing.Size(158, 24);
-            this.annotaionMenuItem.Text = "注记";
+            this.annotationMenuItem.Name = "annotationMenuItem";
+            this.annotationMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.annotationMenuItem.Text = "注记";
+            this.annotationMenuItem.Click += new System.EventHandler(this.annotationMenuItem_Click);
             // 
             // delLayerMenuItem
             // 
             this.delLayerMenuItem.Name = "delLayerMenuItem";
-            this.delLayerMenuItem.Size = new System.Drawing.Size(158, 24);
+            this.delLayerMenuItem.Size = new System.Drawing.Size(210, 24);
             this.delLayerMenuItem.Text = "移除";
+            this.delLayerMenuItem.Click += new System.EventHandler(this.delLayerMenuItem_Click);
+            // 
+            // moveFeatureRightMenu
+            // 
+            this.moveFeatureRightMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.moveFeatureRightMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.delFeatureMenuItem});
+            this.moveFeatureRightMenu.Name = "moveFeatureRightMenu";
+            this.moveFeatureRightMenu.Size = new System.Drawing.Size(111, 28);
+            // 
+            // delFeatureMenuItem
+            // 
+            this.delFeatureMenuItem.Name = "delFeatureMenuItem";
+            this.delFeatureMenuItem.Size = new System.Drawing.Size(110, 24);
+            this.delFeatureMenuItem.Text = "删除";
+            this.delFeatureMenuItem.Click += new System.EventHandler(this.delFeatureMenuItem_Click);
+            // 
+            // createFeatureRightMenu
+            // 
+            this.createFeatureRightMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.createFeatureRightMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.finishDrawPartMenuItem,
+            this.finishDrawFeatureMenuItem});
+            this.createFeatureRightMenu.Name = "createFeatureRightMenu";
+            this.createFeatureRightMenu.Size = new System.Drawing.Size(143, 52);
+            // 
+            // finishDrawPartMenuItem
+            // 
+            this.finishDrawPartMenuItem.Name = "finishDrawPartMenuItem";
+            this.finishDrawPartMenuItem.Size = new System.Drawing.Size(142, 24);
+            this.finishDrawPartMenuItem.Text = "完成部件";
+            this.finishDrawPartMenuItem.Click += new System.EventHandler(this.finishDrawPartMenuItem_Click);
+            // 
+            // finishDrawFeatureMenuItem
+            // 
+            this.finishDrawFeatureMenuItem.Name = "finishDrawFeatureMenuItem";
+            this.finishDrawFeatureMenuItem.Size = new System.Drawing.Size(142, 24);
+            this.finishDrawFeatureMenuItem.Text = "完成绘制";
+            this.finishDrawFeatureMenuItem.Click += new System.EventHandler(this.finishDrawFeatureMenuItem_Click);
+            // 
+            // btnScale1000000
+            // 
+            this.btnScale1000000.Name = "btnScale1000000";
+            this.btnScale1000000.Size = new System.Drawing.Size(224, 26);
+            this.btnScale1000000.Text = "1 : 1000000";
+            this.btnScale1000000.Click += new System.EventHandler(this.btnScale1000000_Click);
+            // 
+            // btnScale5000000
+            // 
+            this.btnScale5000000.Name = "btnScale5000000";
+            this.btnScale5000000.Size = new System.Drawing.Size(224, 26);
+            this.btnScale5000000.Text = "1 : 5000000";
+            this.btnScale5000000.Click += new System.EventHandler(this.btnScale5000000_Click);
+            // 
+            // btnScale10000000
+            // 
+            this.btnScale10000000.Name = "btnScale10000000";
+            this.btnScale10000000.Size = new System.Drawing.Size(224, 26);
+            this.btnScale10000000.Text = "1 : 10000000";
+            this.btnScale10000000.Click += new System.EventHandler(this.btnScale10000000_Click);
+            // 
+            // btnScale20000000
+            // 
+            this.btnScale20000000.Name = "btnScale20000000";
+            this.btnScale20000000.Size = new System.Drawing.Size(224, 26);
+            this.btnScale20000000.Text = "1 : 20000000";
+            this.btnScale20000000.Click += new System.EventHandler(this.btnScale20000000_Click);
             // 
             // mapControl
             // 
@@ -566,48 +584,13 @@
             this.mapControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapControl_MouseMove);
             this.mapControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mapControl_MouseUp);
             // 
-            // moveFeatureRightMenu
-            // 
-            this.moveFeatureRightMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.moveFeatureRightMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.delFeatureMenuItem});
-            this.moveFeatureRightMenu.Name = "moveFeatureRightMenu";
-            this.moveFeatureRightMenu.Size = new System.Drawing.Size(111, 28);
-            // 
-            // delFeatureMenuItem
-            // 
-            this.delFeatureMenuItem.Name = "delFeatureMenuItem";
-            this.delFeatureMenuItem.Size = new System.Drawing.Size(110, 24);
-            this.delFeatureMenuItem.Text = "删除";
-            // 
-            // createFeatureRightMenu
-            // 
-            this.createFeatureRightMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.createFeatureRightMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.finishDrawPartMenuItem,
-            this.finishDrawFeatureMenuItem});
-            this.createFeatureRightMenu.Name = "createFeatureRightMenu";
-            this.createFeatureRightMenu.Size = new System.Drawing.Size(143, 52);
-            // 
-            // finishDrawPartMenuItem
-            // 
-            this.finishDrawPartMenuItem.Name = "finishDrawPartMenuItem";
-            this.finishDrawPartMenuItem.Size = new System.Drawing.Size(142, 24);
-            this.finishDrawPartMenuItem.Text = "完成部件";
-            // 
-            // finishDrawFeatureMenuItem
-            // 
-            this.finishDrawFeatureMenuItem.Name = "finishDrawFeatureMenuItem";
-            this.finishDrawFeatureMenuItem.Size = new System.Drawing.Size(142, 24);
-            this.finishDrawFeatureMenuItem.Text = "完成绘制";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(993, 616);
             this.Controls.Add(this.layersTreeView);
-            this.Controls.Add(this.isProjectioncheckBox);
+            this.Controls.Add(this.isProjectionCheckBox);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.mapControl);
             this.Controls.Add(this.toolStrip);
@@ -657,16 +640,8 @@
         private System.Windows.Forms.ToolStripDropDownButton editDropDownButton;
         private System.Windows.Forms.ToolStripMenuItem startEditMenuItem;
         private System.Windows.Forms.ToolStripMenuItem endEditMenuItem;
-        private System.Windows.Forms.CheckBox isProjectioncheckBox;
+        private System.Windows.Forms.CheckBox isProjectionCheckBox;
         private System.Windows.Forms.ToolStripStatusLabel coordinateStatusLabel;
-        private System.Windows.Forms.ToolStripMenuItem scale50000MenuItem;
-        private System.Windows.Forms.ToolStripMenuItem scale25000MenuItem;
-        private System.Windows.Forms.ToolStripMenuItem scale10000MenuItem;
-        private System.Windows.Forms.ToolStripMenuItem scale5000MenuItem;
-        private System.Windows.Forms.ToolStripMenuItem scale1000000MenuItem;
-        private System.Windows.Forms.ToolStripMenuItem scale500000MenuItem;
-        private System.Windows.Forms.ToolStripMenuItem scale250000MenuItem;
-        private System.Windows.Forms.ToolStripMenuItem scale100000MenuItem;
         private System.Windows.Forms.TreeView layersTreeView;
         private System.Windows.Forms.ContextMenuStrip layerRightMenu;
         private System.Windows.Forms.ToolStripMenuItem stackOrderMenuItem;
@@ -677,7 +652,7 @@
         private System.Windows.Forms.ToolStripMenuItem downOneMenuItem;
         private System.Windows.Forms.ToolStripMenuItem upTopMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downBottomMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem annotaionMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem annotationMenuItem;
         private System.Windows.Forms.ToolStripMenuItem delLayerMenuItem;
         internal MyMapObjects.moMapControl mapControl;
         private System.Windows.Forms.ToolStripButton addNodeButton;
@@ -688,6 +663,10 @@
         private System.Windows.Forms.ToolStripMenuItem delFeatureMenuItem;
         private System.Windows.Forms.ToolStripMenuItem finishDrawPartMenuItem;
         private System.Windows.Forms.ToolStripMenuItem finishDrawFeatureMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnScale20000000;
+        private System.Windows.Forms.ToolStripMenuItem btnScale10000000;
+        private System.Windows.Forms.ToolStripMenuItem btnScale5000000;
+        private System.Windows.Forms.ToolStripMenuItem btnScale1000000;
     }
 }
 

@@ -40,7 +40,7 @@ namespace GISBox.Forms
             // 
             this.btnAddField.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnAddField.Location = new System.Drawing.Point(161, 235);
-            this.btnAddField.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddField.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddField.Name = "btnAddField";
             this.btnAddField.Size = new System.Drawing.Size(141, 41);
             this.btnAddField.TabIndex = 0;
@@ -51,7 +51,7 @@ namespace GISBox.Forms
             // textBox
             // 
             this.textBox.Location = new System.Drawing.Point(233, 46);
-            this.textBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox.Margin = new System.Windows.Forms.Padding(4);
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(236, 25);
             this.textBox.TabIndex = 1;
@@ -67,7 +67,7 @@ namespace GISBox.Forms
             "Double",
             "Text(文本)"});
             this.comboBox.Location = new System.Drawing.Point(233, 134);
-            this.comboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox.Name = "comboBox";
             this.comboBox.Size = new System.Drawing.Size(236, 23);
             this.comboBox.TabIndex = 2;
@@ -104,8 +104,9 @@ namespace GISBox.Forms
             this.Controls.Add(this.comboBox);
             this.Controls.Add(this.textBox);
             this.Controls.Add(this.btnAddField);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AddNewField";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "添加字段";
             this.ResumeLayout(false);
             this.PerformLayout();

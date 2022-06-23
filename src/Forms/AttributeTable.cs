@@ -8,14 +8,14 @@ using MyMapObjects;
 
 namespace GISBox.Forms
 {
-    public partial class AttributeTable : System.Windows.Forms.Form
+    public partial class AttributeTable : Form
     {
         #region 字段
 
         // (1) 主窗体和图层数据
 
         public MainForm Main { get; }
-        public int FormIndex { get; }
+        public int FormIndex { get; set; }
         public int LayerIndex { get; }
         public moMapLayer Layer { get; set; }
 
@@ -285,5 +285,12 @@ namespace GISBox.Forms
             }
         }
     }
-}
+
+        private void btnSelectByAttribute_Click(object sender, EventArgs e)
+        {
+            SelectByAttribute researchSelect = new SelectByAttribute(Main);
+            researchSelect.Owner = this;
+            researchSelect.Show();
+        }
+    }
 }

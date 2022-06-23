@@ -3,10 +3,11 @@
     /// <summary>
     /// shape file feature type
     /// </summary>
-    public enum ShapeFileType:int
+    public enum ShapeFileType : int
     {
         //NullShape = 0,
         Point = 1,
+
         PolyLine = 3,
         Polygon = 5,
         //MultiPoint = 8,
@@ -25,9 +26,9 @@
     /// use one byte to represent dbf Field Type
     /// divide all types into four case
     /// </summary>
-    public enum DbfFieldType:byte
+    public enum DbfFieldType : byte
     {
-        Int= (byte)'I',
+        Int = (byte)'I',
         Single = (byte)'F',
         Double = (byte)'D',
         Text = (byte)'C',
@@ -38,20 +39,22 @@
     /// </summary>
     public enum MapOpStyle
     {
-        None=0,        
-        ZoomIn=1,       
-        ZoomOut=2,      
-        Pan = 3,       
+        None = 0,
+        ZoomIn = 1,
+        ZoomOut = 2,
+        Pan = 3,
         Select = 4,     // select feature
         Identify = 5,   // identify feature
+
         /// <summary>
         /// select the feature to edit
         /// and can move the selected feature in this style
         /// </summary>
         SelectAndMoveFeature = 6,
+
         MoveNode = 7,   // move node
         AddNode = 8,    // add node
-        DelNode =9,  // del node
+        DelNode = 9,  // del node
         Create = 10,    // create feature
     }
 }

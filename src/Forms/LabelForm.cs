@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace GISBox
+namespace GISBox.Forms
 {
-    public partial class Label : Form
+    public partial class LabelForm : Form
     {
         #region 字段
 
@@ -17,7 +17,7 @@ namespace GISBox
         #endregion
 
         #region Constructors
-        public Label(MyMapObjects.moMapLayer layer)
+        public LabelForm(MyMapObjects.moMapLayer layer)
         {
             InitializeComponent();
             int sFieldCount = layer.AttributeFields.Count;
@@ -100,8 +100,8 @@ namespace GISBox
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            Main main = (Main)Owner;
-            main.GetLabel(mVisible, mUseMask, mFieldIndex, mColor, mFont);
+            MainForm main = (MainForm)Owner;
+            main.Label.GetLabel(mVisible, mUseMask, mFieldIndex, mColor, mFont);
             Close();
         }
 

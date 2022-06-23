@@ -171,5 +171,40 @@
         }
 
         #endregion Methods
+        internal void ZoomOutToWindow(moRectangle rect, double windowWidth, double windowHeight)
+        {
+            double sRectWidth = rect.Width, sRectHeight = rect.Height;
+            //计算宽高比例
+            double sMapRatio = sRectWidth / sRectHeight;            //地图范围的宽高比
+            double sWindowRatio = windowWidth / windowHeight;       //窗口的宽高比
+            //计算缩放后比例尺
+            double sMapScale;
+            if (sMapRatio <= sWindowRatio)
+            {
+                double s = windowHeight / sRectHeight * _mpu * _dpm;
+                if (s < 1)
+                    s = 1 / s;
+                sMapScale = _MapScale * s;
+            }
+            else
+            {
+                double s = windowHeight / sRectHeight * _mpu * _dpm;
+                if (s < 1)
+                    s = 1 / s;
+                sMapScale = _MapScale * s;
+            }
+            if (sMapScale > mcMaxMapScale)          //100亿
+                sMapScale = mcMaxMapScale;          //防止溢出
+            else if (sMapScale < mcMinMapScale)
+                sMapScale = mcMinMapScale;            //防止溢出
+            //计算偏移量
+            double sOffsetX, sOffsetY;              //定义新的偏移量
+            sOffsetX = (rect.MinX + rect.MaxX) / 2 - windowWidth / 2 / _dpm * sMapScale / _mpu;
+            sOffsetY = (rect.MinY + rect.MaxY) / 2 + windowHeight / 2 / _dpm * sMapScale / _mpu;
+            //赋值
+            _OffsetX = sOffsetX;
+            _OffsetY = sOffsetY;
+            _MapScale = sMapScale;
+        }
     }
 }
